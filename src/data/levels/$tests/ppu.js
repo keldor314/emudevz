@@ -993,6 +993,10 @@ it("`PPUAddr`: writes the MSB first, then the LSB", () => {
   ppuAddr.onWrite(0x56);
   expect(ppuAddr.address).to.equalHex(0x5634, "address");
   expect(ppuAddr.latch).to.equalN(true, "latch");
+
+  ppuAddr.onWrite(0x0a);
+  expect(ppuAddr.address).to.equalHex(0x560a, "address");
+  expect(ppuAddr.latch).to.equalN(false, "latch");
 })({
   locales: {
     es: "`PPUAddr`: escribe primero el MSB, luego el LSB",
@@ -1000,7 +1004,7 @@ it("`PPUAddr`: writes the MSB first, then the LSB", () => {
   use: ({ id }, book) => id >= book.getId("5b.8") && id < book.getId("5b.23"),
 });
 
-it("`PPUData`: writes the value to VRAM using `PPUAddr::address`", () => {
+it("`PPUData`: writes the value to PPU memory using `PPUAddr::address`", () => {
   const PPU = mainModule.default.PPU;
   const ppu = new PPU({});
   ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -1016,7 +1020,8 @@ it("`PPUData`: writes the value to VRAM using `PPUAddr::address`", () => {
   expect(ppu.memory.read(0x2023)).to.equalN(value, "read(0x2023)");
 })({
   locales: {
-    es: "`PPUData`: escribe el valor en VRAM usando `PPUAddr::address`",
+    es:
+      "`PPUData`: escribe el valor en la memoria PPU usando `PPUAddr::address`",
   },
   use: ({ id }, book) => id >= book.getId("5b.8"),
 });
