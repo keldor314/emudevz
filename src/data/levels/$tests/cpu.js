@@ -577,9 +577,13 @@ it("can fetch <the argument> based on `operation` and `input`", () => {
   const cpu = newCPU();
   expect(cpu).to.respondTo("_fetchArgument");
 
-  // DEC $40,X
+  // DEC $40,X -> argument === "address"
   cpu.x.setValue(6);
   expect(cpu._fetchArgument(cpu.operations[0xd6], 0x40)).to.equalHex(0x46);
+
+  // LDA #$05 -> argument === "value"
+  cpu.a.setValue(8);
+  expect(cpu._fetchArgument(cpu.operations[0xa9], 0x05)).to.equalHex(0x05);
 })({
   locales: {
     es: "puede ir a buscar <el argumento> basándose en `operation` e `input`",
