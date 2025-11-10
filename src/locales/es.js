@@ -132,6 +132,7 @@ export default {
 	integration_teslavsedison_wrongmode: "Modo incorrecto!",
 	integration_wolfspirit_level: "Nivel",
 	integration_wolfspirit_lives: "vidas",
+	is_now_unlocked: 'está desbloqueado. Visita el capítulo "👾".',
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",
