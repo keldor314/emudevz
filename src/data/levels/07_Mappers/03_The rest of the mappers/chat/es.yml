@@ -1,6 +1,7 @@
 main:
   messages:
-  - bueno, dejaré el resto de los mappers como <un ejercicio para el lector>
+  - <{owl.png;30x30}>
+  - "{10}bueno, dejaré el resto de los mappers como <un ejercicio para el lector>"
   - ¡hay muchísimos! 👀
   - de hecho, el formato iNEEES (en su versión no extendida) tiene soporte para al menos 256 mappers 🤯
   - para tener paridad con BrokenNEEES, deberías apuntar a <MMC1> (mapper 1), <CNROM> (mapper 3) y <MMC3> (mapper 4)
