@@ -116,6 +116,11 @@
     "appId": "io.r-labs.emudevz",
     "productName": "EmuDevz",
     "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "asar": true,
+    "asarUnpack": [
+      "build/**",
+      "!build/editables/**"
+    ],
     "directories": {
       "output": "release",
       "buildResources": "public/icons"
@@ -125,7 +130,6 @@
       "electron/**",
       "package.json"
     ],
-    "asar": true,
     "win": {
       "target": [
         {

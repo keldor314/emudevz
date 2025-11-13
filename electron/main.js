@@ -6,12 +6,9 @@ const isDev = !app.isPackaged;
 app.setName("EmuDevz");
 
 function createWindow() {
-	const iconBase = path.join(
-		__dirname,
-		"..",
-		isDev ? "public" : "build",
-		"icons"
-	);
+	const iconBase = isDev
+		? path.join(__dirname, "..", "public", "icons")
+		: path.join(process.resourcesPath, "app.asar.unpacked", "build", "icons");
 	const iconPath = path.join(iconBase, "icon-512x512.png");
 
 	const win = new BrowserWindow({
@@ -42,7 +39,12 @@ function createWindow() {
 		const devUrl = process.env.VITE_DEV_SERVER_URL || "http://localhost:3000";
 		win.loadURL(devUrl);
 	} else {
-		const indexPath = path.join(__dirname, "..", "build", "index.html");
+		const indexPath = path.join(
+			process.resourcesPath,
+			"app.asar.unpacked",
+			"build",
+			"index.html"
+		);
 		win.loadFile(indexPath);
 	}
 
