@@ -30,6 +30,7 @@ const SCALE_FACTOR = 0.5;
 const CRT_SPEED = 0.25;
 const MIN_WIDTH = 512;
 const MIN_HEIGHT = 256;
+const LOGO_MAX_SIZE = 256;
 
 class HomeScreen extends PureComponent {
 	state = { fontsLoaded: false };
@@ -235,7 +236,14 @@ class HomeScreen extends PureComponent {
 				sprites.background.width = app.renderer.width;
 				sprites.background.height = app.renderer.height;
 
-				const logoScale = (app.renderer.height / logoHeight) * SCALE_FACTOR;
+				const rawLogoScale = (app.renderer.height / logoHeight) * SCALE_FACTOR;
+				const maxScaleByWidth = LOGO_MAX_SIZE / sprites.logo.texture.width;
+				const maxScaleByHeight = LOGO_MAX_SIZE / sprites.logo.texture.height;
+				const logoScale = Math.min(
+					rawLogoScale,
+					maxScaleByWidth,
+					maxScaleByHeight
+				);
 				sprites.logo.scale.x = logoScale;
 				sprites.logo.scale.y = logoScale;
 
