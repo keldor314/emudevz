@@ -12,7 +12,8 @@
     "build:electron": "cross-env PUBLIC_URL=./ BUILD_PATH=build vite build",
     "electron:dev": "cross-env OPEN=false VITE_DEV_SERVER_URL=http://localhost:3000 concurrently --success first -k \"vite\" \"wait-on http://localhost:3000 && electron .\"",
     "electron:build:win": "npm run build:electron && electron-builder --win --x64",
-    "electron:build:linux": "npm run build:electron && electron-builder --linux AppImage --x64"
+    "electron:build:linux": "npm run build:electron && electron-builder --linux AppImage --x64",
+    "electron:build:mac": "npm run build:electron && electron-builder --mac dmg --arm64"
   },
   "//": [
     "[!] Packages with fixed versions are conflictive. Do not update them.",
@@ -114,6 +115,7 @@
   "build": {
     "appId": "io.r-labs.emudevz",
     "productName": "EmuDevz",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "release",
       "buildResources": "public/icons"
@@ -133,8 +135,7 @@
           ]
         }
       ],
-      "icon": "public/icons/icon-windows.ico",
-      "artifactName": "${productName} Setup ${version}.${ext}"
+      "icon": "public/icons/icon-windows.ico"
     },
     "nsis": {
       "oneClick": true,
@@ -151,8 +152,22 @@
         }
       ],
       "category": "Game",
+      "icon": "public/icons/icon-512x512.png"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "category": "public.app-category.games",
       "icon": "public/icons/icon-512x512.png",
-      "artifactName": "${productName}-${version}.${ext}"
+      "identity": null,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
     }
   },
   "devDependencies": {
