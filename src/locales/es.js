@@ -152,6 +152,7 @@ export default {
 		"🚫 ¡Ningún archivo abierto!<br>🔍 Usa <code>Ctrl+P</code> para buscar.",
 	not_available: "⚠️  No disponible.",
 	not_now: "⚠️  ¡Ahora no!",
+	open_devtools: "Herramientas para desarrolladores",
 	opening: "Abriendo",
 	optional: "(opcional)",
 	performance_tips_reload: "Recarga la página 😅",

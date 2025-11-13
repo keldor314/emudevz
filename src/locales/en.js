@@ -145,6 +145,7 @@ export default {
 	no_open_files: "🚫 No open files!<br>🔍 Use <code>Ctrl+P</code> to search.",
 	not_available: "⚠️  Not available.",
 	not_now: "⚠️  Not now!",
+	open_devtools: "Developer tools",
 	opening: "Opening",
 	optional: "(optional)",
 	performance_tips_reload: "Reload the page 😅",

@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import Badge from "react-bootstrap/Badge";
 import Marquee from "react-fast-marquee";
 import {
+	FaBug,
 	FaCalculator,
 	FaChevronLeft,
 	FaChevronRight,
@@ -120,6 +121,14 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
+						{window.electronAPI?.openDevTools && (
+							<IconButton
+								style={{ marginRight: 8 }}
+								Icon={FaBug}
+								tooltip={locales.get("open_devtools")}
+								onClick={() => window.electronAPI.openDevTools()}
+							/>
+						)}
 						{isFreeMode && (
 							<IconButton
 								style={{ marginRight: 8 }}

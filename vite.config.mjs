@@ -69,17 +69,27 @@ function devServerPlugin() {
 	return {
 		name: "dev-server-plugin",
 		config(_, { mode }) {
-			const { HOST, PORT, HTTPS, SSL_CRT_FILE, SSL_KEY_FILE } = loadEnv(
-				mode,
-				".",
-				["HOST", "PORT", "HTTPS", "SSL_CRT_FILE", "SSL_KEY_FILE"]
-			);
+			const {
+				HOST,
+				PORT,
+				HTTPS,
+				SSL_CRT_FILE,
+				SSL_KEY_FILE,
+				OPEN,
+			} = loadEnv(mode, ".", [
+				"HOST",
+				"PORT",
+				"HTTPS",
+				"SSL_CRT_FILE",
+				"SSL_KEY_FILE",
+				"OPEN",
+			]);
 			const https = HTTPS === "true";
 			return {
 				server: {
 					host: HOST || "0.0.0.0",
 					port: parseInt(PORT || "3000", 10),
-					open: true,
+					open: OPEN !== "false",
 					...(https &&
 						SSL_CRT_FILE &&
 						SSL_KEY_FILE && {
