@@ -2,16 +2,17 @@
 
 . ./scripts/try.sh
 
-APP_NAME="emudevz"
+REPO_OWNER="${3:-afska}"
+REPO_NAME="${4:-emudevz}"
 
 USERNAME="$1"
 TOKEN="$2"
-SUFFIX="$3"
-REPO="https://$USERNAME:$TOKEN@github.com/$USERNAME/$APP_NAME$SUFFIX"
+
+REPO="https://$USERNAME:$TOKEN@github.com/$REPO_OWNER/$REPO_NAME"
 
 function show_usage {
 	echo "Usage example:"
-	echo "./deploy.sh <GITHUB_USERNAME> <GITHUB_TOKEN> [-test]"
+	echo "./deploy.sh <GITHUB_USERNAME> <GITHUB_TOKEN> [REPO_OWNER] [REPO_NAME]"
 }
 
 if [ -z "$USERNAME" ] || [ -z "$TOKEN" ] ; then

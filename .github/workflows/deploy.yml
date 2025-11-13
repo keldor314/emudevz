@@ -1,0 +1,56 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Copy music from gh-pages
+        run: |
+          git fetch origin gh-pages --depth=1 || true
+          rm -rf public/music
+          mkdir -p public
+          if git cat-file -e origin/gh-pages:music 2>/dev/null; then
+            git archive --format=tar origin/gh-pages music | tar -x -C public
+          else
+            echo "No `music` directory found on gh-pages"
+            exit 111
+          fi
+
+      - name: Package levels
+        run: |
+          npm run package
+
+      - name: Configure git identity
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Run deploy script
+        run: |
+          bash ./scripts/deploy.sh "x-access-token" "${{ secrets.GITHUB_TOKEN }}" "${{ github.repository_owner }}" "emudevz"
