@@ -22,7 +22,7 @@ play:
     {{Right}}.loadROM("/roms/.all/Falling.neees", "stream");
   messages:
   - no ganas...
-  - bueno, digamos que ganas si llegás a 50 puntos
+  - bueno, digamos que ganas si llegás a 30 puntos
   - 👀
   events:
   - falling-end [finish]

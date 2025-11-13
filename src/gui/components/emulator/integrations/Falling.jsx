@@ -61,4 +61,4 @@ export default class Falling extends Integration {
 	};
 }
 
-const HIGH_SCORE = 50;
+const HIGH_SCORE = 30;
