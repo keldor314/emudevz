@@ -139,7 +139,7 @@
           ]
         }
       ],
-      "icon": "public/icons/icon-windows.ico"
+      "icon": "public/icons/icon-512x512.png"
     },
     "nsis": {
       "oneClick": true,
