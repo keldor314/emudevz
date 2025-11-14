@@ -11,6 +11,7 @@ function createWindow() {
 		: path.join(process.resourcesPath, "app.asar.unpacked", "build", "icons");
 	const iconPath = path.join(iconBase, "icon-512x512.png");
 
+	// Main window
 	const win = new BrowserWindow({
 		title: "EmuDevz",
 		width: 1280,
@@ -28,6 +29,9 @@ function createWindow() {
 			sandbox: true,
 		},
 	});
+
+	// Disable native menu bar (Alt)
+	win.setMenu(null);
 
 	if (process.platform === "win32") {
 		// (match electron-builder appId for correct icon association)
@@ -51,6 +55,47 @@ function createWindow() {
 	// Force fullscreen
 	win.on("leave-full-screen", () => {
 		win.setFullScreen(true);
+	});
+
+	// Keyboard zoom shortcuts on Windows/Linux:
+	// - Ctrl+Shift++ or Ctrl+NumpadAdd: Zoom in
+	// - Ctrl+- or Ctrl+NumpadSubtract: Zoom out
+	// - Ctrl+0: Reset zoom
+	win.webContents.on("before-input-event", (event, input) => {
+		if (input.type === "keyDown" && input.alt && input.code === "F4") {
+			// (force-close on Alt+F4 even if the renderer captures keys)
+			event.preventDefault();
+			win.close();
+			return;
+		}
+
+		if (input.type !== "keyDown") return;
+		const ctrlOrCmd = input.control || input.meta;
+		if (!ctrlOrCmd) return;
+
+		const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+		const step = 0.1;
+
+		// Zoom in
+		if (input.code === "NumpadAdd") {
+			const current = win.webContents.getZoomFactor();
+			win.webContents.setZoomFactor(clamp(current + step, 0.5, 3));
+			event.preventDefault();
+			return;
+		}
+		// Zoom out
+		if (input.code === "NumpadSubtract") {
+			const current = win.webContents.getZoomFactor();
+			win.webContents.setZoomFactor(clamp(current - step, 0.5, 3));
+			event.preventDefault();
+			return;
+		}
+		// Reset zoom
+		if (input.code === "Digit0" || input.code === "Numpad0") {
+			win.webContents.setZoomFactor(1);
+			event.preventDefault();
+			return;
+		}
 	});
 
 	// Open external links in the default browser
