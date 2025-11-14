@@ -4,6 +4,7 @@ import { CRTFilter } from "pixi-filters";
 import { PointLight, lightGroup } from "pixi-lights";
 import * as PIXI from "pixi.js";
 import { Toaster } from "react-hot-toast";
+import { FaTimes } from "react-icons/fa";
 import { connect } from "react-redux";
 import Book from "../level/Book";
 import locales from "../locales";
@@ -11,6 +12,7 @@ import ChapterSelectModal from "./components/modals/ChapterSelectModal";
 import CreditsModal from "./components/modals/CreditsModal";
 import SettingsModal from "./components/modals/SettingsModal";
 import Button from "./components/widgets/Button";
+import IconButton from "./components/widgets/IconButton";
 import ToggableButton from "./components/widgets/ToggableButton";
 import styles from "./HomeScreen.module.css";
 
@@ -52,6 +54,16 @@ class HomeScreen extends PureComponent {
 
 		return (
 			<>
+				{window.electronAPI?.isElectron && (
+					<IconButton
+						Icon={FaTimes}
+						tooltip={locales.get("close")}
+						tooltipPlacement="bottom"
+						onClick={this._quit}
+						className={styles.closeButton}
+					/>
+				)}
+
 				<Toaster containerClassName="toaster-wrapper" />
 				<div className={styles.container} ref={this.onReady} />
 

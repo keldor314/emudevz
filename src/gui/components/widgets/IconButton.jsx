@@ -19,6 +19,7 @@ export default class IconButton extends PureComponent {
 		const {
 			Icon,
 			tooltip,
+			tooltipPlacement,
 			onClick,
 			kind = "inline",
 			disabled = false,

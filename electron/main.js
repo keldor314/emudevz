@@ -46,7 +46,7 @@ function createWindow() {
 	});
 
 	// Disable native menu bar (Alt)
-	win.setMenu(null);
+	if (!isDev) win.setMenu(null);
 
 	if (process.platform === "win32") {
 		// (match electron-builder appId for correct icon association)

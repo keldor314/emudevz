@@ -39,3 +39,10 @@
 	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
 		0 0 8px rgba(200, 200, 200, 0.6);
 }
+
+.closeButton {
+	position: fixed;
+	top: 8px;
+	right: 9px;
+	z-index: 999;
+}
