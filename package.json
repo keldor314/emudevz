@@ -115,7 +115,7 @@
   "build": {
     "appId": "io.r-labs.emudevz",
     "productName": "EmuDevz",
-    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "artifactName": "${productName}-${os}-${arch}.${ext}",
     "asar": true,
     "asarUnpack": [
       "build/**",
