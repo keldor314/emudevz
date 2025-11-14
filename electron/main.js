@@ -1,9 +1,24 @@
-const { app, BrowserWindow, shell, ipcMain } = require("electron");
+const { app, BrowserWindow, shell, ipcMain, protocol } = require("electron");
 const path = require("node:path");
 
 const isDev = !app.isPackaged;
 
 app.setName("EmuDevz");
+
+// Set up custom app:// protocol
+protocol.registerSchemesAsPrivileged([
+	{
+		scheme: "app",
+		privileges: {
+			standard: true,
+			secure: true,
+			corsEnabled: true,
+			supportFetchAPI: true,
+			stream: true,
+			allowServiceWorkers: true,
+		},
+	},
+]);
 
 function createWindow() {
 	const iconBase = isDev
@@ -38,18 +53,12 @@ function createWindow() {
 		app.setAppUserModelId("io.r-labs.emudevz");
 	}
 
-	// Dev: open dev server | Prod: static build
+	// Dev: open dev server URL | Prod: serve via app:// protocol
 	if (isDev) {
 		const devUrl = process.env.VITE_DEV_SERVER_URL || "http://localhost:3000";
 		win.loadURL(devUrl);
 	} else {
-		const indexPath = path.join(
-			process.resourcesPath,
-			"app.asar.unpacked",
-			"build",
-			"index.html"
-		);
-		win.loadFile(indexPath);
+		win.loadURL("app://-/index.html");
 	}
 
 	// Force fullscreen
@@ -108,7 +117,41 @@ function createWindow() {
 	});
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+	// Map app:// protocol to unpacked build directory
+	if (!isDev) {
+		const buildDir = path.join(
+			process.resourcesPath,
+			"app.asar.unpacked",
+			"build"
+		);
+		const resolvePath = (requestUrl) => {
+			try {
+				const urlObj = new URL(requestUrl);
+				let pathname = urlObj.pathname || "/";
+				if (pathname === "/") pathname = "/index.html";
+
+				const fsPath = path.normalize(
+					path.join(buildDir, decodeURIComponent(pathname))
+				);
+
+				if (!fsPath.startsWith(buildDir))
+					return path.join(buildDir, "index.html");
+
+				return fsPath;
+			} catch {
+				return path.join(buildDir, "index.html");
+			}
+		};
+
+		protocol.registerFileProtocol("app", (request, callback) => {
+			const filePath = resolvePath(request.url);
+			callback({ path: filePath });
+		});
+	}
+
+	createWindow();
+});
 
 // Open window on start
 app.on("activate", () => {
