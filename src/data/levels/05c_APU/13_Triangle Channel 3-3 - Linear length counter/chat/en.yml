@@ -8,7 +8,7 @@ main:
       (still pretty limited, because the field is only 7-bit wide, so the maximum length is 127)
   - |-
     ⛓️  its value is not loaded immediately:
-      - writes to 📏  LinearLengthCounter set a <reload value>
+      - writes to 📏  TriangleLengthControl set a <reload value>
       - writes to 🕛  TriangleTimerHighLCL set a <reload flag>, which makes it load that pending value in the next clock
   - 🕒  it's updated in quarter frames instead of half frames
   - the channel should be silenced when either counter is 0
