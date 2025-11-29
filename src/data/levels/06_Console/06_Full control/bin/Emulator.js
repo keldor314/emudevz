@@ -106,6 +106,34 @@ export default class Emulator {
     }
   }
 
+  /** Runs the emulation until the next scanline. */
+  scanline(debug = false) {
+    if (!this.context) return;
+
+    const currentScanline = this.ppu.scanline;
+    while (this.ppu.scanline === currentScanline) {
+      this.step();
+    }
+
+    let oldFrameBuffer;
+    if (debug) {
+      oldFrameBuffer = new Uint32Array(this.ppu.frameBuffer.length);
+      for (let i = 0; i < this.ppu.frameBuffer.length; i++)
+        oldFrameBuffer[i] = this.ppu.frameBuffer[i];
+
+      // plot red line
+      for (let i = 0; i < 256; i++)
+        this.ppu.plot(i, this.ppu.scanline, 0xff0000ff);
+    }
+
+    this.onFrame(this.ppu.frameBuffer);
+
+    if (debug) {
+      for (let i = 0; i < this.ppu.frameBuffer.length; i++)
+        this.ppu.frameBuffer[i] = oldFrameBuffer[i];
+    }
+  }
+
   /** Executes a step in the emulation (1 CPU instruction). */
   step() {
     let cpuCycles = this.cpu.step();
