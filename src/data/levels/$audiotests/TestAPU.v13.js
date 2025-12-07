@@ -632,7 +632,7 @@ class FrequencySweep {
 		}
 
 		if (this.dividerCount === 0 || this.startFlag) {
-			this.dividerCount = register.dividerPeriodMinusOne + 1;
+			this.dividerCount = register.dividerPeriodMinusOne;
 			this.startFlag = false;
 		} else this.dividerCount--;
 	}

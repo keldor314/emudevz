@@ -63,7 +63,7 @@ exercise:
           this.channel.timer += sweepDelta * (register.negateFlag ? -1 : 1);```
       
       **->** si el <divider count> es 0 <O> la <start flag> está encendida
-        **->** asigna el valor de `dividerPeriodMinusOne` de 🧹  PulseSweep + 1 a ```javascript this.dividerCount```
+        **->** asigna el valor de `dividerPeriodMinusOne` de 🧹  PulseSweep a ```javascript this.dividerCount```
         **->** apaga la <start flag>
       **->** si no:
         **->** decrementa el <divider count>
