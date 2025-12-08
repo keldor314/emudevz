@@ -56,7 +56,7 @@ export default class DownloadCommand extends FilesystemCommand {
 
 		const zipped = await zip.generateAsync({ type: "uint8array" });
 		const zipName = isSingleDirectory
-			? `${$path.parse(targets[0].path).base}.zip`
+			? `${$path.parse(targets[0].path).base || "root"}.zip`
 			: FILE_NAME;
 		filepicker.saveAs(zipped, zipName);
 	}
