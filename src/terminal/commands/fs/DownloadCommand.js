@@ -34,17 +34,25 @@ export default class DownloadCommand extends FilesystemCommand {
 
 		const zip = new JSZip();
 
+		const entryPaths = [];
 		for (let target of targets) {
 			if (target.stat.isDirectory) {
 				const files = filesystem.lsr(target.path);
-				this._addEntries(
-					zip,
-					files.map((it) => it.filePath)
-				);
+				for (let it of files) entryPaths.push(it.filePath);
 			} else {
-				this._addEntries(zip, [target.path]);
+				entryPaths.push(target.path);
 			}
 		}
+
+		let baseDir = this._shell.workingDirectory;
+		const hasOutside = (baseDirectory) =>
+			entryPaths.some((it) =>
+				$path.relative(baseDirectory, it).startsWith("..")
+			);
+		while (baseDir !== "/" && hasOutside(baseDir))
+			baseDir = $path.dirname(baseDir);
+
+		this._addEntries(zip, entryPaths, baseDir);
 
 		const zipped = await zip.generateAsync({ type: "uint8array" });
 		const zipName = isSingleDirectory
@@ -53,9 +61,9 @@ export default class DownloadCommand extends FilesystemCommand {
 		filepicker.saveAs(zipped, zipName);
 	}
 
-	_addEntries(zip, paths) {
+	_addEntries(zip, paths, baseDir) {
 		for (let path of paths) {
-			const zipPath = $path.relative(this._shell.workingDirectory, path);
+			const zipPath = $path.relative(baseDir, path);
 			const content = read(path);
 			zip.file(
 				zipPath,
