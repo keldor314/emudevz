@@ -35,9 +35,7 @@ export default class EmulatorBuilder {
 			this.withUserCPU ||
 			this.withUserPPU ||
 			this.withUserAPU ||
-			this.withUserController ||
-			this.customPPU ||
-			this.customAPU
+			this.withUserController
 		);
 		// when using user's PPU and APU at the same time, and one of them is only partially
 		// completed, there can be crashes due to `CPUMemory` expecting certain properties to exist
