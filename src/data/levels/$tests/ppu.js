@@ -332,7 +332,7 @@ it("includes a `registers` property with 9 video registers", () => {
     "oamDma",
   ].forEach((key, i) => {
     const register = ppu.registers[key];
-    const name = `apu.registers.${key}`;
+    const name = `ppu.registers.${key}`;
 
     expect(register, name).to.be.an("object");
     expect(register.ppu, name + ".ppu").to.equalN(ppu, "ppu");
@@ -380,10 +380,23 @@ it("connects the video registers to CPU memory (<reads>)", () => {
     "oamDma",
   ].forEach((name, i) => {
     const register = ppu.registers[name];
-    register.onRead = sinon.spy();
+
+    const returnValue = 100 + i;
+    register.onRead = sinon.stub().returns(returnValue);
+
     const address = name === "oamDma" ? 0x4014 : 0x2000 + i;
-    cpuMemory.read(address);
+
+    const result = cpuMemory.read(address);
+
     expect(register.onRead).to.have.been.calledOnce;
+    try {
+      expect(result).to.equal(returnValue);
+    } catch (e) {
+      const addressStr = `0x${address.toString(16).padStart(4, "0")})`;
+      throw new Error(
+        `\`cpuMemory.read(${addressStr})\` did call \`${name}.onRead()\`, but it didn't return the value that the register provided.`
+      );
+    }
   });
 })({
   locales: {

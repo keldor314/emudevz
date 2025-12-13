@@ -191,14 +191,29 @@ it("connects the audio registers to CPU memory (<reads>)", () => {
   const checkRegister = (key, address, shouldBeAccessed = true) => {
     const register = _.get(apu.registers, key);
     expect(register, `apu.registers.${key}`).to.be.an("object");
-    register.onRead = sinon.spy();
-
-    cpuMemory.read(address);
 
     if (shouldBeAccessed) {
+      const returnValue = 100 + address;
+      register.onRead = sinon.stub().returns(returnValue);
+
+      const result = cpuMemory.read(address);
+
       expect(register.onRead, `apu.registers.${key}.onRead`).to.have.been
         .calledOnce;
+
+      try {
+        expect(result).to.equal(returnValue);
+      } catch (e) {
+        const addressStr = `0x${address.toString(16).padStart(4, "0")}`;
+        throw new Error(
+          `\`cpuMemory.read(${addressStr})\` did call \`${key}.onRead()\`, but it didn't return the value that the register provided.`
+        );
+      }
     } else {
+      register.onRead = sinon.spy();
+
+      cpuMemory.read(address);
+
       expect(register.onRead, `apu.registers.${key}.onRead`).to.not.have.been
         .called;
     }
