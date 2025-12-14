@@ -246,8 +246,17 @@ export default class TestCommand extends Command {
 			window.EmuDevz.state.isRunningEmulatorTest = true;
 			bus.emit("run-enabled", false);
 
-			for (let audioTest of level.audioTests) {
-				const success = await this._runAudioTest(level, audioTest);
+			for (let i = 0; i < level.audioTests.length; i++) {
+				const id = i + 1;
+				if (
+					this._targetId === "audio" &&
+					this._numericTargetId !== null &&
+					this._numericTargetId !== id
+				)
+					continue;
+
+				const audioTest = level.audioTests[i];
+				const success = await this._runAudioTest(id, level, audioTest);
 				if (!success) return false;
 			}
 
@@ -258,18 +267,16 @@ export default class TestCommand extends Command {
 		}
 	}
 
-	async _runAudioTest(level, audioTest) {
+	async _runAudioTest(id, level, audioTest) {
 		const isAPUUnlocked = store.getState().savedata.unlockedUnits.useAPU;
 		if (!isAPUUnlocked) {
 			await this._terminal.writeln(locales.get("tests_audio_apu_not_unlocked"));
 			return false;
 		}
 
-		await this._terminal.write(locales.get("tests_audio_running") + " ");
-		await this._terminal.writeln(
-			$path.basename(audioTest.internalRom ?? audioTest.rom),
-			theme.ACCENT
-		);
+		await this._terminal.writeln(locales.get("tests_audio_running"));
+		const romName = $path.basename(audioTest.internalRom ?? audioTest.rom);
+		await this._terminal.writehl(`  (~a${id}~) \`${romName}\``);
 		const tv = level.$layout.findInstance("TV");
 		if (!tv) {
 			await this._terminal.writeln(locales.get("tests_audio_no_tv"));
@@ -317,9 +324,10 @@ export default class TestCommand extends Command {
 			});
 
 			if (result.success) {
-				await this._terminal.writeln("✅ ");
+				await this._terminal.writeln(" ✅ ");
 				tv.setContent(null, "rom");
 			} else {
+				await this._terminal.newline();
 				await this._terminal.writeln(
 					locales.get("tests_audio_failed1") +
 						(result.frame + 1) +
@@ -353,8 +361,16 @@ export default class TestCommand extends Command {
 			window.EmuDevz.state.isRunningEmulatorTest = true;
 			bus.emit("run-enabled", false);
 
-			for (let videoTest of level.videoTests) {
-				const success = await this._runVideoTest(level, videoTest);
+			for (let i = 0; i < level.videoTests.length; i++) {
+				const id = i + 1;
+				if (
+					this._targetId === "video" &&
+					this._numericTargetId !== null &&
+					this._numericTargetId !== i + 1
+				)
+					continue;
+				const videoTest = level.videoTests[i];
+				const success = await this._runVideoTest(id, level, videoTest);
 				if (!success) return false;
 			}
 
@@ -365,18 +381,16 @@ export default class TestCommand extends Command {
 		}
 	}
 
-	async _runVideoTest(level, videoTest) {
+	async _runVideoTest(id, level, videoTest) {
 		const isPPUUnlocked = store.getState().savedata.unlockedUnits.usePPU;
 		if (!isPPUUnlocked) {
 			await this._terminal.writeln(locales.get("tests_video_ppu_not_unlocked"));
 			return false;
 		}
 
-		await this._terminal.write(locales.get("tests_video_running") + " ");
-		await this._terminal.writeln(
-			$path.basename(videoTest.internalRom ?? videoTest.rom),
-			theme.ACCENT
-		);
+		await this._terminal.writeln(locales.get("tests_video_running"));
+		const romName = $path.basename(videoTest.internalRom ?? videoTest.rom);
+		await this._terminal.writehl(`  (~v${id}~) \`${romName}\``);
 		const tv = level.$layout.findInstance("TV");
 		if (!tv) {
 			await this._terminal.writeln(locales.get("tests_video_no_tv"));
@@ -424,9 +438,10 @@ export default class TestCommand extends Command {
 			});
 
 			if (result.success) {
-				await this._terminal.writeln("✅ ");
+				await this._terminal.writeln(" ✅ ");
 				tv.setContent(null, "rom");
 			} else {
+				await this._terminal.newline();
 				await this._terminal.writeln(
 					locales.get("tests_video_failed1") +
 						(result.frame + 1) +
@@ -577,11 +592,24 @@ export default class TestCommand extends Command {
 	}
 
 	get _targetId() {
-		const argument = this._args.filter((it) => it.toLowerCase() !== "-v")[0];
+		const argument = this._rawTargetId;
+		if (/^a\d+$/.test(argument)) return "audio";
+		if (/^v\d+$/.test(argument)) return "video";
 		if (argument === "audio" || argument === "video" || argument === "unit")
 			return argument;
+
+		return this._numericTargetId;
+	}
+
+	get _numericTargetId() {
+		const argument = this._rawTargetId.replace(/^a/, "").replace(/^v/, "");
+
 		let int = parseInt(argument);
 		return _.isFinite(int) ? int : null;
+	}
+
+	get _rawTargetId() {
+		return this._args.filter((it) => it.toLowerCase() !== "-v")[0] || "";
 	}
 
 	get _isVerbose() {
