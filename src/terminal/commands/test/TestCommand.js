@@ -29,7 +29,7 @@ export default class TestCommand extends Command {
 		let isVideoTestSuccessful = true;
 		if (
 			!_.isEmpty(level.videoTests) &&
-			(!this._targetId || this._targetId === "video")
+			((!this._targetId && !level.test?.fsMode) || this._targetId === "video")
 		) {
 			try {
 				isVideoTestSuccessful = await this._runVideoTests(level);
@@ -45,7 +45,7 @@ export default class TestCommand extends Command {
 		if (isVideoTestSuccessful) {
 			if (
 				!_.isEmpty(level.audioTests) &&
-				(!this._targetId || this._targetId === "audio")
+				((!this._targetId && !level.test?.fsMode) || this._targetId === "audio")
 			) {
 				try {
 					isAudioTestSuccessful = await this._runAudioTests(level);
