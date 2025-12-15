@@ -145,19 +145,19 @@ it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
-it('`BRK`: argument == "value"', () => {
+it('`BRK`: argument == "no"', () => {
   const instructions = mainModule.default.instructions;
   expect(instructions).to.include.key("BRK");
   expect(instructions.BRK).to.be.an("object");
-  expect(instructions.BRK.argument).to.equalN("value", "argument");
+  expect(instructions.BRK.argument).to.equalN("no", "argument");
 })({
   locales: {
-    es: '`BRK`: argument == "value"',
+    es: '`BRK`: argument == "no"',
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
-it("`BRK`: produces a <BRK> interrupt (bit 4 from flags should be on)", () => {
+it("`BRK`: increments [PC] and triggers a <BRK> interrupt (bit 4 from flags should be on)", () => {
   const cpu = newCPU();
   const instructions = mainModule.default.instructions;
   cpu.cycle = 8;
@@ -174,14 +174,14 @@ it("`BRK`: produces a <BRK> interrupt (bit 4 from flags should be on)", () => {
   instructions.BRK.run(cpu);
 
   expect(cpu.stack.pop()).to.equalBin(0b00110000, "pop()");
-  expect(cpu.stack.pop16()).to.equalHex(0x1234, "pop16()");
+  expect(cpu.stack.pop16()).to.equalHex(0x1235, "pop16()");
   expect(cpu.cycle).to.equalN(15, "cycle");
   expect(cpu.flags.i).to.equalN(true, "i");
   expect(cpu.pc.getValue()).to.equalHex(0x3125, "getValue()");
 })({
   locales: {
     es:
-      "`BRK`: produce una interrupción <BRK> (el bit 4 de las banderas debería estar encendido)",
+      "`BRK`: incrementa [PC] y dispara una interrupción <BRK> (el bit 4 de las banderas debería estar encendido)",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });

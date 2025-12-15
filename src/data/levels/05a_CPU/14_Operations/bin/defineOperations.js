@@ -930,7 +930,7 @@ export default (instructions, addressingModes) => {
       id: 0x00,
       instruction: instructions.BRK,
       cycles: 0,
-      addressingMode: addressingModes.IMMEDIATE
+      addressingMode: addressingModes.IMPLICIT
     },
     {
       id: 0xea,

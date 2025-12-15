@@ -92,5 +92,5 @@ Todas las instrucciones de bifurcación **condicionales** deben incrementar `cpu
 
 | Código | Nombre              | Arg | Descripción                                                                                                                                                                                                |
 | ------ | ------------------- | --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `BRK`  | Forzar Interrupción | 🔢  | Fuerza la generación de una solicitud de interrupción.<br><br>El `[PC]` y las banderas (con el bit `4` encendido) se ponen en la pila, luego el vector de interrupción `BRK` en `$FFFE/F` se carga a `[PC]`. El argumento es ignorado. |
+| `BRK`  | Forzar Interrupción | 🚫  | Incrementa `[PC]` y fuerza la generación de una interrupción de software.<br><br>El `[PC]` y las banderas (con el bit `4` encendido) se ponen en la pila, luego el vector de interrupción `BRK` en `$FFFE/F` se carga a `[PC]`. |
 | `NOP`  | No Operar           | 🚫  | No causa ningún tipo de cambio.                                                                                                                                                                            |
