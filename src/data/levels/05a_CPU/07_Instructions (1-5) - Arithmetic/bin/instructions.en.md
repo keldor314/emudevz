@@ -92,5 +92,5 @@ All **conditional** branching instructions must increment `cpu.extraCycles` if t
 
 | Code  | Name            | Arg | Description                                                                                                                                                                                |
 | ----- | --------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `BRK` | Force Interrupt | 🚫  | Forces the generation of an interrupt request.<br><br>The `[PC]` and flags (with bit `4` set) are pushed onto the stack, then the IRQ interrupt vector at `$FFFE/F` is loaded into `[PC]`. |
+| `BRK` | Force Interrupt | 🔢  | Forces the generation of an interrupt request.<br><br>The `[PC]` and flags (with bit `4` set) are pushed onto the stack, then the `BRK` interrupt vector at `$FFFE/F` is loaded into `[PC]`. The argument is ignored. |
 | `NOP` | No Operation    | 🚫  | Causes no changes at all.                                                                                                                                                                  |

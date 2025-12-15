@@ -5,7 +5,7 @@ main:
   - "y una de ellas es bastante trivial: `NOP`"
   - "`NOP` significa \"No Operation\", ¡y no hace nada!"
   - los desarrolladores de juegos usaban esto como un espacio reservado, o para introducir retrasos de tiempo para sincronizar sus sistemas
-  - así que, la última es `BRK`, que genera un <Pedido de Interrupción>
+  - así que, la última es `BRK`, que genera un <Interrupción de Software>
   responses:
   - ¿qué es una interrupción? [interrupt]
 
@@ -15,10 +15,11 @@ interrupt:
   - cuando tal evento ocurre, la CPU guarda su estado ([PC] y registro de banderas) en la pila
   - y salta a una dirección de memoria conocida (llamada vector) asociada a ese evento
   - luego de manejar el evento, la ejecución suele continuar desde donde se interrumpió
-  - "en la NEEES, hay 3 eventos:"
+  - "en la NEEES, hay 4 eventos:"
   - "🔁  <RESET>: Disparado cuando el sistema se enciende"
   - "📹  NMI: Disparado cuando la PPU termina de dibujar un frame"
-  - "✋  <IRQ>: Disparado por una instrucción `BRK`, la APU, o hardware externo como mappers"
+  - "✋  <IRQ>: Disparado por la APU o hardware externo como mappers"
+  - "🔢  <BRK>: Disparado por una instrucción `BRK` en el código máquina"
   responses:
   - ¿puedes darme un ejemplo? 🤔 [example]
 
@@ -65,6 +66,7 @@ iflag:
   - |-
     la cosa es que... solo los eventos <IRQ> se pueden desactivar
     <RESET> no puede ser ignorada por obvias razones
+    <BRK> es disparada intencionalmente por el código de los juegos, por lo que no tiene sentido ignorarlo
     NMI quiere decir "Non-maskable interrupt" y es muy importante, por lo que no puede ser "masked" (o sea, desactivada)
   responses:
   - ...nmi
@@ -95,6 +97,6 @@ brk:
   messages:
   - |-
     📚  puedes implementar la instrucción `BRK` solo llamando
-      ```javascript cpu.interrupt(interrupts.IRQ, true)```
+      ```javascript cpu.interrupt(interrupts.BRK, true)```
   responses:
   - ...exercise

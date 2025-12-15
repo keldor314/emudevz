@@ -145,19 +145,19 @@ it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
-it('`BRK`: argument == "no"', () => {
+it('`BRK`: argument == "value"', () => {
   const instructions = mainModule.default.instructions;
   expect(instructions).to.include.key("BRK");
   expect(instructions.BRK).to.be.an("object");
-  expect(instructions.BRK.argument).to.equalN("no", "argument");
+  expect(instructions.BRK.argument).to.equalN("value", "argument");
 })({
   locales: {
-    es: '`BRK`: argument == "no"',
+    es: '`BRK`: argument == "value"',
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
 
-it("`BRK`: produces an <IRQ> interrupt (bit 4 from flags should be on)", () => {
+it("`BRK`: produces a <BRK> interrupt (bit 4 from flags should be on)", () => {
   const cpu = newCPU();
   const instructions = mainModule.default.instructions;
   cpu.cycle = 8;
@@ -181,7 +181,32 @@ it("`BRK`: produces an <IRQ> interrupt (bit 4 from flags should be on)", () => {
 })({
   locales: {
     es:
-      "`BRK`: produce una interrupción <IRQ> (el bit 4 de las banderas debería estar encendido)",
+      "`BRK`: produce una interrupción <BRK> (el bit 4 de las banderas debería estar encendido)",
+  },
+  use: ({ id }, book) => id >= book.getId("5a.11"),
+});
+
+it("`BRK`: works even if the ~I~ flag is set", () => {
+  const cpu = newCPU();
+  const instructions = mainModule.default.instructions;
+  cpu.cycle = 8;
+  cpu.pc.setValue(0x1234);
+  cpu.flags.setValue(0);
+  cpu.flags.i = true;
+
+  const memoryRead = cpu.memory.read.bind(cpu.memory);
+  cpu.memory.read = (address) => {
+    if (address === 0xfffe) return 0x25;
+    else if (address === 0xffff) return 0x31;
+    else return memoryRead(address);
+  };
+
+  instructions.BRK.run(cpu);
+
+  expect(cpu.pc.getValue()).to.equalHex(0x3125, "getValue()");
+})({
+  locales: {
+    es: "`BRK`: funciona incluso cuando la bandera ~I~ está encendida",
   },
   use: ({ id }, book) => id >= book.getId("5a.11"),
 });
