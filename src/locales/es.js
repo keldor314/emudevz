@@ -4,6 +4,7 @@ export default {
 	_credits: "Créditos",
 	_faq: "FAQ",
 	_ost: "Soundtrack",
+	_steam: "Steam",
 	_trailer: "Trailer",
 	also: "también",
 	apu: "APU",

@@ -119,7 +119,7 @@ class HomeScreen extends PureComponent {
 						</div>
 					</div>
 
-					<div style={{ marginTop: 16, fontSize: 12 }}>
+					<div style={{ marginTop: 16, fontSize: 12, whiteSpace: "nowrap" }}>
 						🧪 {locales.get("_created_by")}{" "}
 						<a href="https://r-labs.io" target="_blank" rel="noreferrer">
 							[r]labs
@@ -155,6 +155,14 @@ class HomeScreen extends PureComponent {
 							rel="noreferrer"
 						>
 							{locales.get("_community")}
+						</a>
+						{" 💻 "}
+						<a
+							href="https://store.steampowered.com/app/4260720/EmuDevz"
+							target="_blank"
+							rel="noreferrer"
+						>
+							{locales.get("_steam")}
 						</a>
 						{" 📜 "}
 						<button
