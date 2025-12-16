@@ -13,7 +13,10 @@
     "electron:dev": "cross-env OPEN=false VITE_DEV_SERVER_URL=http://localhost:3000 concurrently --success first -k \"vite\" \"wait-on http://localhost:3000 && electron .\"",
     "electron:build:win": "npm run build:electron && electron-builder --win --x64",
     "electron:build:linux": "npm run build:electron && electron-builder --linux AppImage --x64",
-    "electron:build:mac": "npm run build:electron && electron-builder --mac dmg --arm64"
+    "electron:build:mac": "npm run build:electron && electron-builder --mac dmg --arm64",
+    "steam:build:win": "npm run build:electron && electron-builder --win --x64 --dir",
+    "steam:build:linux": "npm run build:electron && electron-builder --linux --x64 --dir",
+    "steam:build:mac": "npm run build:electron && electron-builder --mac --arm64 --dir"
   },
   "//": [
     "[!] Packages with fixed versions are conflictive. Do not update them.",
