@@ -693,14 +693,16 @@ export default class Terminal {
 	}
 
 	_setUpTextLinks(links) {
-		const linkTexts = links.map((link) => link.text);
+		const availableLinks = links.filter(
+			(it) => !it.isHiddenOnDesktop || !window.EmuDevz.isDesktop()
+		);
+
+		const linkTexts = availableLinks.map((link) => link.text);
 		const regexp = new RegExp(`(${linkTexts.join("|")})`, "iu");
 
 		const handler = (__, match) => {
-			const link = links.find((link) => link.text === match);
-			if (link) {
-				window.open(link.href);
-			}
+			const link = availableLinks.find((link) => link.text === match);
+			if (link) window.open(link.href);
 		};
 
 		this._textLinkProvider = this.registerLinkProvider(regexp, handler, {

@@ -54,7 +54,7 @@ class HomeScreen extends PureComponent {
 
 		return (
 			<>
-				{window.electronAPI?.isElectron && (
+				{window.EmuDevz.isDesktop() && (
 					<IconButton
 						Icon={FaTimes}
 						tooltip={locales.get("close")}
@@ -105,7 +105,11 @@ class HomeScreen extends PureComponent {
 						</div>
 						<div className={styles.button}>
 							<Button onClick={this._support}>
-								{locales.get("button_support")}
+								{locales.get(
+									window.EmuDevz.isDesktop()
+										? "button_support_desktop"
+										: "button_support"
+								)}
 							</Button>
 						</div>
 						<div className={styles.button}>
@@ -113,9 +117,6 @@ class HomeScreen extends PureComponent {
 								{locales.get("button_settings")}
 							</Button>
 						</div>
-						{window.DESKTOP_MODE && (
-							<Button onClick={this._quit}>{locales.get("button_quit")}</Button>
-						)}
 					</div>
 
 					<div style={{ marginTop: 16, fontSize: 12 }}>
@@ -361,7 +362,11 @@ class HomeScreen extends PureComponent {
 	};
 
 	_support = () => {
-		window.open("https://buymeacoffee.com/afska");
+		if (window.EmuDevz.isDesktop()) {
+			window.open("https://r-labs.io");
+		} else {
+			window.open("https://buymeacoffee.com/afska");
+		}
 	};
 
 	_quit = () => {

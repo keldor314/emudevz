@@ -14,6 +14,7 @@ export default {
 	button_quit: "🚪 Quit",
 	button_settings: "⚙️ Settings",
 	button_support: "💜 Support my work",
+	button_support_desktop: "👀 More projects",
 	byte: "byte",
 	bytes: "bytes",
 	calculator: "Calculator",
