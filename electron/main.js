@@ -32,7 +32,8 @@ function createWindow() {
 		width: 1280,
 		height: 800,
 		fullscreen: true,
-		resizable: false,
+		resizable: true,
+		center: true,
 		autoHideMenuBar: true,
 		icon: iconPath,
 		backgroundColor: "#000000",
@@ -60,11 +61,6 @@ function createWindow() {
 	} else {
 		win.loadURL("app://-/index.html");
 	}
-
-	// Force fullscreen
-	win.on("leave-full-screen", () => {
-		win.setFullScreen(true);
-	});
 
 	// Keyboard zoom shortcuts on Windows/Linux:
 	// - Ctrl+Shift++ or Ctrl+NumpadAdd: Zoom in
