@@ -58,7 +58,7 @@ whatelse:
   - you can include all the messages from `main` again!
   - ...main
   responses:
-  - <m.$condition> this response only appears when `m.$condition` [end]
+  - <<m.$condition>> this response only appears when `m.$condition` [end]
   - can I listen to events? [events]
 
 events:

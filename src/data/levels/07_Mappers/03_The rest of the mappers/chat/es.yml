@@ -1,6 +1,6 @@
 main:
   messages:
-  - <{owl.png;30x30}>
+  - <<!window.EmuDevz.isDesktop()>> <{owl.png;30x30}>
   - "{10}bueno, dejaré el resto de los mappers como <un ejercicio para el lector>"
   - ¡hay muchísimos! 👀
   - de hecho, el formato iNEEES (en su versión no extendida) tiene soporte para al menos 256 mappers 🤯
