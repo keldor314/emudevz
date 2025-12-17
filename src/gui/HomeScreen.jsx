@@ -156,14 +156,18 @@ class HomeScreen extends PureComponent {
 						>
 							{locales.get("_community")}
 						</a>
-						{" 💻 "}
-						<a
-							href="https://store.steampowered.com/app/4260720/EmuDevz"
-							target="_blank"
-							rel="noreferrer"
-						>
-							{locales.get("_steam")}
-						</a>
+						{!window.EmuDevz.isDesktop() && (
+							<>
+								{" 💻 "}
+								<a
+									href="https://store.steampowered.com/app/4260720/EmuDevz"
+									target="_blank"
+									rel="noreferrer"
+								>
+									{locales.get("_steam")}
+								</a>
+							</>
+						)}
 						{" 📜 "}
 						<button
 							type="button"

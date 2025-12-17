@@ -82,14 +82,22 @@ function createWindow() {
 		const step = 0.1;
 
 		// Zoom in
-		if (input.code === "NumpadAdd") {
+		if (
+			input.code === "NumpadAdd" ||
+			input.code === "Digit3" ||
+			input.code === "Numpad3"
+		) {
 			const current = win.webContents.getZoomFactor();
 			win.webContents.setZoomFactor(clamp(current + step, 0.5, 3));
 			event.preventDefault();
 			return;
 		}
 		// Zoom out
-		if (input.code === "NumpadSubtract") {
+		if (
+			input.code === "NumpadSubtract" ||
+			input.code === "Digit1" ||
+			input.code === "Numpad1"
+		) {
 			const current = win.webContents.getZoomFactor();
 			win.webContents.setZoomFactor(clamp(current - step, 0.5, 3));
 			event.preventDefault();
