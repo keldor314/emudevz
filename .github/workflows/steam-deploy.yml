@@ -1,0 +1,190 @@
+name: Steam Deploy
+
+on:
+  push:
+    branches:
+      - steam
+
+concurrency:
+  group: steam-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+# Requires:
+# - secrets.STEAM_USERNAME: Steam build account username
+# - secrets.STEAM_PASSWORD: Steam build account password
+# - secrets.STEAM_SHARED_SECRET: Shared secret for TOTP
+# - vars.STEAM_APP_ID: Steam numeric App ID
+# - vars.STEAM_DEPOT_ID_WINDOWS: Steam depot ID for Windows
+# - vars.STEAM_DEPOT_ID_LINUX: Steam depot ID for Linux
+# - vars.STEAM_DEPOT_ID_MACOS: Steam depot ID for macOS
+# Optional:
+# - vars.STEAM_RELEASE_BRANCH: Steam release branch ('default', 'beta', etc.)
+
+jobs:
+  build_win:
+    runs-on: ubuntu-latest
+    container: electronuserland/builder:wine
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Copy music from gh-pages
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
+          git fetch origin gh-pages --depth=1 || true
+          rm -rf public/music
+          mkdir -p public
+          if git cat-file -e origin/gh-pages:music 2>/dev/null; then
+            git archive --format=tar origin/gh-pages music | tar -x -C public
+          else
+            echo "No `music` directory found on gh-pages"
+            exit 111
+          fi
+
+      - name: Package levels
+        run: |
+          npm run package
+
+      - name: Preserve $HOME set in the container
+        run: echo HOME=/root >> "$GITHUB_ENV"
+
+      - name: Build (Windows)
+        run: npm run steam:build:win
+
+      - name: Generate TOTP
+        id: steam-totp
+        uses: CyberAndrii/steam-totp@v1
+        with:
+          shared_secret: ${{ secrets.STEAM_SHARED_SECRET }}
+
+      - name: Deploy Windows depot to Steam (TOTP)
+        uses: game-ci/steam-deploy@v3
+        with:
+          username: ${{ secrets.STEAM_USERNAME }}
+          password: ${{ secrets.STEAM_PASSWORD }}
+          totp: ${{ steps.steam-totp.outputs.code }}
+          appId: ${{ vars.STEAM_APP_ID }}
+          buildDescription: ${{ github.sha }} - ${{ github.run_number }}
+          rootPath: release
+          depot1Path: win-unpacked
+          firstDepotIdOverride: ${{ vars.STEAM_DEPOT_ID_WINDOWS }}
+          releaseBranch: ${{ vars.STEAM_RELEASE_BRANCH || 'release' }}
+
+  build_linux:
+    runs-on: ubuntu-latest
+    needs: build_win
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Copy music from gh-pages
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
+          git fetch origin gh-pages --depth=1 || true
+          rm -rf public/music
+          mkdir -p public
+          if git cat-file -e origin/gh-pages:music 2>/dev/null; then
+            git archive --format=tar origin/gh-pages music | tar -x -C public
+          else
+            echo "No `music` directory found on gh-pages"
+            exit 111
+          fi
+
+      - name: Package levels
+        run: |
+          npm run package
+
+      - name: Build (Linux)
+        run: npm run steam:build:linux
+
+      - name: Generate TOTP
+        id: steam-totp
+        uses: CyberAndrii/steam-totp@v1
+        with:
+          shared_secret: ${{ secrets.STEAM_SHARED_SECRET }}
+
+      - name: Deploy Linux depot to Steam (TOTP)
+        uses: game-ci/steam-deploy@v3
+        with:
+          username: ${{ secrets.STEAM_USERNAME }}
+          password: ${{ secrets.STEAM_PASSWORD }}
+          totp: ${{ steps.steam-totp.outputs.code }}
+          appId: ${{ vars.STEAM_APP_ID }}
+          buildDescription: ${{ github.sha }} - ${{ github.run_number }}
+          rootPath: release
+          depot1Path: linux-unpacked
+          firstDepotIdOverride: ${{ vars.STEAM_DEPOT_ID_LINUX }}
+          releaseBranch: ${{ vars.STEAM_RELEASE_BRANCH || 'release' }}
+
+  build_mac:
+    runs-on: ubuntu-latest
+    needs: build_linux
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Copy music from gh-pages
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE" || true
+          git fetch origin gh-pages --depth=1 || true
+          rm -rf public/music
+          mkdir -p public
+          if git cat-file -e origin/gh-pages:music 2>/dev/null; then
+            git archive --format=tar origin/gh-pages music | tar -x -C public
+          else
+            echo "No `music` directory found on gh-pages"
+            exit 111
+          fi
+
+      - name: Package levels
+        run: |
+          npm run package
+
+      - name: Build (macOS)
+        run: npm run steam:build:mac
+
+      - name: Generate TOTP
+        id: steam-totp
+        uses: CyberAndrii/steam-totp@v1
+        with:
+          shared_secret: ${{ secrets.STEAM_SHARED_SECRET }}
+
+      - name: Deploy macOS depot to Steam (TOTP)
+        uses: game-ci/steam-deploy@v3
+        with:
+          username: ${{ secrets.STEAM_USERNAME }}
+          password: ${{ secrets.STEAM_PASSWORD }}
+          totp: ${{ steps.steam-totp.outputs.code }}
+          appId: ${{ vars.STEAM_APP_ID }}
+          buildDescription: ${{ github.sha }} - ${{ github.run_number }}
+          rootPath: release
+          depot1Path: mac-arm64
+          firstDepotIdOverride: ${{ vars.STEAM_DEPOT_ID_MACOS }}
+          releaseBranch: ${{ vars.STEAM_RELEASE_BRANCH || 'release' }}
