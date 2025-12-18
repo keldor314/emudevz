@@ -1,6 +1,6 @@
 # EmuDevz
 
-🕹️ A game about coding emulators! [Check it out!](https://afska.github.io/emudevz)
+🕹️ A game about building emulators! [Check it out!](https://afska.github.io/emudevz)
 
 [![EmuDevz: Reveal Trailer](docs/thumbnail.png)](https://www.youtube.com/watch?v=sBhFulSp4KQ)
 
