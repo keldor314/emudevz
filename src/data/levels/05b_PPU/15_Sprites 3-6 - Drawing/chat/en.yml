@@ -32,7 +32,7 @@ exercise:
           **->** calculates the "inside" Y coordinate:
             ```javascript sprite.diffY(y)```
             (let's call this `insideY`)
-          **->** instantiates a 🕊️  `Tile` passing the ppu, the pattern table id, the tile id, and the `insideY`
+          **->** instantiates a 🕊️  `Tile` passing the ppu, the pattern table id, the tile id, and `insideY % 8`
             (let's call this `tile`)
           **->** creates an array with the 4 palette colors of ```javascript sprite.paletteId```
             (let's call this `paletteColors`)
@@ -44,6 +44,7 @@ exercise:
   responses:
   - (*) what pattern table should I use? [patterntable]
   - (*) what tile id should I use? [tileid]
+  - (*) why ~insideY % 8~? [whymod8]
   - (*) how can I get the palette colors? [palette]
   - (*) what ~X~ and ~Y~ should I use when plotting pixels? [coordinates]
   - (*) what color should I use when plotting pixels? [color]
@@ -59,6 +60,14 @@ tileid:
   messages:
   - the sprite knows!
   - "```javascript sprite.tileIdFor(insideY)```"
+  responses:
+  - ...exercise
+
+whymod8:
+  messages:
+  - to properly support ~8x16~ sprites!
+  - when the ~8x16~ mode is set via 🎛️  PPUCtrl, each sprite uses two tiles stacked vertically
+  - so, for example, ~y=10~ in a ~8x16~ sprite, means ~y=2~ of its second tile
   responses:
   - ...exercise
 

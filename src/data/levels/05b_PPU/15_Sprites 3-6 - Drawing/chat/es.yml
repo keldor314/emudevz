@@ -32,7 +32,7 @@ exercise:
           **->** calcula la coordenada Y "interna":
             ```javascript sprite.diffY(y)```
             (llamemos a esto `insideY`)
-          **->** instancia un 🕊️  `Tile` pasando la ppu, el id de la pattern table, el id del tile y el `insideY`
+          **->** instancia un 🕊️  `Tile` pasando la ppu, el id de la pattern table, el id del tile e `insideY % 8`
             (llamemos a esto `tile`)
           **->** crea un array con los 4 colores de paleta de ```javascript sprite.paletteId```
             (llamemos a esto `paletteColors`)
@@ -44,6 +44,7 @@ exercise:
   responses:
   - (*) ¿qué pattern table debería usar? [patterntable]
   - (*) ¿qué id de tile debería usar? [tileid]
+  - (*) ¿por qué ~insideY % 8~? [whymod8]
   - (*) ¿cómo puedo obtener los colores de la paleta? [palette]
   - (*) ¿qué ~X~ y ~Y~ debería usar al dibujar píxeles? [coordinates]
   - (*) ¿qué color debería usar al dibujar píxeles? [color]
@@ -59,6 +60,14 @@ tileid:
   messages:
   - ¡el sprite sabe!
   - "```javascript sprite.tileIdFor(insideY)```"
+  responses:
+  - ...exercise
+
+whymod8:
+  messages:
+  - ¡para soportar correctamente sprites de ~8x16~!
+  - cuando el modo ~8x16~ se configura mediante 🎛️  PPUCtrl, cada sprite usa dos tiles apilados verticalmente
+  - por ejemplo, ~y=10~ en un sprite ~8x16~ significa ~y=2~ de su segundo tile
   responses:
   - ...exercise
 
