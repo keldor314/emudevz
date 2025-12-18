@@ -34,6 +34,14 @@ const MIN_WIDTH = 512;
 const MIN_HEIGHT = 256;
 const LOGO_MAX_SIZE = 256;
 
+const LINK_RLABS = "https://r-labs.io";
+const LINK_TRAILER = "https://www.youtube.com/watch?v=sBhFulSp4KQ";
+const LINK_OST =
+	"https://music.youtube.com/playlist?list=OLAK5uy_mo3Gh4YUg4OSMkPn5w1fGnLl2wwUXzcF4&si=tjiwZx8SbbiomHWQ";
+const LINK_COMMUNITY = "https://discord.gg/mFGDxSxEJu";
+const LINK_STEAM = "https://store.steampowered.com/app/4260720/EmuDevz";
+const LINK_COFFEE = "https://buymeacoffee.com/afska";
+
 class HomeScreen extends PureComponent {
 	state = { fontsLoaded: false };
 
@@ -121,7 +129,7 @@ class HomeScreen extends PureComponent {
 
 					<div style={{ marginTop: 16, fontSize: 12, whiteSpace: "nowrap" }}>
 						🧪 {locales.get("_created_by")}{" "}
-						<a href="https://r-labs.io" target="_blank" rel="noreferrer">
+						<a href={LINK_RLABS} target="_blank" rel="noreferrer">
 							[r]labs
 						</a>
 						{" ❓ "}
@@ -133,37 +141,21 @@ class HomeScreen extends PureComponent {
 							{locales.get("_faq")}
 						</button>
 						{" 🎥 "}
-						<a
-							href="https://www.youtube.com/watch?v=sBhFulSp4KQ"
-							target="_blank"
-							rel="noreferrer"
-						>
+						<a href={LINK_TRAILER} target="_blank" rel="noreferrer">
 							{locales.get("_trailer")}
 						</a>
 						{" 🎶 "}
-						<a
-							href="https://music.youtube.com/playlist?list=OLAK5uy_mo3Gh4YUg4OSMkPn5w1fGnLl2wwUXzcF4&si=tjiwZx8SbbiomHWQ"
-							target="_blank"
-							rel="noreferrer"
-						>
+						<a href={LINK_OST} target="_blank" rel="noreferrer">
 							{locales.get("_ost")}
 						</a>
 						{" 🌐 "}
-						<a
-							href="https://discord.gg/mFGDxSxEJu"
-							target="_blank"
-							rel="noreferrer"
-						>
+						<a href={LINK_COMMUNITY} target="_blank" rel="noreferrer">
 							{locales.get("_community")}
 						</a>
 						{!window.EmuDevz.isDesktop() && (
 							<>
 								{" 💻 "}
-								<a
-									href="https://store.steampowered.com/app/4260720/EmuDevz"
-									target="_blank"
-									rel="noreferrer"
-								>
+								<a href={LINK_STEAM} target="_blank" rel="noreferrer">
 									{locales.get("_steam")}
 								</a>
 							</>
@@ -375,9 +367,9 @@ class HomeScreen extends PureComponent {
 
 	_support = () => {
 		if (window.EmuDevz.isDesktop()) {
-			window.open("https://r-labs.io");
+			window.open(LINK_RLABS);
 		} else {
-			window.open("https://buymeacoffee.com/afska");
+			window.open(LINK_COFFEE);
 		}
 	};
 
