@@ -568,7 +568,7 @@ class SpriteRenderer {
 				this.ppu,
 				sprite.patternTableId,
 				sprite.tileIdFor(insideY),
-				insideY
+				insideY % 8
 			);
 			const paletteColors = [
 				this.ppu.getColor(sprite.paletteId, 0),

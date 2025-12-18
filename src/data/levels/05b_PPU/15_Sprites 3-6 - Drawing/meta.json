@@ -55,6 +55,11 @@
 			"rom": "/roms/.all/SuperTiltBro.neees",
 			"frames": 120,
 			"ppu": "TestPPU.v6.js"
+		},
+		{
+			"internalRom": "ppu_8x16_sprite.neees",
+			"frames": 30,
+			"ppu": "TestPPU.v6.js"
 		}
 	],
 	"memory": {
