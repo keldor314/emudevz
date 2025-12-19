@@ -40,6 +40,7 @@ const LINK_OST =
 	"https://music.youtube.com/playlist?list=OLAK5uy_mo3Gh4YUg4OSMkPn5w1fGnLl2wwUXzcF4&si=tjiwZx8SbbiomHWQ";
 const LINK_COMMUNITY = "https://discord.gg/mFGDxSxEJu";
 const LINK_STEAM = "https://store.steampowered.com/app/4260720/EmuDevz";
+const LINK_WEB = "https://afska.github.io/emudevz";
 const LINK_COFFEE = "https://buymeacoffee.com/afska";
 
 class HomeScreen extends PureComponent {
@@ -152,14 +153,14 @@ class HomeScreen extends PureComponent {
 						<a href={LINK_COMMUNITY} target="_blank" rel="noreferrer">
 							{locales.get("_community")}
 						</a>
-						{!window.EmuDevz.isDesktop() && (
-							<>
-								{" 💻 "}
-								<a href={LINK_STEAM} target="_blank" rel="noreferrer">
-									{locales.get("_steam")}
-								</a>
-							</>
-						)}
+						{window.EmuDevz.isDesktop() ? " 🏄 " : " 💻 "}
+						<a
+							href={window.EmuDevz.isDesktop() ? LINK_WEB : LINK_STEAM}
+							target="_blank"
+							rel="noreferrer"
+						>
+							{locales.get(window.EmuDevz.isDesktop() ? "_web" : "_steam")}
+						</a>
 						{" 📜 "}
 						<button
 							type="button"

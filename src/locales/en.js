@@ -6,6 +6,7 @@ export default {
 	_ost: "Soundtrack",
 	_steam: "Steam",
 	_trailer: "Trailer",
+	_web: "Web",
 	also: "also",
 	apu: "APU",
 	backup: "Back up",
