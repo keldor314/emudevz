@@ -121,8 +121,7 @@
     "artifactName": "${productName}-${os}-${arch}.${ext}",
     "asar": true,
     "asarUnpack": [
-      "build/**",
-      "!build/editables/**"
+      "build/**"
     ],
     "directories": {
       "output": "release",
