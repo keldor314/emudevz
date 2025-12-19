@@ -162,7 +162,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: win-unpacked
-          path: release
+          path: release/win-unpacked
 
       - name: Generate TOTP
         id: steam-totp
@@ -192,7 +192,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: linux-unpacked
-          path: release
+          path: release/linux-unpacked
 
       - name: Generate TOTP
         id: steam-totp
@@ -222,7 +222,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: mac-arm64
-          path: release
+          path: release/mac-arm64
 
       - name: Generate TOTP
         id: steam-totp

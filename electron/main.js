@@ -1,5 +1,6 @@
 const { app, BrowserWindow, shell, ipcMain, protocol } = require("electron");
 const path = require("node:path");
+const steam = require("./steam");
 
 const isDev = !app.isPackaged;
 
@@ -174,3 +175,6 @@ ipcMain.handle("open-devtools", () => {
 		win.webContents.openDevTools({ mode: "detach" });
 	}
 });
+
+steam.registerIpc(ipcMain);
+steam.enableOverlay();
