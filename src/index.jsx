@@ -33,6 +33,10 @@ window.EmuDevz = {
 	isDesktop() {
 		return window.electronAPI?.isElectron;
 	},
+	unlockAchievement(achievementId) {
+		if (window.EmuDevz.isDesktop() && window.steam != null)
+			window.steam.unlockAchievement(achievementId);
+	},
 	state: {
 		isRunningEmulatorTest: false,
 		isRunningDebugger: false,

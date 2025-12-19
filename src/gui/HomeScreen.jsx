@@ -325,10 +325,6 @@ class HomeScreen extends PureComponent {
 	};
 
 	_play = () => {
-		// TODO: REMOVE!
-		if (window.EmuDevz.isDesktop() && window.steam != null)
-			window.steam.unlockAchievement("intro-learn-javascript");
-
 		// Request persistent storage to reduce risk of IndexedDB eviction
 		if (navigator.storage && navigator.storage.persist) {
 			navigator.storage
