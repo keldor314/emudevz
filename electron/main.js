@@ -177,3 +177,4 @@ ipcMain.handle("open-devtools", () => {
 });
 
 steam.registerIpc(ipcMain);
+steam.enableOverlay();
