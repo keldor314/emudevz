@@ -44,6 +44,8 @@ finish:
   responses: []
 
 savestate-yes:
+  run: |
+    window.EmuDevz.achievements.unlock("emulator-robo-ninja-cheater")
   messages:
   - ¿usaste... <save states>?!
   - eso es trampa 😅
@@ -56,6 +58,8 @@ savestate-yes:
 
 
 savestate-no:
+  run: |
+    window.EmuDevz.achievements.unlock("emulator-robo-ninja-player")
   messages:
   - ¡increíble! ¡¡lo terminaste sin <save states>!!
   - eso es pura habilidad 🚀

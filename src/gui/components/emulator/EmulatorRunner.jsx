@@ -490,6 +490,8 @@ export default class EmulatorRunner extends PureComponent {
 
 	_openROM = () => {
 		filepicker.open(getFilePickerFilter(), (fileContent, fileName) => {
+			window.EmuDevz.achievements.unlock("misc-dumper");
+
 			const name = $path.parse(fileName).name;
 			this.props.onLoadROM(fileContent, name);
 		});

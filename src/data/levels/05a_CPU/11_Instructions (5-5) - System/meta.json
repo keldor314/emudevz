@@ -42,5 +42,6 @@
 			"multifile": true
 		}
 	},
-	"unlocksGame": "lets-play-dizzy-sheep-disaster"
+	"unlocksGame": "lets-play-dizzy-sheep-disaster",
+	"unlocksAchievementOnEnd": "cpu-instructions"
 }

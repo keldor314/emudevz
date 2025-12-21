@@ -96,5 +96,6 @@
 		"content": {
 			"multifile": true
 		}
-	}
+	},
+	"unlocksAchievementOnEnd": "apu-complete"
 }

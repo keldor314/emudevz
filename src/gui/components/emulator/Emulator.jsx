@@ -175,6 +175,8 @@ export default class Emulator extends Component {
 				? this.props.saveState
 				: this._getSaveState();
 
+		window.EmuDevz.achievements.unlockRomBasedAchievementIfNeeded(bytes);
+
 		const saveFileBytes = this._loadSaveFile();
 
 		const savedata = store.getState().savedata;
@@ -258,6 +260,11 @@ export default class Emulator extends Component {
 	};
 
 	_setError = (error) => {
+		window.EmuDevz.achievements.unlockErrorBasedAchievementIfNeeded(
+			error,
+			this.props.settings
+		);
+
 		this.props.onError(error);
 		this._stop();
 	};

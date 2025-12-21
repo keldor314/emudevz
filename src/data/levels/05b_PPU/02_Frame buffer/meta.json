@@ -47,5 +47,6 @@
 		"content": {
 			"multifile": true
 		}
-	}
+	},
+	"unlocksAchievementOnEnd": "ppu-draw-something"
 }

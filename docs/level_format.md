@@ -13,6 +13,8 @@ The `meta.json` file defines how a level is displayed and tested.
 | `videoTests` | `array` | No | List of video-based regression tests (PPU frames) for this level. |
 | `audioTests` | `array` | No | List of audio-based regression tests (APU samples) for this level. |
 | `unlocksGame` | `string` | No | Slug of a "let's play" level unlocked after completing the level. |
+| `unlocksAchievementOnStart` | `string` | No | Steam Achievement ID of the achievement that will be unlocked at the start of the level. |
+| `unlocksAchievementOnEnd` | `string` | No | Steam Achievement ID of the achievement that will be unlocked at the end of the level. |
 | `help` | `object` | No | Extra help lines that will be added in this level (e.g. `{ "addLines": [1, 4] }`). |
 
 ### `name` object

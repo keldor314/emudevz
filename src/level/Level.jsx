@@ -41,6 +41,7 @@ export default class Level {
 					protected: false,
 					temp: "",
 				},
+				globalFailCount: 0,
 			},
 			this.memory
 		);
@@ -152,6 +153,9 @@ export default class Level {
 			name: this.name.en,
 		});
 
+		if (this.unlocksAchievementOnEnd != null)
+			window.EmuDevz.achievements.unlock(this.unlocksAchievementOnEnd);
+
 		if (!store.dispatch.savedata.advance(this.id))
 			store.dispatch.level.goHome();
 	}
@@ -211,6 +215,8 @@ export default class Level {
 	}
 
 	launchDebugger() {
+		window.EmuDevz.achievements.unlock("misc-debugger");
+
 		bus.emit("pin" + this.debuggerPinSuffix, {
 			Component: Debugger,
 			args: {},
@@ -250,6 +256,9 @@ export default class Level {
 
 		const { isUsingSnapshot } = Drive.init(this.id);
 		this.isUsingSnapshot = isUsingSnapshot;
+
+		if (this.unlocksAchievementOnStart != null)
+			window.EmuDevz.achievements.unlock(this.unlocksAchievementOnStart);
 	}
 
 	validate() {

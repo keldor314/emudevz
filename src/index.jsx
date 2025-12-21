@@ -9,6 +9,7 @@ import PlayScreen from "./gui/PlayScreen";
 import music from "./gui/sound/music";
 import store, { history } from "./store";
 import { bus } from "./utils";
+import achievements from "./utils/achievements";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./gui/theme/crt.css";
 import "./gui/theme/theme.css";
@@ -18,6 +19,7 @@ import "xterm/css/xterm.css";
 // Set up EmuDevz global object
 window.EmuDevz = {
 	emulation: null,
+	achievements,
 	log(value) {
 		const neees = this.emulation?.neees;
 		if (neees == null) return;
@@ -32,10 +34,6 @@ window.EmuDevz = {
 	},
 	isDesktop() {
 		return window.electronAPI?.isElectron;
-	},
-	unlockAchievement(achievementId) {
-		if (window.EmuDevz.isDesktop() && window.steam != null)
-			window.steam.unlockAchievement(achievementId);
 	},
 	state: {
 		isRunningEmulatorTest: false,

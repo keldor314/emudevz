@@ -229,5 +229,6 @@
 			"multifile": true
 		}
 	},
-	"unlocksGame": "lets-play-tesla-vs-edison"
+	"unlocksGame": "lets-play-tesla-vs-edison",
+	"unlocksAchievementOnEnd": "emulator-complete"
 }

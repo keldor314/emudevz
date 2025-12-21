@@ -71,5 +71,6 @@
 		"content": {
 			"multifile": true
 		}
-	}
+	},
+	"unlocksAchievementOnEnd": "apu-pulses"
 }

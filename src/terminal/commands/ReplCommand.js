@@ -24,6 +24,8 @@ export default class ReplCommand extends Command {
 	async execute() {
 		const level = Level.current;
 
+		window.EmuDevz.achievements.unlock("misc-repl");
+
 		let $;
 		try {
 			$ = (await testContext.javascript.prepare(level).evaluate())?.default;

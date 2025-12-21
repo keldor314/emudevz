@@ -27,5 +27,6 @@
 			"multifile": true,
 			"protected": true
 		}
-	}
+	},
+	"unlocksAchievementOnEnd": "cartridge-complete"
 }

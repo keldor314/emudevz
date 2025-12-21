@@ -62,5 +62,6 @@
 			"multifile": true
 		}
 	},
-	"unlocksGame": "lets-play-wolf-spirit"
+	"unlocksGame": "lets-play-wolf-spirit",
+	"unlocksAchievementOnEnd": "ppu-sprites"
 }

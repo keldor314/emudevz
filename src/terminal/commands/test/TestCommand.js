@@ -165,6 +165,9 @@ export default class TestCommand extends Command {
 				isVideoTestSuccessful
 			) {
 				if (winOnTestPass && !this._targetId) {
+					if (level.memory.globalFailCount >= 5)
+						window.EmuDevz.achievements.unlock("misc-finally-works");
+
 					await this._terminal.writeln(locales.get("tests_success_continue"));
 					await this._terminal.waitForKey();
 					level.advance("test");
@@ -175,6 +178,11 @@ export default class TestCommand extends Command {
 				}
 			} else {
 				await this._terminal.writeln(locales.get("tests_failure"));
+
+				level.memory.globalFailCount++;
+
+				if (overallResult.failCount > 50)
+					window.EmuDevz.achievements.unlock("misc-boom");
 
 				if (this._isVerbose) {
 					await this._terminal.writehlln(

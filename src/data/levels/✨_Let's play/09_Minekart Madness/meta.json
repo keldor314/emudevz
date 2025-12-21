@@ -31,5 +31,6 @@
 		"content": {
 			"protected": true
 		}
-	}
+	},
+	"unlocksAchievementOnEnd": "game-minekart-madness"
 }

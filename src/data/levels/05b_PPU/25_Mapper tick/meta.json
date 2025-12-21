@@ -103,5 +103,6 @@
 		"content": {
 			"multifile": true
 		}
-	}
+	},
+	"unlocksAchievementOnEnd": "ppu-complete"
 }

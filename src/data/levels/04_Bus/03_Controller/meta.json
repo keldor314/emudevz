@@ -33,5 +33,6 @@
 			"multifile": true
 		}
 	},
-	"unlocksGame": "lets-play-jupiter-scope-2"
+	"unlocksGame": "lets-play-jupiter-scope-2",
+	"unlocksAchievementOnEnd": "controller-complete"
 }

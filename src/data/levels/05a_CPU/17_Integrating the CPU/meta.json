@@ -38,5 +38,6 @@
 			"multifile": true,
 			"protected": true
 		}
-	}
+	},
+	"unlocksAchievementOnEnd": "cpu-complete"
 }

@@ -92,5 +92,6 @@
 		"content": {
 			"multifile": true
 		}
-	}
+	},
+	"unlocksAchievementOnEnd": "apu-dmc"
 }

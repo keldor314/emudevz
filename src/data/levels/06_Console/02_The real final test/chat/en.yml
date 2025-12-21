@@ -44,6 +44,8 @@ finish:
   responses: []
 
 savestate-yes:
+  run: |
+    window.EmuDevz.achievements.unlock("emulator-robo-ninja-cheater")
   messages:
   - you used... <save states>?!
   - you cheater 😅
@@ -56,6 +58,8 @@ savestate-yes:
 
 
 savestate-no:
+  run: |
+    window.EmuDevz.achievements.unlock("emulator-robo-ninja-player")
   messages:
   - unbelievable! you finished it without <save states>!!
   - that's pure skill 🚀

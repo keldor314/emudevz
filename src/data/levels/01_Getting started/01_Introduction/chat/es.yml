@@ -71,6 +71,8 @@ ready:
   - alert("foo bar baz") [woo]
 
 woo:
+  run: |
+    window.EmuDevz.achievements.unlock("misc-learn-javascript");
   messages:
   - ¡fah! 💡
   - sabes mucho

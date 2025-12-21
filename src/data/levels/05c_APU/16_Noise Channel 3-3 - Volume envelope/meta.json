@@ -82,5 +82,6 @@
 			"multifile": true
 		}
 	},
-	"unlocksGame": "lets-play-from-below"
+	"unlocksGame": "lets-play-from-below",
+	"unlocksAchievementOnEnd": "apu-noise"
 }

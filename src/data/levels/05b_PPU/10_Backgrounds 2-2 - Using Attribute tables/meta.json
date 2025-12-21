@@ -68,5 +68,6 @@
 			"multifile": true
 		}
 	},
-	"unlocksGame": "lets-play-super-tilt-bro"
+	"unlocksGame": "lets-play-super-tilt-bro",
+	"unlocksAchievementOnEnd": "ppu-backgrounds"
 }

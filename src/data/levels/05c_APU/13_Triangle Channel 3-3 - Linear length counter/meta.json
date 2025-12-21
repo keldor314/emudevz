@@ -77,5 +77,6 @@
 			"multifile": true
 		}
 	},
-	"unlocksGame": "lets-play-falling"
+	"unlocksGame": "lets-play-falling",
+	"unlocksAchievementOnEnd": "apu-triangle"
 }
