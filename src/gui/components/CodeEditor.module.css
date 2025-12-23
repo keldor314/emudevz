@@ -1,6 +1,6 @@
 .container {
 	height: 100%;
-	background-color: #111111;
+	background-color: var(--background-code, #111111);
 	position: relative;
 }
 

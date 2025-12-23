@@ -4,6 +4,6 @@
 	padding: 16px;
 	user-select: none;
 	overflow: auto;
-	background-color: #18181a;
-	color: #cccccc;
+	background-color: var(--background-ui, #18181a);
+	color: var(--text-markdown, #cccccc);
 }

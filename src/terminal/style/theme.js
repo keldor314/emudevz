@@ -1,6 +1,8 @@
 import Level from "../../level/Level";
+import { TERMINAL_ANSI_INDICES as THEME } from "../../models/themes/theme";
+import store from "../../store";
+import { image as imageUtils } from "../../utils";
 
-const DEFAULT_COLOR_ID = 255;
 const RESET = {
 	BOLD: 22,
 	ITALIC: 23,
@@ -12,8 +14,7 @@ const RESET = {
 
 const colorTag = (id) => `\u001b[38;5;${id}m`;
 const effectTag = (id) => `\u001b[${id}m`;
-const color = (id) => (text) =>
-	colorTag(id) + text + colorTag(DEFAULT_COLOR_ID);
+const color = (id) => (text) => colorTag(id) + text + effectTag(RESET.COLOR);
 const effect = (id, reset = RESET.EVERYTHING) => (text) =>
 	effectTag(id) + text + effectTag(reset);
 
@@ -32,6 +33,16 @@ export default {
 			args = `;width=${width};height=${height}`;
 
 		const level = Level.current;
+
+		const state = store.getState();
+		const invertTransparentImages =
+			state?.savedata?.invertTransparentImages || false;
+		if (invertTransparentImages && fileName) {
+			const invertedFileName = imageUtils.getInvertedPngPath(fileName);
+			if (invertedFileName !== fileName && level?.media?.[invertedFileName])
+				fileName = invertedFileName;
+		}
+
 		const content = (fileName && level?.media?.[fileName]) || null;
 		if (!content) throw new Error(`Invalid image: ${fileName}`);
 		const rawBase64 = content.split(";base64,")[1];
@@ -41,24 +52,25 @@ export default {
 		return `]1337;File=inline=1;size=${size}${args}:${rawBase64}`;
 	},
 
-	ACCENT: color(180),
+	ACCENT: (txt) => color(THEME.accent)(txt),
 	// ACCENT2: color(123),
-	SYSTEM: color(45),
-	ERROR: color(202),
-	WARNING: color(214),
-	COMMENT: color(230),
-	MESSAGE: color(111),
-	INPUT: color(207),
-	DIFF_ADDED: color(41),
-	DIFF_REMOVED: color(196),
+	SYSTEM: (txt) => color(THEME.system)(txt),
+	ERROR: (txt) => color(THEME.error)(txt),
+	WARNING: (txt) => color(THEME.warning)(txt),
+	COMMENT: (txt) => color(THEME.comment)(txt),
+	MESSAGE: (txt) => color(THEME.message)(txt),
+	INPUT: (txt) => color(THEME.input)(txt),
+	DIFF_ADDED: (txt) => color(THEME.diffAdded)(txt),
+	DIFF_REMOVED: (txt) => color(THEME.diffRemoved)(txt),
 	DICTIONARY: (text) => {
 		const shouldUnderline =
 			Level.current.id === "getting-started-architecture" ||
 			Level.current.id === "console-full-control";
 
+		const coloredText = color(THEME.dictionary)(text);
 		return shouldUnderline
-			? effect(4, RESET.UNDERLINE)(color(195)(text))
-			: color(195)(text);
+			? effect(4, RESET.UNDERLINE)(coloredText)
+			: coloredText;
 	},
 
 	BG_NEW: effect(45, RESET.BG_COLOR),

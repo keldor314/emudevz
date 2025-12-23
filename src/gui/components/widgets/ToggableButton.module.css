@@ -23,18 +23,18 @@
 }
 
 .toggableButton :global(.btn) {
-	background: rgba(0, 0, 0, 0.5) !important;
-	color: white !important;
-	border: solid 1px gray !important;
+	background: var(--button-background, #00000080) !important;
+	color: var(--text, #ffffff) !important;
+	border: solid 1px var(--button-border, #808080) !important;
 	border-radius: 16px !important;
 	padding: 12px !important;
 	font-size: small !important;
-	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
-		0 0 8px rgba(200, 200, 200, 0.6) !important;
+	box-shadow: inset 8px 8px 8px var(--neutral-shadow1, #00000013),
+		0 0 8px var(--neutral-shadow2, #c8c8c899) !important;
 }
 
 .toggableButton :global(.btn:hover) {
-	background: #e6e6e699 !important;
+	background: var(--button-hover, #e6e6e699) !important;
 }
 
 .toggableButton :global(.dropdown-toggle-split) {
@@ -50,15 +50,15 @@
 }
 
 .toggableButton :global(.dropdown-menu) {
-	background-color: rgba(0, 0, 0, 0.5) !important;
-	color: white !important;
-	border: solid 1px gray !important;
+	background-color: var(--button-background, #00000080) !important;
+	color: var(--text, #ffffff) !important;
+	border: solid 1px var(--button-border, #808080) !important;
 }
 
 .toggableButton :global(.dropdown-item) {
-	color: white !important;
+	color: var(--text, #ffffff) !important;
 }
 
 .toggableButton :global(.dropdown-item:hover) {
-	background: #e6e6e699 !important;
+	background: var(--button-hover, #e6e6e699) !important;
 }

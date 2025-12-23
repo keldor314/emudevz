@@ -1,4 +1,6 @@
 import React, { PureComponent } from "react";
+import store from "../../store";
+import { bus } from "../../utils";
 import DebuggerGUI from "./debugger/DebuggerGUI";
 import styles from "./Debugger.module.css";
 
@@ -42,6 +44,26 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 			this.debuggerGUI.draw();
 		};
 
+		_applyImGuiTheme = () => {
+			if (!ImGui || !ImGui.GetStyle) return;
+
+			const imguiTheme = store.getState().savedata?.imguiTheme || "classic";
+
+			if (imguiTheme === "dark" && ImGui.StyleColorsDark) {
+				ImGui.StyleColorsDark();
+			} else if (imguiTheme === "light" && ImGui.StyleColorsLight) {
+				ImGui.StyleColorsLight();
+			} else if (ImGui.StyleColorsClassic) {
+				ImGui.StyleColorsClassic();
+			}
+		};
+
+		componentDidMount() {
+			this._subscriber = bus.subscribe({
+				"theme-changed": this._applyImGuiTheme,
+			});
+		}
+
 		_onCanvas = (canvas) => {
 			this._canvas = canvas;
 			if (!canvas) return;
@@ -60,8 +82,7 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 
 				self.debuggerGUI.init();
 
-				// ImGui.StyleColorsDark(); // DISABLED
-				ImGui.StyleColorsClassic();
+				self._applyImGuiTheme();
 
 				self._animationFrame = window.requestAnimationFrame(_loop);
 				function _loop(time) {
@@ -80,6 +101,7 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 		};
 
 		componentWillUnmount() {
+			this._subscriber.release();
 			if (this.debuggerGUI != null) this.debuggerGUI.destroy();
 			window.removeEventListener("resize", this._onResize);
 			if (this._animationFrame)

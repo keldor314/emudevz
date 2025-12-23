@@ -30,7 +30,7 @@ export default class DizzySheepDisaster extends Integration {
 							<span>☠️ {deaths.toString().padStart(2, "0")}</span>
 							<ProgressBar
 								percentage={percentage}
-								barFillColor="#3398dc"
+								barFillColor="var(--primary-vibrant, #3398dc)"
 								style={{ marginTop: 0 }}
 							/>
 						</div>

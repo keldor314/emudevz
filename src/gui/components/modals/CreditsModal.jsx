@@ -7,7 +7,13 @@ const Section = ({ title, children, ...rest }) => {
 	return (
 		<div style={{ marginBottom: 16 }} {...rest}>
 			<h4>{title}</h4>
-			<div style={{ fontSize: "small", color: "#cfcfcf", paddingLeft: 16 }}>
+			<div
+				style={{
+					fontSize: "small",
+					color: "var(--text, #ffffff)",
+					paddingLeft: 16,
+				}}
+			>
 				{children}
 			</div>
 		</div>

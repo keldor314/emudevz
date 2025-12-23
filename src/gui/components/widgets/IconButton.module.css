@@ -1,5 +1,6 @@
 .icon {
 	cursor: pointer;
+	color: var(--icon-button, #ffffff);
 }
 
 .inline {
@@ -8,30 +9,30 @@
 }
 
 .inline:hover {
-	color: #466a8e;
+	color: var(--icon-button-hover, #466a8e);
 }
 
 .inlinenomargin {
 }
 
 .inlinenomargin:hover {
-	color: #466a8e;
+	color: var(--icon-button-hover, #466a8e);
 }
 
 .disabled {
-	background: #929292 !important;
+	background: var(--fab-disabled, #929292) !important;
 	cursor: not-allowed;
 }
 
 .rounded {
-	background: #7792b2;
-	color: #252525;
+	background: var(--fab-background, #7792b2);
+	color: var(--fab-inner, #252525);
 	border-radius: 50%;
 	padding: 16px 20px 18px 20px;
-	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
-		0 0 8px rgba(200, 200, 200, 0.6);
+	box-shadow: inset 8px 8px 8px var(--neutral-shadow1, #00000013),
+		0 0 8px var(--neutral-shadow2, #c8c8c899);
 }
 
 .rounded:hover {
-	background: #9bc0e9;
+	background: var(--fab-hover, #9bc0e9);
 }

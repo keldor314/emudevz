@@ -1,0 +1,96 @@
+.headerRow {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.headerActions {
+	display: flex;
+	gap: 8px;
+}
+
+.section {
+	margin-top: 16px;
+}
+
+.sectionTitleLarge {
+	margin-bottom: 16px;
+}
+
+.sectionTitleSmall {
+	margin-bottom: 4px;
+}
+
+.sectionDescription {
+	font-size: small;
+	opacity: 0.8;
+	margin-bottom: 4px;
+}
+
+.group {
+	margin-top: 12px;
+}
+
+.groupTitle {
+	margin-bottom: 4px;
+}
+
+.colorPickerGrid {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	padding-top: 4px;
+}
+
+.colorPickerItem {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
+}
+
+.colorPickerLabel {
+	font-size: 0.5em;
+	opacity: 0.8;
+	max-width: 80px;
+	text-align: center;
+}
+
+.colorPickerLabelNarrow {
+	font-size: 0.5em;
+	opacity: 0.8;
+	max-width: 60px;
+	text-align: center;
+}
+
+.brightnessTitle {
+	margin-bottom: 8px;
+}
+
+.brightnessDescription {
+	font-size: small;
+	opacity: 0.85;
+}
+
+.brightnessRow {
+	display: flex;
+	align-items: center;
+	margin-top: 8px;
+	gap: 8px;
+}
+
+.brightnessLabel {
+	flex: 1;
+}
+
+.brightnessValue {
+	width: 40px;
+	text-align: right;
+}
+
+.terminalCheckbox {
+	margin-bottom: 8px;
+}

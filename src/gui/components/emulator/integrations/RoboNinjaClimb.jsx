@@ -29,7 +29,7 @@ export default class RoboNinjaClimb extends Integration {
 				<div style={{ paddingTop: 8, paddingBottom: 8, width: "50%" }}>
 					<ProgressBar
 						percentage={percentage}
-						barFillColor="#3398dc"
+						barFillColor="var(--primary-vibrant, #3398dc)"
 						style={{ marginTop: 0 }}
 					/>
 				</div>

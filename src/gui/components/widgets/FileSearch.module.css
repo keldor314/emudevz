@@ -1,5 +1,5 @@
 .container {
-	background: #2e3c49ee;
+	background: var(--primary-translucent, #2e3c49ee);
 	width: 75%;
 	max-height: 75%;
 	position: absolute;
@@ -9,8 +9,8 @@
 	padding: 12px;
 	padding-bottom: 0;
 	border-radius: 8px;
-	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
-		0 0 8px rgba(200, 200, 200, 0.6);
+	box-shadow: inset 8px 8px 8px var(--neutral-shadow1, #00000013),
+		0 0 8px var(--neutral-shadow2, #c8c8c899);
 	z-index: 10;
 	user-select: none;
 
@@ -19,8 +19,8 @@
 }
 
 .input {
-	box-shadow: inset 16px 16px 16px rgb(0 0 0 / 8%),
-		0 0 16px rgba(200, 200, 200, 0.6) !important;
+	box-shadow: inset 16px 16px 16px var(--neutral-shadow1, #00000013),
+		0 0 16px var(--neutral-shadow2, #c8c8c899) !important;
 }
 
 .results {
@@ -35,9 +35,9 @@
 	margin-top: 8px;
 	border-radius: 4px;
 	padding: 4px 8px;
-	background: #505a69;
-	border: 1px solid #577295;
-	color: #b7bbc7;
+	background: var(--primary-alt, #505a69);
+	border: 1px solid var(--primary-medium, #577295);
+	color: var(--text-dim, #b7bbc7);
 	cursor: pointer;
 	flex: 1;
 
@@ -46,7 +46,7 @@
 }
 
 .path {
-	color: rgb(165, 176, 186);
+	color: var(--text-dim-alt, #a5b0ba);
 }
 
 .pathStart {
@@ -54,12 +54,12 @@
 }
 
 .highlight {
-	color: #d7d6ff;
+	color: var(--text-highlight, #d7d6ff);
 	font-weight: bold;
 }
 
 .selected {
-	background: #697992;
+	background: var(--primary-alt-light, #697992);
 }
 
 .tree {

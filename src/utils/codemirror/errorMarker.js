@@ -6,5 +6,5 @@ export default {
 		if (to > from && code.length >= to) this.decorate(ref, from, to);
 	},
 
-	...decorator("cm-error", "mark", "rgba(232, 67, 49, 0.5)"),
+	...decorator("cm-error", "mark", "var(--editor-error, #e8433180)"),
 };

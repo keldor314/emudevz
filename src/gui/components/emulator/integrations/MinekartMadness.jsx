@@ -29,7 +29,7 @@ export default class MinekartMadness extends Integration {
 						<div>
 							<ProgressBar
 								percentage={percentage}
-								barFillColor="#3398dc"
+								barFillColor="var(--primary-vibrant, #3398dc)"
 								style={{ marginTop: 0 }}
 							/>
 						</div>

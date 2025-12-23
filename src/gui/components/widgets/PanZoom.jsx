@@ -1,4 +1,4 @@
-function PanZoom(props) {
+export default function PanZoom(props) {
 	return (
 		<img
 			src={props.src}
@@ -14,5 +14,3 @@ function PanZoom(props) {
 		/>
 	);
 }
-
-export default PanZoom;

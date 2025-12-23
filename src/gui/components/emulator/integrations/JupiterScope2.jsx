@@ -22,7 +22,7 @@ export default class JupiterScope2 extends Integration {
 						</span>
 						<ProgressBar
 							percentage={percentage}
-							barFillColor="#3398dc"
+							barFillColor="var(--primary-vibrant, #3398dc)"
 							style={{ marginTop: 0 }}
 						/>
 					</div>

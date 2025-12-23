@@ -11,8 +11,8 @@ body {
 	position: fixed;
 	overflow: hidden;
 
-	background-color: black;
-	color: white;
+	background-color: var(--background, #000000);
+	color: var(--text, #ffffff);
 	font-family: "Open Sans";
 }
 
@@ -35,9 +35,10 @@ body {
 	margin-bottom: 8px;
 }
 
+a,
 .link-button {
 	background-color: transparent;
-	color: var(--bs-link-color);
+	color: var(--link, #0d6efd);
 	border: none;
 	cursor: pointer;
 	text-decoration: underline;
@@ -46,8 +47,9 @@ body {
 	padding: 0;
 }
 
+a:hover,
 .link-button:hover {
-	color: var(--bs-link-hover-color);
+	color: var(--link-hover, #0a58ca);
 }
 
 /* Effects */
@@ -189,11 +191,11 @@ body {
 /* Dictionary entries */
 
 .dictionary-entry-name {
-	color: #9db5dc;
+	color: var(--link-highlight, #9db5dc);
 }
 
 .dictionary-entry-alt-names {
-	color: #b3b3b3;
+	color: var(--text-neutral-light, #b3b3b3);
 	font-size: x-small;
 }
 
@@ -204,20 +206,31 @@ code {
 }
 
 .highlight-link {
-	color: #9db5dc;
+	color: var(--link-highlight, #9db5dc);
 	cursor: pointer;
 	text-decoration: none;
 	-webkit-user-drag: none;
 }
 
 .highlight-link:hover {
-	color: #ccd1f9;
+	color: var(--link-highlight-hover, #ccd1f9);
 }
 
 /* Bootstrap */
 
 :root {
-	--bs-code-color: #c39f79;
+	--bs-code-color: var(--secondary, #c39f79);
+}
+
+.table-dark {
+	--bs-table-bg: var(--cpu-debugger-table-bg, #18181a);
+	--bs-table-striped-bg: var(--cpu-debugger-table-striped-bg, #202428);
+	--bs-table-hover-bg: var(--cpu-debugger-table-hover-bg, #2b3036);
+	--bs-table-border-color: var(--cpu-debugger-table-border, #4b4d51);
+}
+
+.bg-warning {
+	background-color: var(--warning, #e8a931) !important;
 }
 
 .modal-lg {
@@ -225,8 +238,8 @@ code {
 }
 
 .form-control {
-	background-color: #435c69 !important;
-	color: white !important;
+	background-color: var(--input-background, #435c69) !important;
+	color: var(--input-text, #ffffff) !important;
 }
 
 ::placeholder {
@@ -272,7 +285,7 @@ code {
 }
 
 .cm-gutter-lint {
-	border-right: 1px dashed #577295;
+	border-right: 1px dashed var(--primary-medium, #577295);
 }
 
 .cm-tooltip {
@@ -332,12 +345,12 @@ code {
 }
 
 .markdown-view th {
-	border: 1px solid #577295;
+	border: 1px solid var(--primary-medium, #577295);
 	padding: 4px;
 }
 
 .markdown-view td {
-	border: 1px solid #577295;
+	border: 1px solid var(--primary-medium, #577295);
 	padding: 4px;
 }
 

@@ -128,7 +128,7 @@ class HomeScreen extends PureComponent {
 						</div>
 					</div>
 
-					<div style={{ marginTop: 16, fontSize: 12, whiteSpace: "nowrap" }}>
+					<div className={styles.footer}>
 						🧪 {locales.get("_created_by")}{" "}
 						<a href={LINK_RLABS} target="_blank" rel="noreferrer">
 							[r]labs

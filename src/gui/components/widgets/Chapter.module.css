@@ -11,7 +11,7 @@
 }
 
 .optional:hover {
-	background: #e6e6e699;
+	background: var(--chapter-opt-background, #e6e6e699);
 }
 
 .chapter {
@@ -31,7 +31,7 @@
 	width: 2px;
 	height: 8px;
 	border-radius: 8px;
-	background: white;
+	background: var(--chapter-tree-line, #ffffff);
 }
 
 .horizontalLines {
@@ -48,7 +48,7 @@
 	width: 50%;
 	height: 2px;
 	border-radius: 8px;
-	background: white;
+	background: var(--chapter-tree-line, #ffffff);
 	align-self: end;
 }
 
@@ -56,6 +56,6 @@
 	width: 50%;
 	height: 2px;
 	border-radius: 8px;
-	background: white;
+	background: var(--chapter-tree-line, #ffffff);
 	align-self: start;
 }

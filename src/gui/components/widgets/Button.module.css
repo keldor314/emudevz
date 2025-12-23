@@ -5,21 +5,21 @@
 	align-items: center;
 	margin-left: 8px;
 	margin-right: 8px;
-	background: rgba(0, 0, 0, 0.5);
-	color: white;
+	background: var(--button-background, #00000080);
+	color: var(--text, #ffffff);
 	padding: 12px;
-	border: solid 1px gray;
+	border: solid 1px var(--button-border, #808080);
 	border-radius: 16px;
 	font-size: small;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
-		0 0 8px rgba(200, 200, 200, 0.6);
+	box-shadow: inset 8px 8px 8px var(--neutral-shadow1, #00000013),
+		0 0 8px var(--neutral-shadow2, #c8c8c899);
 	cursor: pointer;
 }
 
 .button:hover {
-	background: #e6e6e699;
+	background: var(--button-hover, #e6e6e699);
 }
 
 .primary {

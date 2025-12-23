@@ -3,7 +3,6 @@ import widgets from "./widgets";
 const ImGui = window.ImGui;
 
 // Knobs
-const PRESSED_COLOR = "#c39f79";
 const UI_BUTTONS = ["Up", "Down", "Left", "Right", "A", "B", "Select", "Start"];
 
 const CONTROLLER_BUTTONS = [
@@ -60,7 +59,8 @@ export default class Debugger_Controllers {
 					const position = CONTROLLER_BUTTONS.indexOf(label);
 					const pressed = pressedButtons[c][position];
 
-					widgets.booleanSquare(pressed, label, PRESSED_COLOR);
+					const pressedColor = widgets.getThemeColor("secondary");
+					widgets.booleanSquare(pressed, label, pressedColor);
 
 					ImGui.SameLine(0, 5);
 				}

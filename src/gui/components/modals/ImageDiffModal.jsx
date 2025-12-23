@@ -21,8 +21,8 @@ const SCREEN_WIDTH = 256;
 const SCREEN_HEIGHT = 240;
 const SCALE = 1;
 
-const COLOR_DIFF = "#d9534f";
-const COLOR_OK = "#3fb950";
+const COLOR_DIFF = "var(--failure, #d9534f)";
+const COLOR_OK = "var(--success, #5cb85c)";
 
 export default class ImageDiffModal extends PureComponent {
 	state = {

@@ -238,7 +238,7 @@ class SettingsModal extends PureComponent {
 									<Button
 										onClick={this._deleteSavefile}
 										disabled={isLoadingSaveDelete}
-										style={{ background: "#ff07005e" }}
+										style={{ background: "var(--danger, #ff07005e)" }}
 									>
 										{isLoadingSaveDelete
 											? "⌛"

@@ -8,7 +8,7 @@ export default class ProgressBar extends PureComponent {
 	render() {
 		const {
 			percentage,
-			barFillColor = "#5cb85c",
+			barFillColor = "var(--success, #5cb85c)",
 			animated = true,
 			className,
 			...rest

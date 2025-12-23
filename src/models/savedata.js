@@ -1,5 +1,11 @@
 import filesystem, { Drive } from "../filesystem";
 import { bus } from "../utils";
+import {
+	getDefaultConsoleTheme,
+	getDefaultGlobalTheme,
+	getDefaultLayoutBrightness,
+	getDefaultTerminalAnsiTheme,
+} from "./themes/theme";
 
 const KEY = "savedata";
 const DEFAULT_KEY_MAP = () => ({
@@ -32,6 +38,7 @@ const DEFAULT_KEY_MAP = () => ({
 		BUTTON_R: "9",
 	},
 });
+
 const INITIAL_STATE = () => ({
 	version: 1,
 	saveId: guid(),
@@ -76,6 +83,15 @@ const INITIAL_STATE = () => ({
 		useConsole: false,
 	},
 	unlockedLetsPlayLevels: [],
+
+	// --- supporter pack ---
+	editorTheme: "oneDark",
+	consoleTheme: getDefaultConsoleTheme(),
+	terminalAnsiTheme: getDefaultTerminalAnsiTheme(),
+	globalTheme: getDefaultGlobalTheme(),
+	imguiTheme: "classic",
+	invertTransparentImages: false,
+	layoutBrightness: getDefaultLayoutBrightness(),
 });
 
 export default {
@@ -175,6 +191,44 @@ export default {
 		},
 		reset() {
 			return INITIAL_STATE();
+		},
+
+		// --- supporter pack ---
+		setEditorTheme(state, editorTheme) {
+			return { ...state, editorTheme };
+		},
+		setConsoleTheme(state, consoleTheme) {
+			return {
+				...state,
+				consoleTheme: { ...state.consoleTheme, ...consoleTheme },
+			};
+		},
+		setTerminalAnsiTheme(state, terminalAnsiTheme) {
+			return {
+				...state,
+				terminalAnsiTheme: { ...state.terminalAnsiTheme, ...terminalAnsiTheme },
+			};
+		},
+		setGlobalTheme(state, globalTheme) {
+			return {
+				...state,
+				globalTheme: { ...state.globalTheme, ...globalTheme },
+			};
+		},
+		setInvertTransparentImages(state, invertTransparentImages) {
+			return { ...state, invertTransparentImages };
+		},
+		setLayoutBrightness(state, layoutBrightness) {
+			return {
+				...state,
+				layoutBrightness: {
+					...state.layoutBrightness,
+					...layoutBrightness,
+				},
+			};
+		},
+		setImguiTheme(state, imguiTheme) {
+			return { ...state, imguiTheme };
 		},
 	},
 	effects: (_dispatch_) => {

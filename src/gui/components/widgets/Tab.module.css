@@ -4,11 +4,11 @@
 	justify-content: center;
 	align-items: center;
 	padding: 6px;
-	background-color: #18181a;
+	background-color: var(--background-ui, #18181a);
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
 	border: 1px solid #ffffff00;
-	color: #b3c6df;
+	color: var(--text-tab, #b3c6df);
 	height: 40px; /* (tied to HorizontalDragList.js) */
 }
 
@@ -18,11 +18,11 @@
 }
 
 .active {
-	background-color: #2b323a;
-	border-top: 1px solid #577295;
-	border-left: 1px solid #577295;
-	border-right: 1px solid #577295;
-	border-bottom: 1px solid #577295;
+	background-color: var(--background-ui-selected, #2b323a);
+	border-top: 1px solid var(--primary-medium, #577295);
+	border-left: 1px solid var(--primary-medium, #577295);
+	border-right: 1px solid var(--primary-medium, #577295);
+	border-bottom: 1px solid var(--primary-medium, #577295);
 }
 
 .title {

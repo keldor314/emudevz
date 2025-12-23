@@ -147,7 +147,7 @@ export default class VideoTester extends PureComponent {
 					this._failed = true;
 					this._firstFailIndex = this._count;
 					this._symbol.innerHTML = "❌";
-					this._progressBar.setBarFillColor("#d9534f");
+					this._progressBar.setBarFillColor("var(--failure, #d9534f)");
 					this._closeButton.style.display = "block";
 				}
 			}

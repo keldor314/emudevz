@@ -1,3 +1,6 @@
+import { getDefaultGlobalTheme } from "../../../models/themes/theme";
+import store from "../../../store";
+
 const ImGui = window.ImGui;
 const ImGui_Impl = window.ImGui_Impl;
 
@@ -83,8 +86,15 @@ export default {
 		draw(label);
 		ImGui.PopItemWidth();
 	},
-	progressBar(value, text) {
-		ImGui.ProgressBar(value, new ImGui.Vec2(-1, 16), text);
+	progressBar(value, text, color = null) {
+		if (color != null) {
+			const vec4Color = this.colorHexToVec4(color);
+			ImGui.PushStyleColor(ImGui.Col.PlotHistogram, vec4Color);
+			ImGui.ProgressBar(value, new ImGui.Vec2(-1, 16), text);
+			ImGui.PopStyleColor();
+		} else {
+			ImGui.ProgressBar(value, new ImGui.Vec2(-1, 16), text);
+		}
 	},
 	wave(samples, n, min, max, height = 40) {
 		const waveSize = new ImGui.Vec2(ImGui.GetContentRegionAvail().x, height);
@@ -119,10 +129,17 @@ export default {
 
 		ImGui.EndDisabled();
 	},
+	getThemeColor(key) {
+		const state = store.getState();
+		const globalTheme = state?.savedata?.globalTheme || {};
+		const defaults = getDefaultGlobalTheme();
+		return globalTheme[key] || defaults[key] || "#000000";
+	},
 	value(fieldName, value) {
 		ImGui.Text(`${fieldName} =`);
 		ImGui.SameLine();
-		this.withTextColor("#c39f79", () => ImGui.Text(`${value}`));
+		const color = this.getThemeColor("secondary");
+		this.withTextColor(color, () => ImGui.Text(`${value}`));
 	},
 	boolean(label, value) {
 		ImGui.BeginDisabled(true);

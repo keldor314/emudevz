@@ -5,12 +5,12 @@
 
 .bar {
 	width: 100%;
-	background-color: #ecf0f1;
+	background-color: var(--bar-background, #ecf0f1);
 	border-width: 1px;
-	border-color: white;
+	border-color: var(--bar-border, #ffffff);
 	border-style: solid;
 	border-radius: 2px;
-	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 3px var(--bar-shadow, #00000033);
 }
 
 .barFill {

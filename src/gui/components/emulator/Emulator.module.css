@@ -15,7 +15,7 @@
 	width: auto;
 	max-width: 95%;
 
-	border: 1px solid #466a8e;
+	border: 1px solid var(--primary, #466a8e);
 	border-radius: 8px;
 }
 

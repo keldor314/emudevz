@@ -4,9 +4,9 @@
 	width: 100%;
 	border-width: 1px 0 0;
 	border-style: solid;
-	border-color: darkgray;
-	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
-		0 0 8px rgba(200, 200, 200, 0.6);
+	border-color: var(--neutral-border, #a9a9a9);
+	box-shadow: inset 8px 8px 8px var(--neutral-shadow1, #00000013),
+		0 0 8px var(--neutral-shadow2, #c8c8c899);
 	font-family: "Courier New", Courier, monospace;
 	user-select: none;
 

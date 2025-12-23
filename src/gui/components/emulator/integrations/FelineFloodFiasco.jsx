@@ -28,7 +28,7 @@ export default class FelineFloodFiasco extends Integration {
 					) : (
 						<ProgressBar
 							percentage={percentage}
-							barFillColor="#3398dc"
+							barFillColor="var(--primary-vibrant, #3398dc)"
 							style={{ marginTop: 0 }}
 						/>
 					)}

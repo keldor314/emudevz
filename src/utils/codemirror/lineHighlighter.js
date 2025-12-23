@@ -11,7 +11,7 @@ export default {
 	...decorator(
 		"cm-highlight",
 		"line",
-		"rgba(98, 112, 128, 0.5) !important",
+		"var(--editor-highlight, #62708080) !important",
 		(r) => r.from,
 		(r) => r.from
 	),

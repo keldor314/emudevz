@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
 import { esLint, javascript } from "@codemirror/lang-javascript";
 import { lintGutter, linter } from "@codemirror/lint";
-import { oneDark } from "@codemirror/theme-one-dark";
 import { EditorView } from "@codemirror/view";
 import CodeMirror from "@uiw/react-codemirror";
 import { Linter } from "eslint-linter-browserify";
@@ -16,9 +15,11 @@ import _ from "lodash";
 import Level from "../../level/Level";
 import codeEval from "../../level/codeEval";
 import locales from "../../locales";
+import store from "../../store";
 import { bus } from "../../utils";
 import {
 	asm6502,
+	editorTheme,
 	errorMarker,
 	esLintConfig,
 	lineHighlighter,
@@ -205,7 +206,7 @@ export default class CodeEditor extends PureComponent {
 					value={getCode()}
 					width="100%"
 					height="100%"
-					theme={oneDark}
+					theme={this._getThemeExtension()}
 					readOnly={!isEditionEnabled}
 					extensions={LANGUAGES[language](filePath, extraLangOptions)}
 					onChange={this._setCode}
@@ -235,6 +236,7 @@ export default class CodeEditor extends PureComponent {
 				this.setState({ actionName: ACTION_RUN });
 			},
 			"content-changed": this._blink,
+			"theme-changed": () => this.forceUpdate(),
 		});
 	}
 
@@ -403,6 +405,11 @@ export default class CodeEditor extends PureComponent {
 		} catch (e) {
 			console.warn("Failed to scroll", e);
 		}
+	}
+
+	_getThemeExtension() {
+		const themeKey = store.getState()?.savedata?.editorTheme || "oneDark";
+		return editorTheme.getById(themeKey);
 	}
 }
 

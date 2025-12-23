@@ -10,9 +10,9 @@
 	min-height: 41.5px; /* (tied to HorizontalDragList.js and Tab.module.css) */
 	border-width: 0 0 1px;
 	border-style: solid;
-	border-color: darkgray;
-	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
-		0 0 8px rgba(200, 200, 200, 0.6);
+	border-color: var(--neutral-border, #a9a9a9);
+	box-shadow: inset 8px 8px 8px var(--neutral-shadow1, #00000013),
+		0 0 8px var(--neutral-shadow2, #c8c8c899);
 	font-family: "Courier New", Courier, monospace;
 	user-select: none;
 	overflow: hidden;
@@ -64,7 +64,7 @@
 	cursor: pointer;
 
 	border-radius: 8px;
-	border: 1px dashed rgb(143, 143, 143);
+	border: 1px dashed var(--neutral-border, #808080);
 	padding: 4px;
 }
 
@@ -83,7 +83,7 @@
 
 .info:hover {
 	opacity: 1;
-	background-color: black;
+	background-color: var(--background, #000000);
 	transition: opacity 0.3s, background-color 0.3s;
 }
 
@@ -101,7 +101,7 @@
 
 .controlButtons:hover {
 	opacity: 1;
-	background-color: black;
+	background-color: var(--background, #000000);
 	transition: opacity 0.3s, background-color 0.3s;
 }
 

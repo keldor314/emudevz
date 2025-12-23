@@ -66,10 +66,13 @@ export default class DebuggerGUI {
 	_drawRunButtons() {
 		const emulation = window.EmuDevz.emulation;
 
+		const frameColor = widgets.getThemeColor("secondary-vibrant");
+		const scanlineColor = widgets.getThemeColor("primary-vibrant");
+
 		const btns = [
 			{ label: emulation?.isDebugging ? "Resume" : "Pause" },
-			{ label: OPTION_RUN_FRAME, color: "#b87632" },
-			{ label: OPTION_RUN_SCANLINE, color: "#2a62b0" },
+			{ label: OPTION_RUN_FRAME, color: frameColor },
+			{ label: OPTION_RUN_SCANLINE, color: scanlineColor },
 		];
 		const style = ImGui.GetStyle();
 		const totalW =

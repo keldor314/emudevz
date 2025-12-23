@@ -1,4 +1,3 @@
-import Book from "../../../../level/Book";
 import Level from "../../../../level/Level";
 
 export default {

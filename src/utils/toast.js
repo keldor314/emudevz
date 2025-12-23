@@ -2,8 +2,8 @@ import toast from "react-hot-toast";
 
 const STYLE = {
 	userSelect: "none",
-	background: "#333",
-	color: "#fff",
+	background: "var(--toast-background, #333333)",
+	color: "var(--toast-text, #ffffff)",
 };
 
 const DEFAULT_DURATION = 3000;

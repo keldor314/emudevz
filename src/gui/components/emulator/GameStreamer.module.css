@@ -21,9 +21,9 @@
 	height: 41.5px; /* (tied to HorizontalDragList.js and Tab.module.css) */
 	border-width: 0 0 1px;
 	border-style: solid;
-	border-color: darkgray;
-	box-shadow: inset 8px 8px 8px rgba(0, 0, 0, 0.075),
-		0 0 8px rgba(200, 200, 200, 0.6);
+	border-color: var(--neutral-border, #a9a9a9);
+	box-shadow: inset 8px 8px 8px var(--neutral-shadow1, #00000013),
+		0 0 8px var(--neutral-shadow2, #c8c8c899);
 	font-family: "Courier New", Courier, monospace;
 	user-select: none;
 
@@ -224,8 +224,8 @@
 .spinner {
 	width: 50px;
 	height: 50px;
-	border: 5px solid #f3f3f3;
-	border-top: 5px solid #6f8fb9;
+	border: 5px solid var(--neutral-superlight, #f3f3f3);
+	border-top: 5px solid var(--primary-light, #6f8fb9);
 	border-radius: 50%;
 	animation: spin 1s linear infinite;
 }

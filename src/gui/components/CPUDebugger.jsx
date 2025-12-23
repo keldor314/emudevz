@@ -25,7 +25,7 @@ const ADDRESS_STACK_END = 0x01ff;
 const CUSTOM_STYLES = {
 	SP: {
 		textDecoration: "overline",
-		background: "rgb(75, 77, 81)",
+		background: "var(--cpu-debugger-sp, #4b4d51)",
 		borderRadius: 12,
 		padding: 4,
 	},
@@ -497,7 +497,10 @@ const Value = ({
 			flashDuration={flashDuration}
 			style={{
 				transform: "rotate(-360deg)",
-				color: value !== 0 ? "#e5c07b" : "#ffffff",
+				color:
+					value !== 0
+						? "var(--cpu-debugger-nonzero-cell, #e5c07b)"
+						: "var(--cpu-debugger-zero-cell, #ffffff)",
 				...style,
 			}}
 			flashStyle={{

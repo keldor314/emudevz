@@ -30,13 +30,13 @@
 .leftColumn {
 	border-width: 0 1px 0 0;
 	border-style: solid;
-	border-color: darkgray;
+	border-color: var(--neutral-border, #a9a9a9);
 }
 
 .rightColumn {
 	border-width: 0 0 0 1px;
 	border-style: solid;
-	border-color: darkgray;
+	border-color: var(--neutral-border, #a9a9a9);
 }
 
 .topRow {
@@ -44,24 +44,24 @@
 	position: sticky;
 	border-width: 0 0 1px 0;
 	border-style: solid;
-	border-color: darkgray;
+	border-color: var(--neutral-border, #a9a9a9);
 }
 
 .bottomRow {
 	border-width: 1px 0 0 0;
 	border-style: solid;
-	border-color: darkgray;
+	border-color: var(--neutral-border, #a9a9a9);
 }
 
 .selected {
-	filter: brightness(125%);
+	filter: brightness(var(--layout-selected-brightness, 1.25));
 
 	animation-duration: 0.25s;
 	animation-name: select;
 }
 
 .unselected {
-	filter: brightness(90%);
+	filter: brightness(var(--layout-unselected-brightness, 0.9));
 
 	animation-duration: 0.25s;
 	animation-name: unselect;
@@ -69,21 +69,21 @@
 
 @keyframes select {
 	from {
-		filter: brightness(90%);
+		filter: brightness(var(--layout-unselected-brightness, 0.9));
 	}
 
 	to {
-		filter: brightness(125%);
+		filter: brightness(var(--layout-selected-brightness, 1.25));
 	}
 }
 
 @keyframes unselect {
 	from {
-		filter: brightness(125%);
+		filter: brightness(var(--layout-selected-brightness, 1.25));
 	}
 
 	to {
-		filter: brightness(90%);
+		filter: brightness(var(--layout-unselected-brightness, 0.9));
 	}
 }
 

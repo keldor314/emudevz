@@ -7,9 +7,6 @@ const ImGui = window.ImGui;
 
 // Knobs
 const WAVE_HEIGHT = 20;
-const COLOR_FAIL = "#d9534f";
-const COLOR_ACTUAL_WAVE = "#e5c07b";
-const COLOR_EXPECTED_WAVE = "#577295";
 const VOLUME = 0.1;
 const NON_MIX_FACTOR = 0.01;
 const SAMPLE_EPSILON = 1e-4;
@@ -40,7 +37,12 @@ export default GenericDebugger(
 				"Audio test",
 				{ margin: 10, flags: ImGui.WindowFlags.NoTitleBar },
 				() => {
-					widgets.withWaveColor(this.didFail ? COLOR_FAIL : null, () => {
+					const failColor = this.didFail
+						? widgets.getThemeColor("failure")
+						: null;
+					const progressColor =
+						failColor || widgets.getThemeColor("primary-alt");
+					widgets.withWaveColor(failColor, () => {
 						if (this.progressValue === 100) {
 							widgets.fullWidthFieldWithLabel("Scroll", (label) => {
 								const disable = !!this._player;
@@ -55,14 +57,20 @@ export default GenericDebugger(
 								if (disable) ImGui.EndDisabled();
 							});
 						} else {
-							widgets.progressBar(this.progressValue / 100, this.progressText);
+							widgets.progressBar(
+								this.progressValue / 100,
+								this.progressText,
+								progressColor
+							);
 						}
 					});
 
 					ImGui.Columns(2, "ComparerCols", false);
-					this._drawWaves(this.emulationA, COLOR_ACTUAL_WAVE, "A");
+					const actualColor = widgets.getThemeColor("secondary");
+					const expectedColor = widgets.getThemeColor("primary-medium");
+					this._drawWaves(this.emulationA, actualColor, "A");
 					ImGui.NextColumn();
-					this._drawWaves(this.emulationB, COLOR_EXPECTED_WAVE, "B");
+					this._drawWaves(this.emulationB, expectedColor, "B");
 
 					ImGui.Columns(1);
 
@@ -203,9 +211,10 @@ export default GenericDebugger(
 			ImGui.SameLine();
 			ImGui.AlignTextToFramePadding();
 			const isDifferent = this._doFinalSamplesDiffer(key);
-			if (isDifferent)
-				widgets.withTextColor(COLOR_FAIL, () => ImGui.Text(label));
-			else ImGui.Text(label);
+			if (isDifferent) {
+				const failColor = widgets.getThemeColor("failure");
+				widgets.withTextColor(failColor, () => ImGui.Text(label));
+			} else ImGui.Text(label);
 
 			let view = samples;
 			let viewN = n;

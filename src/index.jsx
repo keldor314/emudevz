@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import { PersistGate } from "redux-persist/lib/integration/react";
+import GlobalThemeProvider from "./gui/GlobalThemeProvider";
 import HomeScreen from "./gui/HomeScreen";
 import PlayScreen from "./gui/PlayScreen";
 import music from "./gui/sound/music";
@@ -48,6 +49,7 @@ const persistor = getPersistor();
 const app = (
 	<PersistGate persistor={persistor}>
 		<Provider store={store}>
+			<GlobalThemeProvider />
 			<ConnectedRouter history={history}>
 				<Switch>
 					<Route exact path="/" render={() => <HomeScreen />} />

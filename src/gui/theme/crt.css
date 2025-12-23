@@ -64,24 +64,11 @@
 	}
 }
 .crt {
-	background: #121010;
+	background: var(--background-crt, #121010);
 	position: relative;
 	overflow: hidden;
 }
 
-.crt::after {
-	content: " ";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	background: rgba(18, 16, 16, 0.1);
-	opacity: 0;
-	z-index: 2;
-	pointer-events: none;
-}
 .crt::before {
 	content: " ";
 	display: block;
@@ -90,18 +77,37 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+	background: linear-gradient(
+			var(--crt-gradient1, #12101000) 50%,
+			var(--crt-gradient2, #00000040) 50%
+		),
 		linear-gradient(
 			90deg,
-			rgba(255, 0, 0, 0.06),
-			rgba(0, 255, 0, 0.02),
-			rgba(0, 0, 255, 0.06)
+			var(--crt-gradient3, #ff00000f),
+			var(--crt-gradient4, #00ff0005),
+			var(--crt-gradient5, #0000ff0f)
 		);
 	z-index: 2;
 	background-size: 100% 2px, 3px 100%;
 	pointer-events: none;
 }
 
-/* .crt::after {
+/*
+.crt::after {
+	content: " ";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: var(--background-crt-after, #1210101a);
+	opacity: 0;
+	z-index: 2;
+	pointer-events: none;
+}
+
+.crt::after {
 	animation: flicker 0.15s infinite;
-} */
+}
+*/

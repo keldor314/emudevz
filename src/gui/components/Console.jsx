@@ -3,6 +3,11 @@ import { XTerm } from "updated-xterm-for-react";
 import { FitAddon } from "xterm-addon-fit";
 import dictionary from "../../data/dictionary";
 import locales from "../../locales";
+import {
+	TERMINAL_ANSI_INDICES,
+	getDefaultTerminalAnsiTheme,
+} from "../../models/themes/theme";
+import store from "../../store";
 import Terminal from "../../terminal/Terminal";
 import { bus } from "../../utils";
 import styles from "./Console.module.css";
@@ -52,6 +57,11 @@ export default class Console extends PureComponent {
 	}
 
 	render() {
+		const savedata = store.getState().savedata || {};
+		const consoleTheme = savedata.consoleTheme || {};
+		const terminalAnsiTheme = savedata.terminalAnsiTheme || {};
+		const theme = buildTheme(consoleTheme, terminalAnsiTheme);
+
 		return (
 			<div
 				className={styles.xtermContainer}
@@ -63,11 +73,7 @@ export default class Console extends PureComponent {
 						cursorBlink: true,
 						smoothScrollDuration: 50,
 						allowProposedApi: true,
-						theme: {
-							background: "#111111",
-							cursor: "#ffffff",
-							cursorAccent: "#111111",
-						},
+						theme,
 					}}
 					addons={[this.fitAddon, this.imageAddon]}
 					ref={(ref) => {
@@ -88,11 +94,16 @@ export default class Console extends PureComponent {
 
 		const xterm = this.ref.terminal;
 		this.terminal = new Terminal(xterm, dictionary);
+
+		this._subscriber = bus.subscribe({
+			"theme-changed": this._refreshTheme,
+		});
 	}
 
 	componentWillUnmount() {
 		window.removeEventListener("resize", this._onResize);
 		this.terminal.dispose();
+		this._subscriber.release();
 	}
 
 	_onResize = () => {
@@ -115,4 +126,64 @@ export default class Console extends PureComponent {
 		)
 			e.preventDefault();
 	};
+
+	_refreshTheme = () => {
+		const term = this.ref?.terminal;
+		if (!term) return;
+
+		const savedata = store.getState().savedata || {};
+		const consoleTheme = savedata.consoleTheme || {};
+		const terminalAnsiTheme = savedata.terminalAnsiTheme || {};
+
+		const currentTheme = term.options.theme || {};
+		const theme = buildTheme(consoleTheme, terminalAnsiTheme);
+
+		term.options.theme = {
+			...currentTheme,
+			...theme,
+		};
+		term.refresh(0, term.rows - 1);
+	};
+}
+
+function buildTheme(consoleTheme, terminalAnsiTheme) {
+	const {
+		background,
+		cursor,
+		cursorAccent,
+		foreground,
+		selectionBackground,
+		selectionForeground,
+		bgHighlight,
+		bgNew,
+	} = consoleTheme;
+
+	const extendedAnsi = buildExtendedAnsi(terminalAnsiTheme);
+
+	return {
+		foreground: foreground || "#1b1f24",
+		background: background || "#fbfaf7",
+		cursor: cursor || "#1b1f24",
+		cursorAccent: cursorAccent || "#fbfaf7",
+		selectionBackground: selectionBackground || "#ffffff4d",
+		selectionForeground: selectionForeground || "",
+		black: bgHighlight || "#2e3436",
+		magenta: bgNew || "#75507b",
+		extendedAnsi,
+	};
+}
+
+function buildExtendedAnsi(terminalAnsiTheme) {
+	const defaults = getDefaultTerminalAnsiTheme();
+	const extendedAnsi = Array(256 - 16).fill("#000000");
+
+	Object.entries(TERMINAL_ANSI_INDICES).forEach(([key, index]) => {
+		const pos = index - 16;
+		if (pos < 0 || pos >= extendedAnsi.length) return;
+
+		const hex = terminalAnsiTheme?.[key] || defaults[key] || "#000000";
+		extendedAnsi[pos] = hex;
+	});
+
+	return extendedAnsi;
 }

@@ -12,6 +12,7 @@ import {
 	FaMusic,
 	FaPause,
 	FaPlay,
+	FaRocket,
 	FaSave,
 	FaTrash,
 } from "react-icons/fa";
@@ -26,6 +27,7 @@ import CalculatorModal from "../modals/CalculatorModal";
 import FreeModeSettingsModal from "../modals/FreeModeSettingsModal";
 import ImageDiffModal from "../modals/ImageDiffModal";
 import LevelHistoryModal from "../modals/LevelHistoryModal";
+import SupporterPackSettingsModal from "../modals/SupporterPackSettingsModal";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
 import VolumeSlider from "./VolumeSlider";
@@ -37,6 +39,7 @@ class NavBar extends PureComponent {
 	state = {
 		isCalculatorOpen: false,
 		isFreeModeSettingsOpen: false,
+		isSupporterPackSettingsOpen: false,
 		imageDiffSequence: null,
 	};
 
@@ -62,6 +65,10 @@ class NavBar extends PureComponent {
 
 		return (
 			<div className={styles.navbar}>
+				<SupporterPackSettingsModal
+					open={this.state.isSupporterPackSettingsOpen}
+					onClose={this._closeSupporterPackSettings}
+				/>
 				<FreeModeSettingsModal
 					open={this.state.isFreeModeSettingsOpen}
 					onClose={this._closeFreeModeSettings}
@@ -129,6 +136,12 @@ class NavBar extends PureComponent {
 								onClick={() => window.electronAPI.openDevTools()}
 							/>
 						)}
+						<IconButton
+							style={{ marginRight: 8 }}
+							Icon={FaRocket}
+							tooltip={locales.get("supporter_title")}
+							onClick={this._openSupporterPackSettings}
+						/>
 						{isFreeMode && (
 							<IconButton
 								style={{ marginRight: 8 }}
@@ -231,6 +244,14 @@ class NavBar extends PureComponent {
 
 	_closeFreeModeSettings = () => {
 		this.setState({ isFreeModeSettingsOpen: false });
+	};
+
+	_openSupporterPackSettings = () => {
+		this.setState({ isSupporterPackSettingsOpen: true });
+	};
+
+	_closeSupporterPackSettings = () => {
+		this.setState({ isSupporterPackSettingsOpen: false });
 	};
 
 	_backUp = async () => {
