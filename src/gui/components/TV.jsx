@@ -3,7 +3,7 @@ import $path from "path-browserify-esm";
 import filesystem from "../../filesystem";
 import store from "../../store";
 import OpenCommand from "../../terminal/commands/fs/OpenCommand";
-import { image as imageUtils } from "../../utils";
+import { dlc, image as imageUtils } from "../../utils";
 import extensions from "../extensions";
 import TVNoise from "./TVNoise";
 import AudioTester from "./emulator/AudioTester";
@@ -51,9 +51,10 @@ export default class TV extends PureComponent {
 
 		let resolvedFileName = fileName;
 		if (bucket === "media" && fileName) {
-			const state = store.getState();
 			const invertTransparentImages =
-				state?.savedata?.invertTransparentImages || false;
+				(dlc.installed() &&
+					store.getState().savedata?.invertTransparentImages) ||
+				false;
 			if (invertTransparentImages) {
 				const invertedFileName = imageUtils.getInvertedPngPath(fileName);
 				if (

@@ -4,6 +4,7 @@ import {
 	getDefaultGlobalTheme,
 	getDefaultLayoutBrightness,
 } from "../models/themes/theme";
+import { dlc } from "../utils";
 
 class GlobalThemeProvider extends PureComponent {
 	componentDidMount() {
@@ -21,6 +22,7 @@ class GlobalThemeProvider extends PureComponent {
 	}
 
 	_apply(theme, layoutBrightness) {
+		if (!dlc.installed()) return;
 		if (!theme) return;
 
 		const root = document.documentElement;

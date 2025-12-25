@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import classNames from "classnames";
 import dictionary from "../../../data/dictionary";
 import { INVERTABLE_IMAGES } from "../../../models/themes/theme";
-import { image as imageUtils } from "../../../utils";
+import { dlc, image as imageUtils } from "../../../utils";
 import styles from "./MarkdownView.module.css";
 
 const LINK_FILE_REGEXP = /📄 {1}([a-z0-9/._-]+)/iu;
@@ -64,7 +64,8 @@ class MarkdownView extends PureComponent {
 }
 
 const mapStateToProps = ({ savedata }) => ({
-	invertTransparentImages: savedata.invertTransparentImages,
+	invertTransparentImages:
+		(dlc.installed() && savedata.invertTransparentImages) || false,
 });
 
 export default connect(mapStateToProps)(MarkdownView);

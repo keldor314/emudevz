@@ -16,7 +16,7 @@ import Level from "../../level/Level";
 import codeEval from "../../level/codeEval";
 import locales from "../../locales";
 import store from "../../store";
-import { bus } from "../../utils";
+import { bus, dlc } from "../../utils";
 import {
 	asm6502,
 	editorTheme,
@@ -408,7 +408,8 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	_getThemeExtension() {
-		const themeKey = store.getState()?.savedata?.editorTheme || "oneDark";
+		const themeKey =
+			(dlc.installed() && store.getState().savedata?.editorTheme) || "oneDark";
 		return editorTheme.getById(themeKey);
 	}
 }

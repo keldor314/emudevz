@@ -1,7 +1,7 @@
 import Level from "../../level/Level";
 import { TERMINAL_ANSI_INDICES as THEME } from "../../models/themes/theme";
 import store from "../../store";
-import { image as imageUtils } from "../../utils";
+import { dlc, image as imageUtils } from "../../utils";
 
 const RESET = {
 	BOLD: 22,
@@ -36,7 +36,7 @@ export default {
 
 		const state = store.getState();
 		const invertTransparentImages =
-			state?.savedata?.invertTransparentImages || false;
+			(dlc.installed() && state.savedata?.invertTransparentImages) || false;
 		if (invertTransparentImages && fileName) {
 			const invertedFileName = imageUtils.getInvertedPngPath(fileName);
 			if (invertedFileName !== fileName && level?.media?.[invertedFileName])

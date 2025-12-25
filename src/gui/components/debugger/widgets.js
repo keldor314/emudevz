@@ -131,7 +131,7 @@ export default {
 	},
 	getThemeColor(key) {
 		const state = store.getState();
-		const globalTheme = state?.savedata?.globalTheme || {};
+		const globalTheme = (dlc.installed() && state.savedata?.globalTheme) || {};
 		const defaults = getDefaultGlobalTheme();
 		return globalTheme[key] || defaults[key] || "#000000";
 	},

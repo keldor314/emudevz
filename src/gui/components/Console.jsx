@@ -9,7 +9,7 @@ import {
 } from "../../models/themes/theme";
 import store from "../../store";
 import Terminal from "../../terminal/Terminal";
-import { bus } from "../../utils";
+import { bus, dlc } from "../../utils";
 import styles from "./Console.module.css";
 
 const ImageAddon = window.ImageAddon.ImageAddon;
@@ -57,7 +57,7 @@ export default class Console extends PureComponent {
 	}
 
 	render() {
-		const savedata = store.getState().savedata || {};
+		const savedata = (dlc.installed() && store.getState().savedata) || {};
 		const consoleTheme = savedata.consoleTheme || {};
 		const terminalAnsiTheme = savedata.terminalAnsiTheme || {};
 		const theme = buildTheme(consoleTheme, terminalAnsiTheme);
@@ -131,7 +131,7 @@ export default class Console extends PureComponent {
 		const term = this.ref?.terminal;
 		if (!term) return;
 
-		const savedata = store.getState().savedata || {};
+		const savedata = (dlc.installed() && store.getState().savedata) || {};
 		const consoleTheme = savedata.consoleTheme || {};
 		const terminalAnsiTheme = savedata.terminalAnsiTheme || {};
 
@@ -161,10 +161,10 @@ function buildTheme(consoleTheme, terminalAnsiTheme) {
 	const extendedAnsi = buildExtendedAnsi(terminalAnsiTheme);
 
 	return {
-		foreground: foreground || "#1b1f24",
-		background: background || "#fbfaf7",
-		cursor: cursor || "#1b1f24",
-		cursorAccent: cursorAccent || "#fbfaf7",
+		background: background || "#111111",
+		cursor: cursor || "#ffffff",
+		cursorAccent: cursorAccent || "#111111",
+		foreground: foreground || "#ffffff",
 		selectionBackground: selectionBackground || "#ffffff4d",
 		selectionForeground: selectionForeground || "",
 		black: bgHighlight || "#2e3436",

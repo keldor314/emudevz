@@ -21,7 +21,7 @@ import classNames from "classnames";
 import _ from "lodash";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
-import { bus, savefile } from "../../../utils";
+import { bus, dlc, savefile } from "../../../utils";
 import music from "../../sound/music";
 import CalculatorModal from "../modals/CalculatorModal";
 import FreeModeSettingsModal from "../modals/FreeModeSettingsModal";
@@ -136,12 +136,14 @@ class NavBar extends PureComponent {
 								onClick={() => window.electronAPI.openDevTools()}
 							/>
 						)}
-						<IconButton
-							style={{ marginRight: 8 }}
-							Icon={FaRocket}
-							tooltip={locales.get("supporter_title")}
-							onClick={this._openSupporterPackSettings}
-						/>
+						{dlc.installed() && (
+							<IconButton
+								style={{ marginRight: 8 }}
+								Icon={FaRocket}
+								tooltip={locales.get("supporter_title")}
+								onClick={this._openSupporterPackSettings}
+							/>
+						)}
 						{isFreeMode && (
 							<IconButton
 								style={{ marginRight: 8 }}

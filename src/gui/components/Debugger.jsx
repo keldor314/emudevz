@@ -47,7 +47,8 @@ export const GenericDebugger = (DebuggerGUIClass = DebuggerGUI) =>
 		_applyImGuiTheme = () => {
 			if (!ImGui || !ImGui.GetStyle) return;
 
-			const imguiTheme = store.getState().savedata?.imguiTheme || "classic";
+			const imguiTheme =
+				(dlc.installed() && store.getState().savedata?.imguiTheme) || "classic";
 
 			if (imguiTheme === "dark" && ImGui.StyleColorsDark) {
 				ImGui.StyleColorsDark();
