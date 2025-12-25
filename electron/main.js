@@ -1,5 +1,13 @@
-const { app, BrowserWindow, shell, ipcMain, protocol } = require("electron");
+const {
+	app,
+	BrowserWindow,
+	shell,
+	ipcMain,
+	protocol,
+	net,
+} = require("electron");
 const path = require("node:path");
+const { pathToFileURL } = require("node:url");
 const steam = require("./steam");
 
 const isDev = !app.isPackaged;
@@ -24,7 +32,7 @@ protocol.registerSchemesAsPrivileged([
 function createWindow() {
 	const iconBase = isDev
 		? path.join(__dirname, "..", "public", "icons")
-		: path.join(process.resourcesPath, "app.asar.unpacked", "build", "icons");
+		: path.join(app.getAppPath(), "build", "icons");
 	const iconPath = path.join(iconBase, "icon-512x512.png");
 
 	// Main window
@@ -123,35 +131,23 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-	// Map app:// protocol to unpacked build directory
+	// Map app:// protocol to files inside app.asar/build
 	if (!isDev) {
-		const buildDir = path.join(
-			process.resourcesPath,
-			"app.asar.unpacked",
-			"build"
-		);
-		const resolvePath = (requestUrl) => {
-			try {
-				const urlObj = new URL(requestUrl);
-				let pathname = urlObj.pathname || "/";
-				if (pathname === "/") pathname = "/index.html";
+		const buildDir = path.join(app.getAppPath(), "build");
 
-				const fsPath = path.normalize(
-					path.join(buildDir, decodeURIComponent(pathname))
-				);
+		protocol.handle("app", (request) => {
+			const urlObj = new URL(request.url);
+			let pathname = urlObj.pathname || "/";
+			if (pathname === "/") pathname = "/index.html";
 
-				if (!fsPath.startsWith(buildDir))
-					return path.join(buildDir, "index.html");
+			const decoded = decodeURIComponent(pathname);
+			const abs = path.resolve(buildDir, "." + decoded);
+			const rel = path.relative(buildDir, abs);
+			const safe = rel && !rel.startsWith("..") && !path.isAbsolute(rel);
 
-				return fsPath;
-			} catch {
-				return path.join(buildDir, "index.html");
-			}
-		};
+			const filePath = safe ? abs : path.join(buildDir, "index.html");
 
-		protocol.registerFileProtocol("app", (request, callback) => {
-			const filePath = resolvePath(request.url);
-			callback({ path: filePath });
+			return net.fetch(pathToFileURL(filePath).toString());
 		});
 	}
 
@@ -171,9 +167,7 @@ app.on("window-all-closed", () => {
 // DevTools button
 ipcMain.handle("open-devtools", () => {
 	const win = BrowserWindow.getFocusedWindow();
-	if (win) {
-		win.webContents.openDevTools({ mode: "detach" });
-	}
+	if (win) win.webContents.openDevTools({ mode: "detach" });
 });
 
 steam.registerIpc(ipcMain);

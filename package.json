@@ -120,9 +120,6 @@
     "productName": "EmuDevz",
     "artifactName": "${productName}-${os}-${arch}.${ext}",
     "asar": true,
-    "asarUnpack": [
-      "build/**"
-    ],
     "directories": {
       "output": "release",
       "buildResources": "public/icons"
