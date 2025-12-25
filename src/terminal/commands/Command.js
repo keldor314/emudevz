@@ -16,6 +16,10 @@ export default class Command extends Program {
 		return false;
 	}
 
+	static get isBlocked() {
+		return false;
+	}
+
 	static get isHidden() {
 		return false;
 	}

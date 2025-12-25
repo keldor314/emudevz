@@ -45,9 +45,10 @@ export default class Shell extends Program {
 
 		const Command = commands.find((it) => it.name === commandName);
 		const isAvailable =
-			this.availableCommands.includes(commandName) ||
-			_.isEmpty(this.availableCommands) ||
-			commandName === RootCommand.name;
+			!Command?.isBlocked &&
+			(this.availableCommands.includes(commandName) ||
+				_.isEmpty(this.availableCommands) ||
+				commandName === RootCommand.name);
 
 		if (!Command || !isAvailable) {
 			await this._terminal.writeln(

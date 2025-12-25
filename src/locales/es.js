@@ -44,6 +44,7 @@ export default {
 	command_chat_already_open: "Ya abierto.",
 	command_chat_description: "Ejecutar la app de chat.",
 	command_clear_description: "Limpiar la terminal.",
+	command_cowsay_description: "Mostrar una vaca diciendo un mensaje.",
 	command_cp_description: "Copiar algo (uso: `cp ruta_orig ruta_dest`).",
 	command_diff_description:
 		"Mostrar diffs de `/code` vs último nivel completado.",
@@ -134,8 +135,8 @@ export default {
 	integration_teslavsedison_wrongmode: "Modo incorrecto!",
 	integration_wolfspirit_level: "Nivel",
 	integration_wolfspirit_lives: "vidas",
-	it_worked: "¡Funcionó!",
 	is_now_unlocked: 'está desbloqueado. Visita el capítulo "👾".',
+	it_worked: "¡Funcionó!",
 	language: "Idioma",
 	language_en: "Inglés",
 	language_es: "Español",
@@ -237,6 +238,10 @@ export default {
 	supporter_editor_theme_title: "📝 Tema del editor",
 	supporter_export_json: "Exportar JSON",
 	supporter_global_theme_title: "🌍 Tema global",
+	supporter_imgui_theme_classic: "ImGui Classic",
+	supporter_imgui_theme_dark: "ImGui Dark",
+	supporter_imgui_theme_light: "ImGui Light",
+	supporter_imgui_theme_title: "🐞 Tema del depurador",
 	supporter_import_json: "Importar JSON",
 	supporter_invert_images_description:
 		"En temas claros, esta opción invierte las imágenes transparentes con texto blanco a texto negro para que se puedan leer.",
@@ -244,10 +249,6 @@ export default {
 	supporter_layout_brightness_description:
 		"Controla cuán tenues se ven los paneles no seleccionados y cuán brillante se ve el panel seleccionado.",
 	supporter_layout_brightness_title: "✨ Brillo del layout",
-	supporter_imgui_theme_title: "🐞 Tema del depurador",
-	supporter_imgui_theme_classic: "ImGui Classic",
-	supporter_imgui_theme_dark: "ImGui Dark",
-	supporter_imgui_theme_light: "ImGui Light",
 	supporter_terminal_apps_description:
 		"Colores usados por las apps de terminal, como el chat.",
 	supporter_terminal_apps_title: "🧰 Apps de terminal",

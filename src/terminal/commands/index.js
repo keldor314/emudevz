@@ -1,5 +1,6 @@
 import ChatCommand from "./ChatCommand";
 import ClearCommand from "./ClearCommand";
+import CowsayCommand from "./CowsayCommand";
 import HelpCommand from "./HelpCommand";
 import ReplCommand from "./ReplCommand";
 import RootCommand from "./RootCommand";
@@ -14,4 +15,5 @@ export default [
 	TestCommand,
 	...fsCommands,
 	RootCommand,
+	CowsayCommand,
 ];
