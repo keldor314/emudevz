@@ -114,6 +114,8 @@ class Filesystem {
 		let data = this.fs.readFileSync(path).toString();
 		if (options.binary || options.any)
 			try {
+				const imagePrefix = "data:application/octet-stream;base64,";
+				if (data.startsWith(imagePrefix)) data = data.replace(imagePrefix, "");
 				data = blob.base64ToArrayBuffer(data);
 			} catch (e) {
 				if (!options.any) throw e;
