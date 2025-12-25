@@ -1,6 +1,7 @@
 const steamworks = require("steamworks.js");
 
 const APP_ID = 4260720;
+const DLC_APP_ID = 4283970;
 
 let _client = null;
 
@@ -50,6 +51,41 @@ function registerIpc(ipcMain) {
 				" -> ",
 				reason
 			);
+			return { ok: false, error: reason };
+		}
+	});
+
+	ipcMain.handle("steam:is-dlc-installed", () => {
+		const client = _client ?? init();
+		if (!client) {
+			console.warn("⚠️ Cannot check DLC status: client not initialized");
+			return { ok: false, installed: false };
+		}
+
+		try {
+			const installed = client.apps.isDlcInstalled(DLC_APP_ID);
+			return { ok: true, installed };
+		} catch (err) {
+			const reason = err?.message || err?.toString() || "?";
+			console.warn("⚠️ Cannot check DLC status: ", reason);
+			return { ok: false, installed: false, error: reason };
+		}
+	});
+
+	ipcMain.handle("steam:open-dlc-store", () => {
+		const client = _client ?? init();
+		if (!client) {
+			console.warn("⚠️ Cannot open DLC store: client not initialized");
+			return { ok: false };
+		}
+
+		try {
+			// StoreFlag.AddToCartAndShow = 2
+			client.overlay.activateToStore(DLC_APP_ID, 2);
+			return { ok: true };
+		} catch (err) {
+			const reason = err?.message || err?.toString() || "?";
+			console.warn("⚠️ Cannot open DLC store: ", reason);
 			return { ok: false, error: reason };
 		}
 	});

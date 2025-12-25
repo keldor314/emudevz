@@ -1,9 +1,10 @@
 import GraphemeSplitter from "grapheme-splitter";
 import _ from "lodash";
 import filesystem from "../filesystem";
+import _links from "../gui/_links";
 import locales from "../locales";
 import store from "../store";
-import { async, bus, toast } from "../utils";
+import { async, bus, dlc, toast } from "../utils";
 import { addSpaceAfterEmoji, ansiEscapes } from "../utils/cli";
 import { WebLinkProvider } from "../utils/cli/WebLinkProvider";
 import PendingInput, { PendingKey } from "./PendingInput";
@@ -693,15 +694,27 @@ export default class Terminal {
 	}
 
 	_setUpTextLinks(links) {
-		const availableLinks = links.filter(
-			(it) => !it.isHiddenOnDesktop || !window.EmuDevz.isDesktop()
-		);
-
-		const linkTexts = availableLinks.map((link) => link.text);
+		const linkTexts = links.map((link) => link.text);
 		const regexp = new RegExp(`(${linkTexts.join("|")})`, "iu");
 
 		const handler = (__, match) => {
 			const link = availableLinks.find((link) => link.text === match);
+
+			if (link.isSupport) {
+				if (window.EmuDevz.isDesktop()) {
+					if (dlc.installed()) {
+						window.open(_links.rlabs);
+					} else {
+						window.steam.openDlcStore().catch(() => {
+							window.open(_links.rlabs);
+						});
+					}
+				} else {
+					window.open(_links.coffee);
+				}
+				return;
+			}
+
 			if (link) window.open(link.href);
 		};
 

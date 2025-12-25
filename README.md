@@ -26,6 +26,14 @@
   * 🗃️ Emulator logging
 - 🔭 **Free mode** to use the IDE to develop emulators for other systems!
 
+## Where's the save file?
+
+- Portable: `.devz` files (import/export from _Settings_ menu)
+- Web: IndexedDB and LocalStorage
+- Steam/Windows: `%USERPROFILE%/AppData/Roaming/EmuDevz`
+- Steam/Linux: `$XDG_CONFIG_HOME/EmuDevz`
+- Steam/macOS: `~/Library/Application Support/EmuDevz`
+
 ## Development
 
 ### Install and run

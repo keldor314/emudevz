@@ -8,4 +8,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
 contextBridge.exposeInMainWorld("steam", {
 	unlockAchievement: (achievementId) =>
 		ipcRenderer.invoke("steam:unlock-achievement", achievementId),
+	isDlcInstalled: () => ipcRenderer.invoke("steam:is-dlc-installed"),
+	openDlcStore: () => ipcRenderer.invoke("steam:open-dlc-store"),
 });

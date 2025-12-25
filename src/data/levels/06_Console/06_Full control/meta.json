@@ -202,8 +202,7 @@
 						},
 						{
 							"text": "supporting my work",
-							"href": "https://buymeacoffee.com/afska",
-							"isHiddenOnDesktop": true
+							"isSupport": true
 						}
 					]
 				}

@@ -9,8 +9,7 @@ import HomeScreen from "./gui/HomeScreen";
 import PlayScreen from "./gui/PlayScreen";
 import music from "./gui/sound/music";
 import store, { history } from "./store";
-import { bus } from "./utils";
-import achievements from "./utils/achievements";
+import { achievements, bus, dlc } from "./utils";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./gui/theme/crt.css";
 import "./gui/theme/theme.css";
@@ -62,7 +61,11 @@ const app = (
 );
 
 // Render the React app
-ReactDOM.render(app, document.getElementById("root"));
+dlc.check().then(() => {
+	if (window.EmuDevz.isDesktop()) music.start(); // on desktop, start music!
+
+	ReactDOM.render(app, document.getElementById("root"));
+});
 
 // On "keydown" events
 document.onkeydown = (e) => {

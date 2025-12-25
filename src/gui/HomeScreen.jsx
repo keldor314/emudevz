@@ -8,6 +8,8 @@ import { FaTimes } from "react-icons/fa";
 import { connect } from "react-redux";
 import Book from "../level/Book";
 import locales from "../locales";
+import { dlc } from "../utils";
+import _links from "./_links";
 import ChapterSelectModal from "./components/modals/ChapterSelectModal";
 import CreditsModal from "./components/modals/CreditsModal";
 import SettingsModal from "./components/modals/SettingsModal";
@@ -17,7 +19,10 @@ import ToggableButton from "./components/widgets/ToggableButton";
 import styles from "./HomeScreen.module.css";
 
 const ASSET_LOGO = "assets/logo.png";
-const ASSET_BACKGROUND = "assets/tiling-background.png";
+const ASSET_BACKGROUND = () =>
+	dlc.installed()
+		? "assets/tiling-background-sp.png"
+		: "assets/tiling-background.png";
 const UI_SELECTOR = "#ui";
 const BACKGROUND_COLOR = 0x000000;
 const BACKGROUND_TILE_Y = 60;
@@ -33,15 +38,6 @@ const CRT_SPEED = 0.25;
 const MIN_WIDTH = 512;
 const MIN_HEIGHT = 256;
 const LOGO_MAX_SIZE = 256;
-
-const LINK_RLABS = "https://r-labs.io";
-const LINK_TRAILER = "https://www.youtube.com/watch?v=sBhFulSp4KQ";
-const LINK_OST =
-	"https://music.youtube.com/playlist?list=OLAK5uy_mo3Gh4YUg4OSMkPn5w1fGnLl2wwUXzcF4&si=tjiwZx8SbbiomHWQ";
-const LINK_COMMUNITY = "https://discord.gg/mFGDxSxEJu";
-const LINK_STEAM = "https://store.steampowered.com/app/4260720/EmuDevz";
-const LINK_WEB = "https://afska.github.io/emudevz";
-const LINK_COFFEE = "https://buymeacoffee.com/afska";
 
 class HomeScreen extends PureComponent {
 	state = { fontsLoaded: false };
@@ -114,11 +110,7 @@ class HomeScreen extends PureComponent {
 						</div>
 						<div className={styles.button}>
 							<Button onClick={this._support}>
-								{locales.get(
-									window.EmuDevz.isDesktop()
-										? "button_support_desktop"
-										: "button_support"
-								)}
+								{locales.get("button_support")}
 							</Button>
 						</div>
 						<div className={styles.button}>
@@ -130,7 +122,7 @@ class HomeScreen extends PureComponent {
 
 					<div className={styles.footer}>
 						🧪 {locales.get("_created_by")}{" "}
-						<a href={LINK_RLABS} target="_blank" rel="noreferrer">
+						<a href={_links.rlabs} target="_blank" rel="noreferrer">
 							[r]labs
 						</a>
 						{" ❓ "}
@@ -142,20 +134,20 @@ class HomeScreen extends PureComponent {
 							{locales.get("_faq")}
 						</button>
 						{" 🎥 "}
-						<a href={LINK_TRAILER} target="_blank" rel="noreferrer">
+						<a href={_links.trailer} target="_blank" rel="noreferrer">
 							{locales.get("_trailer")}
 						</a>
 						{" 🎶 "}
-						<a href={LINK_OST} target="_blank" rel="noreferrer">
+						<a href={_links.ost} target="_blank" rel="noreferrer">
 							{locales.get("_ost")}
 						</a>
 						{" 🌐 "}
-						<a href={LINK_COMMUNITY} target="_blank" rel="noreferrer">
+						<a href={_links.community} target="_blank" rel="noreferrer">
 							{locales.get("_community")}
 						</a>
 						{window.EmuDevz.isDesktop() ? " 🏄 " : " 💻 "}
 						<a
-							href={window.EmuDevz.isDesktop() ? LINK_WEB : LINK_STEAM}
+							href={window.EmuDevz.isDesktop() ? _links.web : _links.steam}
 							target="_blank"
 							rel="noreferrer"
 						>
@@ -204,7 +196,7 @@ class HomeScreen extends PureComponent {
 		const loader = new PIXI.Loader();
 		loader.reset();
 		loader.add("logo", ASSET_LOGO);
-		loader.add("background", ASSET_BACKGROUND);
+		loader.add("background", ASSET_BACKGROUND());
 
 		const sprites = {};
 		let logoHeight = 0;
@@ -368,9 +360,15 @@ class HomeScreen extends PureComponent {
 
 	_support = () => {
 		if (window.EmuDevz.isDesktop()) {
-			window.open(LINK_RLABS);
+			if (!dlc.installed() && window.steam?.openDlcStore) {
+				window.steam.openDlcStore().catch(() => {
+					window.open(_links.rlabs);
+				});
+			} else {
+				window.open(_links.rlabs);
+			}
 		} else {
-			window.open(LINK_COFFEE);
+			window.open(_links.coffee);
 		}
 	};
 
