@@ -252,7 +252,8 @@ export default {
 	supporter_layout_brightness_description:
 		"Controla cuán tenues se ven los paneles no seleccionados y cuán brillante se ve el panel seleccionado.",
 	supporter_layout_brightness_title: "✨ Brillo del layout",
-	supporter_sfx: "Volumen de SFX",
+	supporter_sfx_title: "🔊 Volumen de SFX",
+	supporter_sfx_description: "Volumen de los efectos de sonido.",
 	supporter_terminal_apps_description:
 		"Colores usados por las apps de terminal, como el chat.",
 	supporter_terminal_apps_title: "🧰 Apps de terminal",

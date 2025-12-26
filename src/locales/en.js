@@ -241,7 +241,8 @@ export default {
 	supporter_layout_brightness_description:
 		"Controls how dim unselected panes and how bright the selected pane appear.",
 	supporter_layout_brightness_title: "✨ Layout brightness",
-	supporter_sfx: "SFX volume",
+	supporter_sfx_title: "🔊 SFX volume",
+	supporter_sfx_description: "Volume of the sound effects.",
 	supporter_terminal_apps_description:
 		"Colors used by terminal apps, like the chat.",
 	supporter_terminal_apps_title: "🧰 Terminal apps",

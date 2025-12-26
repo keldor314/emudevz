@@ -286,8 +286,13 @@ class SupporterPackSettingsModal extends PureComponent {
 								</option>
 							</Form.Select>
 						</div>
-						<Form.Group style={{ marginTop: 16 }}>
-							<Form.Label>{locales.get("supporter_sfx")}</Form.Label>
+						<div className={styles.section}>
+							<h5 className={styles.sectionTitleLarge}>
+								{locales.get("supporter_sfx_title")}
+							</h5>
+							<p className={styles.sectionDescriptionTopLevel}>
+								{locales.get("supporter_sfx_description")}
+							</p>
 							<VolumeSlider
 								disableTooltip
 								volume={this.props.sfxVolume}
@@ -296,7 +301,7 @@ class SupporterPackSettingsModal extends PureComponent {
 									sfx.setVolume(v);
 								}}
 							/>
-						</Form.Group>
+						</div>
 					</Form>
 				</Modal.Body>
 			</Modal>
