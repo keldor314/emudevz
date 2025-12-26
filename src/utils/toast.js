@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+import { sfx } from "../gui/sound";
 
 const STYLE = {
 	userSelect: "none",
@@ -22,6 +23,8 @@ export default {
 		});
 	},
 	error(message, options = { duration: DEFAULT_DURATION }) {
+		sfx.play("failure");
+
 		toast.error(message, {
 			style: STYLE,
 			...options,

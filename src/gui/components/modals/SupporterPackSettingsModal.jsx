@@ -402,6 +402,7 @@ class SupporterPackSettingsModal extends PureComponent {
 
 		const json = JSON.stringify(data, null, 2);
 		filepicker.saveAs(json, FILE_NAME);
+		sfx.play("save");
 	};
 
 	_importTheme = () => {
@@ -467,6 +468,7 @@ class SupporterPackSettingsModal extends PureComponent {
 
 				bus.emit("theme-changed");
 				toast.success(locales.get("it_worked"));
+				sfx.play("load");
 			} catch (e) {
 				console.error("💥 Failed to import theme JSON", e);
 				toast.error(locales.get("the_operation_failed"));

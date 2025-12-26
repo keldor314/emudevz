@@ -508,6 +508,7 @@ export default class Terminal {
 			filesystem.write(resolvedFilePath, initialContent, { parents: true });
 			OpenCommand.open(filePath);
 			toast.success(locales.get("file_created"));
+			sfx.play("save");
 		} catch (e) {
 			toast.error(locales.get("file_created_error"));
 		}

@@ -9,6 +9,7 @@ import locales from "../../locales";
 import testContext from "../../terminal/commands/test/context";
 import { bus } from "../../utils";
 import { NEEESTestLogger } from "../../utils/nes";
+import { sfx } from "../sound";
 import IconButton from "./widgets/IconButton";
 import styles from "./NEEESTester.module.css";
 
@@ -197,6 +198,7 @@ export default class NEEESTester extends PureComponent {
 			} catch (e) {
 				const message = this._getMessage(e);
 				this.setState({ _error: message });
+				sfx.play("failure");
 				return;
 			}
 
@@ -206,10 +208,12 @@ export default class NEEESTester extends PureComponent {
 		}
 
 		if (line === this.state.logLines.length - 1) {
+			sfx.play("success");
 			bus.emit("golden-log-end");
 
 			this.setState({ success: true });
 		} else {
+			sfx.play("failure");
 			if (line === PAGE_BOUNDARY_BUG_LINE) bus.emit("cpu-bug-page-boundary");
 			else bus.emit("cpu-bug-unexpected");
 

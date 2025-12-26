@@ -22,7 +22,7 @@ import _ from "lodash";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import { bus, dlc, savefile } from "../../../utils";
-import { music } from "../../sound";
+import { music, sfx } from "../../sound";
 import CalculatorModal from "../modals/CalculatorModal";
 import FreeModeSettingsModal from "../modals/FreeModeSettingsModal";
 import ImageDiffModal from "../modals/ImageDiffModal";
@@ -233,39 +233,49 @@ class NavBar extends PureComponent {
 	}
 
 	_openCalculator = () => {
+		sfx.play("open");
 		this.setState({ isCalculatorOpen: true });
 	};
 
 	_closeCalculator = () => {
+		sfx.play("close");
 		this.setState({ isCalculatorOpen: false });
 	};
 
 	_openFreeModeSettings = () => {
+		sfx.play("open");
 		this.setState({ isFreeModeSettingsOpen: true });
 	};
 
 	_closeFreeModeSettings = () => {
+		sfx.play("close");
 		this.setState({ isFreeModeSettingsOpen: false });
 	};
 
 	_openSupporterPackSettings = () => {
+		sfx.play("open");
 		this.setState({ isSupporterPackSettingsOpen: true });
 	};
 
 	_closeSupporterPackSettings = () => {
+		sfx.play("close");
 		this.setState({ isSupporterPackSettingsOpen: false });
 	};
 
 	_backUp = async () => {
+		sfx.play("save");
+
 		const filename = new Date().toJSON().split("T")[0] + SAVEFILE_EXTENSION;
 		await savefile.export(filename);
 	};
 
 	_openLevelHistory = () => {
+		sfx.play("open");
 		this.setState({ isLevelHistoryOpen: true });
 	};
 
 	_closeLevelHistory = () => {
+		sfx.play("close");
 		this.setState({ isLevelHistoryOpen: false });
 	};
 

@@ -8,6 +8,7 @@ import locales from "../../locales";
 import testContext from "../../terminal/commands/test/context";
 import { bus, hex } from "../../utils";
 import FlashChange from "../../utils/FlashChange";
+import { sfx } from "../sound";
 import TVNoise from "./TVNoise";
 import styles from "./CPUDebugger.module.css";
 
@@ -408,6 +409,8 @@ export default class CPUDebugger extends PureComponent {
 	};
 
 	_onStep = () => {
+		sfx.play("step");
+
 		bus.emit("run-enabled", false);
 		setTimeout(() => {
 			bus.emit("run-enabled", true);
@@ -418,6 +421,8 @@ export default class CPUDebugger extends PureComponent {
 	};
 
 	_onReset = () => {
+		sfx.play("step");
+
 		this._onCode(this.state._lastCode);
 	};
 
