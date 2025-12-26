@@ -2,6 +2,7 @@ import GraphemeSplitter from "grapheme-splitter";
 import _ from "lodash";
 import filesystem from "../filesystem";
 import _links from "../gui/_links";
+import { sfx } from "../gui/sound";
 import locales from "../locales";
 import store from "../store";
 import { async, bus, dlc, toast } from "../utils";
@@ -128,6 +129,7 @@ export default class Terminal {
 			if (e === DISPOSED) return;
 			throw e;
 		}
+		sfx.play("close");
 	}
 
 	restart() {

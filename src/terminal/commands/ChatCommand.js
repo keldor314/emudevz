@@ -1,5 +1,6 @@
 import escapeStringRegexp from "escape-string-regexp";
 import _ from "lodash";
+import { sfx } from "../../gui/sound";
 import Level from "../../level/Level";
 import ChatScript from "../../level/chat/ChatScript";
 import codeEval from "../../level/codeEval";
@@ -65,6 +66,7 @@ export default class ChatCommand extends Command {
 			if (memory.sectionName !== sectionName) continue;
 
 			if (!_.isEmpty(responses)) {
+				sfx.play("question");
 				await this._showChooseAnAnswer();
 				await this._showResponses(responses);
 				const response = await this._getSelectedResponse(responses);
@@ -181,14 +183,18 @@ export default class ChatCommand extends Command {
 				if (i > 0) await this._terminal.newline();
 				await this._terminal.writeln(rawMessage, theme.COMMENT);
 				if (i < messages.length - 1) await this._terminal.newline();
+				sfx.play("systemmsg");
 			} else {
+				const isExercise = message.startsWith(EXERCISE_PREFIX);
 				if (
 					i > 0 &&
 					!_.last(messages[i - 1].split("\n")).startsWith(EXERCISE_PREFIX) &&
-					message.startsWith(EXERCISE_PREFIX)
+					isExercise
 				) {
 					await this._terminal.newline();
 				}
+
+				sfx.play(isExercise ? "exercise" : "message");
 
 				let delay = 0;
 				const delayStr = message.match(DELAY_REGEXP)?.[1];
@@ -247,6 +253,7 @@ export default class ChatCommand extends Command {
 				}
 			}
 			await this._showResponse(command.selectedResponse, responses);
+			sfx.play("answer");
 		} finally {
 			this._linkProvider.end();
 		}

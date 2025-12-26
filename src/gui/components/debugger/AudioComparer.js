@@ -1,4 +1,4 @@
-import music from "../../sound/music";
+import { music } from "../../sound";
 import { GenericDebugger } from "../Debugger";
 import Speaker from "../emulator/runner/Speaker";
 import widgets from "./widgets";

@@ -224,11 +224,14 @@ export default {
 	supporter_brightness_unselected: "Unselected panel",
 	supporter_console_theme_description: "Colors used by the in-game terminal.",
 	supporter_console_theme_title: "💻 Console theme",
+	supporter_editor_theme_description: "Appearance of the code editor.",
 	supporter_editor_theme_title: "📝 Editor theme",
 	supporter_export_json: "Export JSON",
 	supporter_global_theme_title: "🌍 Global theme",
 	supporter_imgui_theme_classic: "ImGui Classic",
 	supporter_imgui_theme_dark: "ImGui Dark",
+	supporter_imgui_theme_description:
+		"Appearance of the debugger featured in the emulator runner.",
 	supporter_imgui_theme_light: "ImGui Light",
 	supporter_imgui_theme_title: "🐞 Debugger theme",
 	supporter_import_json: "Import JSON",
@@ -238,6 +241,7 @@ export default {
 	supporter_layout_brightness_description:
 		"Controls how dim unselected panes and how bright the selected pane appear.",
 	supporter_layout_brightness_title: "✨ Layout brightness",
+	supporter_sfx: "SFX volume",
 	supporter_terminal_apps_description:
 		"Colors used by terminal apps, like the chat.",
 	supporter_terminal_apps_title: "🧰 Terminal apps",

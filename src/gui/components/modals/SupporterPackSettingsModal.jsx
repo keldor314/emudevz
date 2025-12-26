@@ -14,7 +14,9 @@ import {
 } from "../../../models/themes/theme";
 import { bus, filepicker, toast } from "../../../utils";
 import AlphaColorInput from "../../../utils/AlphaColorInput";
+import { sfx } from "../../sound";
 import IconButton from "../widgets/IconButton";
+import VolumeSlider from "../widgets/VolumeSlider";
 import modalStyles from "./SettingsModal.module.css";
 import styles from "./SupporterPackSettingsModal.module.css";
 
@@ -85,7 +87,11 @@ class SupporterPackSettingsModal extends PureComponent {
 							<h5 className={styles.sectionTitleLarge}>
 								{locales.get("supporter_editor_theme_title")}
 							</h5>
+							<p className={styles.sectionDescriptionTopLevel}>
+								{locales.get("supporter_editor_theme_description")}
+							</p>
 							<Form.Select
+								style={{ marginTop: 8 }}
 								value={editorTheme || "oneDark"}
 								onChange={(e) => {
 									this.props.setEditorTheme(e.target.value);
@@ -101,10 +107,10 @@ class SupporterPackSettingsModal extends PureComponent {
 						</Form.Group>
 
 						<div className={styles.section}>
-							<h5 className={styles.sectionTitleSmall}>
+							<h5 className={styles.sectionTitleLarge}>
 								{locales.get("supporter_console_theme_title")}
 							</h5>
-							<p className={styles.sectionDescription}>
+							<p className={styles.sectionDescriptionTopLevel}>
 								{locales.get("supporter_console_theme_description")}
 							</p>
 							{this._renderColorPickerGrid(
@@ -124,7 +130,7 @@ class SupporterPackSettingsModal extends PureComponent {
 							<h5 className={styles.sectionTitleLarge}>
 								{locales.get("supporter_terminal_apps_title")}
 							</h5>
-							<p className={styles.sectionDescription}>
+							<p className={styles.sectionDescriptionTopLevel}>
 								{locales.get("supporter_terminal_apps_description")}
 							</p>
 							{this._renderColorPickerGrid(
@@ -258,7 +264,11 @@ class SupporterPackSettingsModal extends PureComponent {
 							<h5 className={styles.sectionTitleLarge}>
 								{locales.get("supporter_imgui_theme_title")}
 							</h5>
+							<p className={styles.sectionDescriptionTopLevel}>
+								{locales.get("supporter_imgui_theme_description")}
+							</p>
 							<Form.Select
+								style={{ marginTop: 8 }}
 								value={this.props.imguiTheme || "classic"}
 								onChange={(e) => {
 									this.props.setImguiTheme(e.target.value);
@@ -276,6 +286,17 @@ class SupporterPackSettingsModal extends PureComponent {
 								</option>
 							</Form.Select>
 						</div>
+						<Form.Group style={{ marginTop: 16 }}>
+							<Form.Label>{locales.get("supporter_sfx")}</Form.Label>
+							<VolumeSlider
+								disableTooltip
+								volume={this.props.sfxVolume}
+								setVolume={(v) => {
+									this.props.setSfxVolume(v);
+									sfx.setVolume(v);
+								}}
+							/>
+						</Form.Group>
 					</Form>
 				</Modal.Body>
 			</Modal>
@@ -473,6 +494,7 @@ const mapStateToProps = ({ savedata }) => ({
 	invertTransparentImages: savedata.invertTransparentImages,
 	layoutBrightness: savedata.layoutBrightness,
 	imguiTheme: savedata.imguiTheme,
+	sfxVolume: savedata.sfxVolume,
 });
 const mapDispatchToProps = ({ savedata }) => ({
 	setEditorTheme: savedata.setEditorTheme,
@@ -482,6 +504,7 @@ const mapDispatchToProps = ({ savedata }) => ({
 	setInvertTransparentImages: savedata.setInvertTransparentImages,
 	setLayoutBrightness: savedata.setLayoutBrightness,
 	setImguiTheme: savedata.setImguiTheme,
+	setSfxVolume: savedata.setSfxVolume,
 });
 
 export default connect(

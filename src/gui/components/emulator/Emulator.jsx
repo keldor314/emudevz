@@ -7,7 +7,7 @@ import store from "../../../store";
 import { toast } from "../../../utils";
 import { bus } from "../../../utils";
 import { getActiveScreenSize } from "../../screen";
-import music from "../../sound/music";
+import { music } from "../../sound";
 import TVNoise from "../TVNoise";
 import Screen from "./Screen";
 import Emulation from "./runner/Emulation";

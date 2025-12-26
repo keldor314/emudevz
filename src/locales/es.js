@@ -235,11 +235,14 @@ export default {
 	supporter_console_theme_description:
 		"Colores usados por la terminal del juego.",
 	supporter_console_theme_title: "💻 Tema de la consola",
+	supporter_editor_theme_description: "Apariencia del editor de código.",
 	supporter_editor_theme_title: "📝 Tema del editor",
 	supporter_export_json: "Exportar JSON",
 	supporter_global_theme_title: "🌍 Tema global",
 	supporter_imgui_theme_classic: "ImGui Classic",
 	supporter_imgui_theme_dark: "ImGui Dark",
+	supporter_imgui_theme_description:
+		"Apariencia del depurador usado en la pantalla del emulador.",
 	supporter_imgui_theme_light: "ImGui Light",
 	supporter_imgui_theme_title: "🐞 Tema del depurador",
 	supporter_import_json: "Importar JSON",
@@ -249,6 +252,7 @@ export default {
 	supporter_layout_brightness_description:
 		"Controla cuán tenues se ven los paneles no seleccionados y cuán brillante se ve el panel seleccionado.",
 	supporter_layout_brightness_title: "✨ Brillo del layout",
+	supporter_sfx: "Volumen de SFX",
 	supporter_terminal_apps_description:
 		"Colores usados por las apps de terminal, como el chat.",
 	supporter_terminal_apps_title: "🧰 Apps de terminal",

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import locales from "../../../locales";
-import music from "../../sound/music";
+import { music } from "../../sound";
 import ValueSlider from "./ValueSlider";
 
 class VolumeSlider extends PureComponent {

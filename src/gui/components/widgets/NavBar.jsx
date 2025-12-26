@@ -22,7 +22,7 @@ import _ from "lodash";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import { bus, dlc, savefile } from "../../../utils";
-import music from "../../sound/music";
+import { music } from "../../sound";
 import CalculatorModal from "../modals/CalculatorModal";
 import FreeModeSettingsModal from "../modals/FreeModeSettingsModal";
 import ImageDiffModal from "../modals/ImageDiffModal";

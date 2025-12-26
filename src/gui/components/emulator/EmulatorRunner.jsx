@@ -20,7 +20,7 @@ import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
 import { bus, filepicker, toast } from "../../../utils";
 import { getFilePickerFilter } from "../../rom";
-import music from "../../sound/music";
+import { music } from "../../sound";
 import IconButton from "../widgets/IconButton";
 import InputTypeToggle from "../widgets/InputTypeToggle";
 import VolumeSlider from "../widgets/VolumeSlider";

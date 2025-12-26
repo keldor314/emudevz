@@ -7,7 +7,7 @@ import { PersistGate } from "redux-persist/lib/integration/react";
 import GlobalThemeProvider from "./gui/GlobalThemeProvider";
 import HomeScreen from "./gui/HomeScreen";
 import PlayScreen from "./gui/PlayScreen";
-import music from "./gui/sound/music";
+import { music, sfx } from "./gui/sound";
 import store, { history } from "./store";
 import { achievements, bus, dlc } from "./utils";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -62,7 +62,13 @@ const app = (
 
 // Render the React app
 dlc.check().then(() => {
-	if (window.EmuDevz.isDesktop()) music.start(); // on desktop, start music!
+	if (window.EmuDevz.isDesktop()) {
+		// on desktop, start music and set sfx volume
+		music.start();
+
+		const sfxVolume = store.getState().savedata?.sfxVolume;
+		if (sfxVolume != null) sfx.setVolume(sfxVolume);
+	}
 
 	ReactDOM.render(app, document.getElementById("root"));
 });
