@@ -701,7 +701,7 @@ export default class Terminal {
 		const regexp = new RegExp(`(${linkTexts.join("|")})`, "iu");
 
 		const handler = (__, match) => {
-			const link = availableLinks.find((link) => link.text === match);
+			const link = links.find((link) => link.text === match);
 
 			if (link.isSupport) {
 				if (window.EmuDevz.isDesktop()) {
