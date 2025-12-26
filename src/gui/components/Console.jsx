@@ -10,6 +10,7 @@ import {
 import store from "../../store";
 import Terminal from "../../terminal/Terminal";
 import { bus, dlc } from "../../utils";
+import { ansi256ToHex } from "../../utils/ansi256";
 import styles from "./Console.module.css";
 
 const ImageAddon = window.ImageAddon.ImageAddon;
@@ -175,7 +176,9 @@ function buildTheme(consoleTheme, terminalAnsiTheme) {
 
 function buildExtendedAnsi(terminalAnsiTheme) {
 	const defaults = getDefaultTerminalAnsiTheme();
-	const extendedAnsi = Array(256 - 16).fill("#000000");
+	const extendedAnsi = Array.from({ length: 256 - 16 }, (_, i) =>
+		ansi256ToHex(i + 16)
+	);
 
 	Object.entries(TERMINAL_ANSI_INDICES).forEach(([key, index]) => {
 		const pos = index - 16;
