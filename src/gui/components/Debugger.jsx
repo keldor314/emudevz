@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import store from "../../store";
-import { bus } from "../../utils";
+import { bus, dlc } from "../../utils";
 import DebuggerGUI from "./debugger/DebuggerGUI";
 import styles from "./Debugger.module.css";
 

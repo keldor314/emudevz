@@ -1,5 +1,6 @@
 import { getDefaultGlobalTheme } from "../../../models/themes/theme";
 import store from "../../../store";
+import { dlc } from "../../../utils";
 
 const ImGui = window.ImGui;
 const ImGui_Impl = window.ImGui_Impl;

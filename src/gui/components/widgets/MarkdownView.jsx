@@ -24,7 +24,13 @@ const marked = new Marked(
 
 class MarkdownView extends PureComponent {
 	render() {
-		const { content, className, ...rest } = this.props;
+		const {
+			content,
+			className,
+			invertTransparentImages,
+			dispatch,
+			...rest
+		} = this.props;
 
 		return (
 			<div
