@@ -11,6 +11,7 @@ import Terminal from "../../terminal/Terminal";
 import OpenCommand from "../../terminal/commands/fs/OpenCommand";
 import { bus } from "../../utils";
 import extensions from "../extensions";
+import { sfx } from "../sound";
 import CodeEditor from "./CodeEditor";
 import TV from "./TV";
 import FileSearch from "./widgets/FileSearch";
@@ -176,6 +177,8 @@ class MultiFile extends PureComponent {
 	};
 
 	_onFileOpened = () => {
+		sfx.play("open");
+
 		this._tabsScroll?.scrollTo({
 			left: this._tabsScroll.scrollWidth,
 			behavior: "smooth",
@@ -183,6 +186,8 @@ class MultiFile extends PureComponent {
 	};
 
 	_onFileClosed = () => {
+		sfx.play("close");
+
 		this._tabsScroll?.scrollTo({ left: 0, behavior: "smooth" });
 	};
 

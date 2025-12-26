@@ -1,6 +1,7 @@
 import escapeStringRegexp from "escape-string-regexp";
 import { marked } from "marked";
 import _ from "lodash";
+import { sfx } from "../gui/sound";
 import locales from "../locales";
 import { toast } from "../utils";
 
@@ -1196,6 +1197,8 @@ const dictionary = {
 	},
 
 	showDefinition(word) {
+		sfx.play("systemmsg");
+
 		const { icon, name, text, usableKeys, otherKeys } = this.getDefinition(
 			word
 		);

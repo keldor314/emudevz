@@ -4,6 +4,7 @@ import components from "../gui/components";
 import Debugger from "../gui/components/Debugger";
 import TV from "../gui/components/TV";
 import layouts from "../gui/components/layouts";
+import { sfx } from "../gui/sound";
 import locales from "../locales";
 import store from "../store";
 import { COROLLARY_SECTION } from "../terminal/commands/ChatCommand";
@@ -243,7 +244,9 @@ export default class Level {
 		});
 	}
 
-	startEffect(effectName) {
+	startEffect(effectName, options = { sfx: true }) {
+		if (options?.sfx) sfx.play("effect");
+
 		document.querySelector("body").className = effectName;
 	}
 

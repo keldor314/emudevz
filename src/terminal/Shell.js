@@ -35,6 +35,7 @@ export default class Shell extends Program {
 		} catch (e) {
 			if (!e.isUserEvent) throw e;
 			if (e !== DISPOSED) this._terminal.restart();
+			return "error";
 		}
 	}
 

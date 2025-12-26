@@ -20,7 +20,7 @@ import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
 import { bus, filepicker, toast } from "../../../utils";
 import { getFilePickerFilter } from "../../rom";
-import { music } from "../../sound";
+import { music, sfx } from "../../sound";
 import IconButton from "../widgets/IconButton";
 import InputTypeToggle from "../widgets/InputTypeToggle";
 import VolumeSlider from "../widgets/VolumeSlider";
@@ -344,6 +344,8 @@ export default class EmulatorRunner extends PureComponent {
 	}
 
 	stop = () => {
+		if (this._emulator?.neees != null) sfx.play("close");
+
 		this._emulator?.stop();
 		this.props.onStop();
 		this.didUseSaveState = false;
@@ -430,6 +432,8 @@ export default class EmulatorRunner extends PureComponent {
 			const saveStatePath = `${Drive.SAVE_DIR}/${name}.state`;
 			filesystem.write(saveStatePath, JSON.stringify(state));
 			toast.success(locales.get("save_state_saved"));
+
+			sfx.play("save");
 		} catch (e) {
 			console.error("💥 Error saving state", e);
 			toast.error(locales.get("the_operation_failed"));
@@ -455,6 +459,8 @@ export default class EmulatorRunner extends PureComponent {
 			neees?.setSaveState?.(state);
 			toast.success(locales.get("save_state_loaded"));
 			this.didUseSaveState = true;
+
+			sfx.play("load");
 		} catch (e) {
 			console.error("💥 Error loading state", e);
 			toast.error(locales.get("the_operation_failed"));
@@ -468,6 +474,7 @@ export default class EmulatorRunner extends PureComponent {
 		}
 
 		const keepState = this._emulatorSettings.withHotReload && !forceReset;
+		sfx.play("restart");
 
 		if (isFullReload) {
 			const saveState =

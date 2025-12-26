@@ -7,7 +7,7 @@ import store from "../../../store";
 import { toast } from "../../../utils";
 import { bus } from "../../../utils";
 import { getActiveScreenSize } from "../../screen";
-import { music } from "../../sound";
+import { music, sfx } from "../../sound";
 import TVNoise from "../TVNoise";
 import Screen from "./Screen";
 import Emulation from "./runner/Emulation";
@@ -229,7 +229,8 @@ export default class Emulator extends Component {
 						.useCustomEmulator(settings.useConsole || isFreeMode)
 						.build(settings.withLatestCode);
 		} catch (e) {
-			this._onError(e);
+			console.error(e);
+			this._setError(e);
 			return null;
 		}
 	}
@@ -260,6 +261,8 @@ export default class Emulator extends Component {
 	};
 
 	_setError = (error) => {
+		sfx.play("failure");
+
 		window.EmuDevz.achievements.unlockErrorBasedAchievementIfNeeded(
 			error,
 			this.props.settings
@@ -435,11 +438,5 @@ export default class Emulator extends Component {
 			console.error("💥 Error saving", e);
 			toast.error(locales.get("the_operation_failed"));
 		}
-	}
-
-	_onError(e) {
-		console.error(e);
-		this.props.onError(e);
-		this._stop();
 	}
 }

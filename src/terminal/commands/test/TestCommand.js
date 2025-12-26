@@ -1,6 +1,7 @@
 import $path from "path-browserify-esm";
 import _ from "lodash";
 import filesystem, { Drive } from "../../../filesystem";
+import { sfx } from "../../../gui/sound";
 import Book from "../../../level/Book";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
@@ -116,7 +117,7 @@ export default class TestCommand extends Command {
 						locales.get("testing") + theme.MESSAGE(fileName) + "..."
 					);
 
-				Level.current.startEffect("running");
+				Level.current.startEffect("running", { sfx: false });
 				let results;
 				try {
 					results = await framework.test(test, testDefinition, this._isDebug);
@@ -164,6 +165,8 @@ export default class TestCommand extends Command {
 				isAudioTestSuccessful &&
 				isVideoTestSuccessful
 			) {
+				sfx.play("success");
+
 				if (winOnTestPass && !this._targetId) {
 					if (level.memory.globalFailCount >= 5)
 						window.EmuDevz.achievements.unlock("misc-finally-works");
@@ -177,6 +180,8 @@ export default class TestCommand extends Command {
 					if (this._isVerbose && warnings.length > 0) await this._waitForKey();
 				}
 			} else {
+				sfx.play("failure");
+
 				await this._terminal.writeln(locales.get("tests_failure"));
 
 				level.memory.globalFailCount++;
@@ -332,9 +337,13 @@ export default class TestCommand extends Command {
 			});
 
 			if (result.success) {
+				sfx.play("success");
+
 				await this._terminal.writeln(" ✅ ");
 				tv.setContent(null, "rom");
 			} else {
+				sfx.play("failure");
+
 				await this._terminal.newline();
 				await this._terminal.writeln(
 					locales.get("tests_audio_failed1") +
@@ -446,9 +455,13 @@ export default class TestCommand extends Command {
 			});
 
 			if (result.success) {
+				sfx.play("success");
+
 				await this._terminal.writeln(" ✅ ");
 				tv.setContent(null, "rom");
 			} else {
+				sfx.play("failure");
+
 				await this._terminal.newline();
 				await this._terminal.writeln(
 					locales.get("tests_video_failed1") +

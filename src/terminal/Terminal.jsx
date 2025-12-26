@@ -124,12 +124,13 @@ export default class Terminal {
 		try {
 			this._currentProgram = program;
 			this.autocompleteOptions = [];
-			await this._currentProgram.run();
+			const exitCode = await this._currentProgram.run();
+
+			if (!exitCode) sfx.play("close");
 		} catch (e) {
 			if (e === DISPOSED) return;
 			throw e;
 		}
-		sfx.play("close");
 	}
 
 	restart() {

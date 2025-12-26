@@ -92,7 +92,7 @@ const INITIAL_STATE = () => ({
 	imguiTheme: "classic",
 	invertTransparentImages: false,
 	layoutBrightness: getDefaultLayoutBrightness(),
-	sfxVolume: 1,
+	sfxVolume: 0.5,
 });
 
 export default {

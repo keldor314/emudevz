@@ -1,5 +1,6 @@
 import { PureComponent } from "react";
 import _ from "lodash";
+import { sfx } from "../../sound";
 
 export default class Layout extends PureComponent {
 	instances = {};
@@ -76,6 +77,8 @@ export default class Layout extends PureComponent {
 	};
 
 	_onPinOpened = (pin, name, pinLocation) => {
+		sfx.play("open");
+
 		this.setState({ [name]: pin.Component }, () => {
 			this.instances[name].initialize(pin.args, pin.level, this);
 			setTimeout(() => {
@@ -85,6 +88,8 @@ export default class Layout extends PureComponent {
 	};
 
 	_onPinClosed = (name, pinLocation, options = { changeFocus: true }) => {
+		if (this.isPinOpen) sfx.play("close");
+
 		this.instances[name] = null;
 		this.setState({ [name]: null }, () => {
 			if (options?.changeFocus) {

@@ -67,6 +67,7 @@ export default class ChatCommand extends Command {
 
 			if (!_.isEmpty(responses)) {
 				sfx.play("question");
+
 				await this._showChooseAnAnswer();
 				await this._showResponses(responses);
 				const response = await this._getSelectedResponse(responses);
@@ -179,11 +180,12 @@ export default class ChatCommand extends Command {
 			const isSystemMessage = message.startsWith(SYSTEM_PREFIX);
 
 			if (isSystemMessage) {
+				sfx.play("systemmsg");
+
 				const rawMessage = message.replace(SYSTEM_PREFIX, "");
 				if (i > 0) await this._terminal.newline();
 				await this._terminal.writeln(rawMessage, theme.COMMENT);
 				if (i < messages.length - 1) await this._terminal.newline();
-				sfx.play("systemmsg");
 			} else {
 				const isExercise = message.startsWith(EXERCISE_PREFIX);
 				if (
@@ -253,6 +255,7 @@ export default class ChatCommand extends Command {
 				}
 			}
 			await this._showResponse(command.selectedResponse, responses);
+
 			sfx.play("answer");
 		} finally {
 			this._linkProvider.end();
