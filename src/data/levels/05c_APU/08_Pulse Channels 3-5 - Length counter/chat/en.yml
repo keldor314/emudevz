@@ -16,10 +16,10 @@ length:
   messages:
   - it's what the APU uses to track the <length> of the notes!
   - games <load> its initial value to indicate the note length
-  - then that value is decreased every half frame
+  - then that value is decremented every half frame
   - and when it reaches 0, the channel is muted! 🤐
   responses:
-  - (*) how would a game load its value? [load]
+  - (*) how does a game load its value? [load]
   - (*) does it always decrement its value on half frames? [decrement]
   - let's code it [exercise]
 
@@ -34,7 +34,7 @@ load:
 
 otherlengths:
   messages:
-  - it's not possible!
+  - that's not supported!
   - at least with this type of length counter
   - that's why games don't usually use this method and end up changing the volume manually, or using the envelope
   responses:
@@ -98,4 +98,19 @@ exercise:
         **->** reset <Pulse 1>'s length counter
       **->** if `!this.enablePulse2`:
         **->** reset <Pulse 2>'s length counter
-  responses: []
+  responses:
+  - (*) how do I access the registers? [access]
+
+access:
+  messages:
+  - |-
+    our `PulseChannel` class defines a `registers` attribute:
+      ```javascript this.registers = this.apu.registers.pulses[this.id];```
+  - |-
+    if you look at the constructor of `AudioRegisters`, you'll see that it has the following form:
+      `{ control, sweep, timerLow, timerHighLCL }`
+  - |-
+    then, for example, to access the halt flag of 🟦  PulseControl, you can write:
+      ```javascript this.registers.control.envelopeLoopOrLengthCounterHalt```
+  responses:
+  - ...exercise
