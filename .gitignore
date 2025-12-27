@@ -28,4 +28,4 @@ yarn-error.log*
 *.exe
 *.AppImage
 public/levels
-*.mp3
+public/music
