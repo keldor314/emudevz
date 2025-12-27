@@ -128,25 +128,25 @@ class NavBar extends PureComponent {
 						</Badge>
 					)}
 					<div className={styles.buttons}>
-						{window.electronAPI?.openDevTools && (
-							<IconButton
-								style={{ marginRight: 8 }}
-								Icon={FaBug}
-								tooltip={locales.get("open_devtools")}
-								onClick={() => window.electronAPI.openDevTools()}
-							/>
-						)}
 						{dlc.installed() && (
 							<IconButton
-								style={{ marginRight: 8 }}
+								style={{ marginRight: 16 }}
 								Icon={FaRocket}
 								tooltip={locales.get("supporter_title")}
 								onClick={this._openSupporterPackSettings}
 							/>
 						)}
+						{window.electronAPI?.openDevTools && (
+							<IconButton
+								style={{ marginRight: 16 }}
+								Icon={FaBug}
+								tooltip={locales.get("open_devtools")}
+								onClick={() => window.electronAPI.openDevTools()}
+							/>
+						)}
 						{isFreeMode && (
 							<IconButton
-								style={{ marginRight: 8 }}
+								style={{ marginRight: 16 }}
 								Icon={FaCog}
 								tooltip={locales.get("free_mode_settings")}
 								onClick={this._openFreeModeSettings}
@@ -154,7 +154,7 @@ class NavBar extends PureComponent {
 						)}
 						{book.canUseEmulator && canRunEmulator && (
 							<IconButton
-								style={{ marginRight: 8 }}
+								style={{ marginRight: 16 }}
 								Icon={FaPlay}
 								tooltip={locales.get("run_emulator")}
 								onClick={this._runEmulator}
