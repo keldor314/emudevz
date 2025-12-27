@@ -196,7 +196,7 @@ export default class ChatCommand extends Command {
 					await this._terminal.newline();
 				}
 
-				sfx.play(isExercise ? "exercise" : "message");
+				if (isExercise) sfx.play("exercise");
 
 				let delay = 0;
 				const delayStr = message.match(DELAY_REGEXP)?.[1];
