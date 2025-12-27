@@ -3,7 +3,7 @@ name: Steam Deploy
 on:
   push:
     branches:
-      - steam
+      - master
 
 concurrency:
   group: steam-deploy-${{ github.ref }}
