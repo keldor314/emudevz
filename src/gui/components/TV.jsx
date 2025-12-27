@@ -48,24 +48,7 @@ export default class TV extends PureComponent {
 
 	load(fileName, type = "media", bucket = "media") {
 		const name = fileName ? $path.parse(fileName).name : null;
-
-		let resolvedFileName = fileName;
-		if (bucket === "media" && fileName) {
-			const invertTransparentImages =
-				(dlc.installed() &&
-					store.getState().savedata?.invertTransparentImages) ||
-				false;
-			if (invertTransparentImages) {
-				const invertedFileName = imageUtils.getInvertedPngPath(fileName);
-				if (
-					invertedFileName !== fileName &&
-					this._level?.media?.[invertedFileName]
-				) {
-					resolvedFileName = invertedFileName;
-				}
-			}
-		}
-
+		const resolvedFileName = this._resolveFileName(fileName, bucket);
 		const content =
 			(resolvedFileName && this._level?.[bucket]?.[resolvedFileName]) || null;
 		this.setContent(content, type, name);
@@ -279,6 +262,26 @@ export default class TV extends PureComponent {
 
 		reader.readAsArrayBuffer(file);
 	};
+
+	_resolveFileName(fileName, bucket) {
+		if (bucket === "media" && fileName) {
+			const invertTransparentImages =
+				(dlc.installed() &&
+					store.getState().savedata?.invertTransparentImages) ||
+				false;
+			if (invertTransparentImages) {
+				const invertedFileName = imageUtils.getInvertedPngPath(fileName);
+				if (
+					invertedFileName !== fileName &&
+					this._level?.media?.[invertedFileName]
+				) {
+					return invertedFileName;
+				}
+			}
+		}
+
+		return fileName;
+	}
 
 	_ignore = (e) => {
 		e.stopPropagation();
