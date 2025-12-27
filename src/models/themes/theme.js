@@ -169,7 +169,7 @@ export const GLOBAL_THEME_GROUPS = [
 			{
 				key: "neutral-superlight",
 				label: "superlight",
-				defaultValue: "#f3f3f3",
+				defaultValue: "#ffffff",
 			},
 			{
 				key: "neutral-translucent",
@@ -217,11 +217,6 @@ export const GLOBAL_THEME_GROUPS = [
 				key: "text-neutral-light",
 				label: "neutral-light",
 				defaultValue: "#b3b3b3",
-			},
-			{
-				key: "text-neutral-superlight",
-				label: "neutral-superlight",
-				defaultValue: "#cfcfcf",
 			},
 			{
 				key: "text-neutral-dark",

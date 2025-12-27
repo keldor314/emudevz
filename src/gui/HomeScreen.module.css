@@ -38,7 +38,7 @@
 	text-align: justify;
 	box-shadow: inset 8px 8px 8px var(--neutral-shadow1, #00000013),
 		0 0 8px var(--neutral-shadow2, #c8c8c899);
-	color: var(--neutral-superlight, #cfcfcf);
+	color: var(--neutral-superlight, #ffffff);
 }
 
 .closeButton {
@@ -52,5 +52,5 @@
 	margin-top: 16px;
 	font-size: 12px;
 	white-space: nowrap;
-	color: var(--neutral-superlight, #cfcfcf);
+	color: var(--neutral-superlight, #ffffff);
 }

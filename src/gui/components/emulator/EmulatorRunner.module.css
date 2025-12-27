@@ -64,7 +64,7 @@
 	cursor: pointer;
 
 	border-radius: 8px;
-	border: 1px dashed var(--neutral-border, #808080);
+	border: 1px dashed var(--neutral-border, #a9a9a9);
 	padding: 4px;
 }
 
