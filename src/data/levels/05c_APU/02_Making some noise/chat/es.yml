@@ -60,5 +60,6 @@ duty:
   - y con <75%>
   - <{wave_square_75duty.png;32x32}>
   - ¡todos suenan <muy diferentes>! prueba cambiar la constante `dutyCycle` para ver cómo reacciona
+  - (solo recuerda volver a configurar `dutyCycle` en `0.5` después, las pruebas esperan la forma de onda exacta del código de ejemplo 😉 )
   responses:
   - ...exercise

@@ -60,5 +60,6 @@ duty:
   - and with <75%>
   - <{wave_square_75duty.png;32x32}>
   - these all sound <very different>! try changing the `dutyCycle` constant to see how it reacts
+  - (just remember to set `dutyCycle` back to `0.5` afterward, the tests expect the exact waveform from the example code 😉 )
   responses:
   - ...exercise
