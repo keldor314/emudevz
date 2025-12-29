@@ -98,19 +98,4 @@ exercise:
         **->** reinicia el contador de longitud de <Pulse 1>
       **->** if `!this.enablePulse2`:
         **->** reinicia el contador de longitud de <Pulse 2>
-  responses:
-  - (*) ¿cómo accedo a los registros? [access]
-
-access:
-  messages:
-  - |-
-    nuestra clase `PulseChannel` define un atributo `registers`:
-      ```javascript this.registers = this.apu.registers.pulses[this.id];```
-  - |-
-    si miras el constructor de `AudioRegisters`, verás que tiene la siguiente forma:
-      `{ control, sweep, timerLow, timerHighLCL }`
-  - |-
-    entonces, por ejemplo, para acceder a la bandera de detención de 🟦  PulseControl, puedes escribir:
-      ```javascript this.registers.control.envelopeLoopOrLengthCounterHalt```
-  responses:
-  - ...exercise
+  responses: []

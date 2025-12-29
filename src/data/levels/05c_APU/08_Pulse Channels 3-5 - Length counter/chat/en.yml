@@ -98,19 +98,4 @@ exercise:
         **->** reset <Pulse 1>'s length counter
       **->** if `!this.enablePulse2`:
         **->** reset <Pulse 2>'s length counter
-  responses:
-  - (*) how do I access the registers? [access]
-
-access:
-  messages:
-  - |-
-    our `PulseChannel` class defines a `registers` attribute:
-      ```javascript this.registers = this.apu.registers.pulses[this.id];```
-  - |-
-    if you look at the constructor of `AudioRegisters`, you'll see that it has the following form:
-      `{ control, sweep, timerLow, timerHighLCL }`
-  - |-
-    then, for example, to access the halt flag of 🟦  PulseControl, you can write:
-      ```javascript this.registers.control.envelopeLoopOrLengthCounterHalt```
-  responses:
-  - ...exercise
+  responses: []

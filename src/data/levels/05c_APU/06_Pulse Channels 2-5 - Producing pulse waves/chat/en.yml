@@ -22,4 +22,19 @@ exercise:
   - try out some games!
   - it won't sound <great> since the channels aren't always silenced and there's lots of missing stuff 😅
   - but you'll start hearing part of the games' melodies
-  responses: []
+  responses:
+  - (*) how do I access the registers? [access]
+
+access:
+  messages:
+  - |-
+    our `PulseChannel` class defines a `registers` attribute:
+      ```javascript this.registers = this.apu.registers.pulses[this.id];```
+  - |-
+    if you look at the constructor of `AudioRegisters`, you'll see that it has the following form:
+      `{ control, sweep, timerLow, timerHighLCL }`
+  - |-
+    then, for example, to access the volume of 🟦  PulseControl, you can write:
+      ```javascript this.registers.control.volumeOrEnvelopePeriod```
+  responses:
+  - ...exercise
