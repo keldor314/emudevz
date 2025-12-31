@@ -78,7 +78,7 @@ exercise:
       - the `updateTimer()` method is only called if 🧹  PulseSweep's `enabledFlag` is clear
     **->** implement this method:
     **halfFrame()**:
-      **->** __keep clocking the envelope like before__
+      **->** __keep clocking the length counter like before__
       **->** calls ```javascript this.frequencySweep.clock()```
   - |-
     📚  ah, right, in 🧹  `PulseSweep`, one more thing:

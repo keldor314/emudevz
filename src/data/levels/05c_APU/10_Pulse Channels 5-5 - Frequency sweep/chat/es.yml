@@ -78,7 +78,7 @@ exercise:
       - el método `updateTimer()` solo se llame si la `enabledFlag` de 🧹  PulseSweep está apagada
     **->** implementa este método:
     **halfFrame()**:
-      **->** __continúa clockeando la envolvente como antes__
+      **->** __continúa clockeando el contador de longitud como antes__
       **->** llama a ```javascript this.frequencySweep.clock()```
   - |-
     📚  ah, cierto, en 🧹  `PulseSweep`, una cosa más:
