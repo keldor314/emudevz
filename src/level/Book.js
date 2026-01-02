@@ -75,7 +75,14 @@ export default class Book {
 			const nextPendingCPU = this.nextPendingLevelOfChapter(ids.CPU);
 			const nextPendingPPU = this.nextPendingLevelOfChapter(ids.PPU);
 			const nextPendingAPU = this.nextPendingLevelOfChapter(ids.APU);
-			return !nextPendingCPU && !nextPendingPPU && !nextPendingAPU;
+			const isChapterUnlocked =
+				!nextPendingCPU && !nextPendingPPU && !nextPendingAPU;
+
+			if (isChapterUnlocked) {
+				const nextPendingLevel = this.nextPendingLevelOfChapter(chapter.id);
+				if (!nextPendingLevel) return true;
+				return level.globalId <= nextPendingLevel.globalId;
+			} else return false;
 		} else if (chapter.number === maxChapterNumber + 1) {
 			const nextPendingLevel = this.nextPendingLevelOfChapter(maxChapter.id);
 			return !nextPendingLevel;
