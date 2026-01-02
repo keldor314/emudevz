@@ -15,7 +15,7 @@ dpcm:
   - games write the memory address where the sound clip is stored to 🐏  DMCSampleAddress and the length in bytes to 📐  DMCSampleLength
   - |-
     not quite, but the actual address and length can be derived like this:
-      ```javascript clipAddress = 0xc000 + dmcSampleAddress + (A * 64);
+      ```javascript clipAddress = 0xc000 + dmcSampleAddress * 64;
       clipLength = dmcSampleLength * 16 + 1;```
   - then, they write a <DPCM period> (which determines the playback frequency) and a <loop flag> to 📦  DMCControl
   - lastly, they write to 🎛️  APUControl a value with its bit 4 set, which starts the playback if the DMC Channel is not currently playing a clip
