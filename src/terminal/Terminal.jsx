@@ -260,22 +260,26 @@ export default class Terminal {
 	}
 
 	async confirmPrompt() {
-		if (this.isExpectingInput) {
-			const input = this._input;
-			this._input = null;
-			const isValid = input.confirm();
-			input.caretIndex = 0;
+		if (!this.isExpectingInput) return;
 
-			if (isValid) await this.newline();
-		}
+		const input = this._input;
+		this._input = null;
+		await this.write(this._cursorToInputEndSeq(input));
+
+		const isValid = input.confirm();
+		input.caretIndex = 0;
+
+		if (isValid) await this.newline();
 	}
 
 	cancelPrompt(reason = CANCELED) {
-		if (this.isExpectingInput) {
-			const input = this._input;
-			this._input = null;
-			input.cancel(reason);
-		}
+		if (!this.isExpectingInput) return;
+
+		const input = this._input;
+		this._input = null;
+		this._xterm.write(this._cursorToInputEndSeq(input));
+
+		input.cancel(reason);
 	}
 
 	cancelKey(reason = CANCELED) {
@@ -814,5 +818,19 @@ export default class Terminal {
 		}
 
 		if (data === KEY_LEFT || data === KEY_RIGHT) return false;
+	}
+
+	_cursorToInputEndSeq(input) {
+		const { y, ybase } = this.buffer;
+		const curAbsY = y + ybase;
+
+		const startCol = input.position.x;
+		const end = this._computePositionAfterText(input.text, startCol);
+		const endAbsY = input.position.y + end.rowsDown;
+
+		return (
+			ansiEscapes.cursorMove(0, endAbsY - curAbsY) +
+			ansiEscapes.cursorTo(end.column)
+		);
 	}
 }
