@@ -297,8 +297,7 @@ class SupporterPackSettingsModal extends PureComponent {
 								disableTooltip
 								volume={this.props.sfxVolume}
 								setVolume={(v) => {
-									this.props.setSfxVolume(v);
-									sfx.setVolume(v);
+									this._setSfxVolume(v);
 								}}
 							/>
 						</div>
@@ -481,6 +480,11 @@ class SupporterPackSettingsModal extends PureComponent {
 		});
 	};
 
+	_setSfxVolume(volume) {
+		this.props.setSfxVolume(volume);
+		sfx.setVolume(volume);
+	}
+
 	_restoreDefaults = () => {
 		this.props.setEditorTheme("oneDark");
 		this.props.setConsoleTheme(getDefaultConsoleTheme());
@@ -489,6 +493,7 @@ class SupporterPackSettingsModal extends PureComponent {
 		this.props.setInvertTransparentImages(false);
 		this.props.setLayoutBrightness(getDefaultLayoutBrightness());
 		this.props.setImguiTheme("classic");
+		this._setSfxVolume(0.3);
 		bus.emit("theme-changed");
 	};
 }
