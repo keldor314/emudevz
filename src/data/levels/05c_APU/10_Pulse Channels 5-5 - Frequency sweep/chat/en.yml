@@ -61,7 +61,7 @@ exercise:
         ):
           ```javascript const sweepDelta = this.channel.timer >> register.shiftCount;
           this.channel.timer += sweepDelta * (register.negateFlag ? -1 : 1);```
-      
+        (where `register` is, of course, 🧹  PulseSweep)
       **->** if the <divider count> is 0 <OR> the <start flag> is set
         **->** sets ```javascript this.dividerCount``` to 🧹  PulseSweep's `dividerPeriodMinusOne`
         **->** clears the <start flag>
