@@ -182,21 +182,22 @@ class Music {
 		if (this._audio) this._audio.pause();
 
 		this._saveTrackInfo();
-		this._audio = new Audio(MUSIC_DIR + TRACKS[this._track].file);
-		this._audio.volume = this._volume;
+		const audio = new Audio(MUSIC_DIR + TRACKS[this._track].file);
+		audio.volume = this._volume;
+		this._audio = audio;
 
 		if (startSecond > 0) {
-			this._audio.addEventListener(
+			audio.addEventListener(
 				"loadedmetadata",
 				() => {
-					this._audio.currentTime = startSecond;
+					audio.currentTime = startSecond;
 				},
 				{ once: true }
 			);
 		}
 
-		this._audio.play();
-		this._audio.onended = () => {
+		audio.play();
+		audio.onended = () => {
 			this.next();
 		};
 	}

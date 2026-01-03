@@ -14,7 +14,7 @@ class SFX {
 	}
 
 	play(soundName) {
-		if (!dlc.installed()) return;
+		if (!dlc.installed() || this._volume === 0) return;
 
 		const now = Date.now();
 		if (now - this._lastPlayTime < DEBOUNCE_MS) return;
