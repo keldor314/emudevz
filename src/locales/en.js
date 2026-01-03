@@ -164,6 +164,7 @@ export default {
 		"In the year 32767, the world suffered a massive cyber attack which <b>destroyed</b> the entire Internet. Since then, you and an online friend are trying to understand the sparse pieces of documentation about the NEEES, an ancient game console released in 1983. With your programming skills, you'll have to build an emulator that runs those old games, helping preserve video game history.",
 	ppu: "PPU",
 	press_any_key_to_continue: "⌨️  Press any key to continue.",
+	prompt_too_long: "What?! Prompt too long!",
 	psa_savefile: "⚠️ PSA: Back up your save file regularly!!!",
 	register_A: "Accumulator Register",
 	register_flags_C: "Carry Flag",
@@ -241,8 +242,8 @@ export default {
 	supporter_layout_brightness_description:
 		"Controls how dim unselected panes and how bright the selected pane appear.",
 	supporter_layout_brightness_title: "✨ Layout brightness",
-	supporter_sfx_title: "🔊 SFX volume",
 	supporter_sfx_description: "Volume of the sound effects.",
+	supporter_sfx_title: "🔊 SFX volume",
 	supporter_terminal_apps_description:
 		"Colors used by terminal apps, like the chat.",
 	supporter_terminal_apps_title: "🧰 Terminal apps",

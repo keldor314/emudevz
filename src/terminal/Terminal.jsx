@@ -253,6 +253,7 @@ export default class Terminal {
 				await this.write(data, undefined, runSpeed);
 				this._input.append(data);
 				this._updateRenderedRows();
+				if (await this._cancelPromptIfTooTall()) return;
 			} else {
 				this._input.insertAtCaret(data);
 				await this._redrawInput();
@@ -274,12 +275,14 @@ export default class Terminal {
 		this._xterm.scrollToBottom();
 	}
 
-	cancelPrompt(reason = CANCELED) {
+	async cancelPrompt(reason = CANCELED, warning = null) {
 		if (!this.isExpectingInput) return;
 
 		const input = this._input;
 		this._input = null;
 		this._xterm.write(this._cursorToInputEndSeq(input));
+		if (warning != null)
+			await this.write(NEWLINE + "⚠️  " + warning, theme.ACCENT);
 
 		input.cancel(reason);
 	}
@@ -299,7 +302,7 @@ export default class Terminal {
 		const isShell = this._currentProgram.isShell;
 
 		if (this._currentProgram.onStop()) {
-			this.cancelPrompt(INTERRUPTED);
+			await this.cancelPrompt(INTERRUPTED);
 			this.cancelKey(INTERRUPTED);
 			await this.break();
 			if (!isShell) await this.newline();
@@ -540,7 +543,7 @@ export default class Terminal {
 			}
 		}
 
-		// supr (delete char at caret)
+		// delete (delete char at caret)
 		if (this.isExpectingInput && !e.ctrlKey && !e.shiftKey && !e.altKey) {
 			if (e.key === "Delete") {
 				this._deleteForward();
@@ -572,6 +575,7 @@ export default class Terminal {
 						await this.newline();
 						this._input.append(SHORT_NEWLINE);
 						this._updateRenderedRows();
+						if (await this._cancelPromptIfTooTall()) return;
 					} else {
 						this._input.insertAtCaret(SHORT_NEWLINE);
 						await this._redrawInput();
@@ -591,13 +595,8 @@ export default class Terminal {
 	}
 
 	async _onResize(e) {
-		if (this.isExpectingInput) {
-			await this.write(
-				NEWLINE + "⚠️  " + locales.get("resize_warning"),
-				theme.ACCENT
-			);
-			this.cancelPrompt();
-		}
+		if (this.isExpectingInput)
+			await this.cancelPrompt(CANCELED, locales.get("resize_warning"));
 	}
 
 	_setUpXtermHooks() {
@@ -760,7 +759,7 @@ export default class Terminal {
 			const autocompletedCharacters = commonCharacters.replace(lastPart, "");
 
 			await this.write(NEWLINE + options.join(INDENTATION), theme.MESSAGE);
-			this.cancelPrompt();
+			await this.cancelPrompt();
 			await async.sleep();
 			this._onData(text + autocompletedCharacters);
 		}
@@ -785,6 +784,18 @@ export default class Terminal {
 		}
 
 		if (data === KEY_LEFT || data === KEY_RIGHT) return false;
+	}
+
+	async _cancelPromptIfTooTall() {
+		if (!this.isExpectingInput) return false;
+
+		const input = this._input;
+		const rows = Math.max(1, input.renderedRows || 1);
+
+		if (rows <= this.height) return false;
+
+		this.cancelPrompt(CANCELED, locales.get("prompt_too_long"));
+		return true;
 	}
 
 	async _redrawInput() {
@@ -826,6 +837,8 @@ export default class Terminal {
 		const caretPos = this._computePositionAfterText(caretText, startColumn);
 
 		input.renderedRows = endPos.rowsDown + 1;
+
+		if (await this._cancelPromptIfTooTall()) return;
 
 		let moveSeq = "";
 		const rowsUp = endPos.rowsDown - caretPos.rowsDown;

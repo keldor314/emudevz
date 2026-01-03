@@ -171,6 +171,7 @@ export default {
 		"En el año 32767, el mundo sufrió un ciberataque masivo que <b>destruyó</b> toda la Internet. Desde entonces, tu amigo online y tú están intentando entender las escasas piezas de documentación sobre la NEEES, una consola de videojuegos antigua lanzada en 1983. Con tus habilidades de programación, deberás crear un emulador que corra esos juegos viejos, ayudando a preservar la historia de los videojuegos.",
 	ppu: "PPU",
 	press_any_key_to_continue: "⌨️  Presiona cualquier tecla para continuar.",
+	prompt_too_long: "¡¿Qué?! ¡El prompt es demasiado largo!",
 	psa_savefile:
 		"⚠️ AVISO: ¡¡¡Resguarda tu archivo de guardado con regularidad!!!",
 	register_A: "Registro Acumulador",
@@ -252,8 +253,8 @@ export default {
 	supporter_layout_brightness_description:
 		"Controla cuán tenues se ven los paneles no seleccionados y cuán brillante se ve el panel seleccionado.",
 	supporter_layout_brightness_title: "✨ Brillo del layout",
-	supporter_sfx_title: "🔊 Volumen de SFX",
 	supporter_sfx_description: "Volumen de los efectos de sonido.",
+	supporter_sfx_title: "🔊 Volumen de SFX",
 	supporter_terminal_apps_description:
 		"Colores usados por las apps de terminal, como el chat.",
 	supporter_terminal_apps_title: "🧰 Apps de terminal",
