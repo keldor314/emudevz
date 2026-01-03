@@ -362,6 +362,8 @@ export default class TestCommand extends Command {
 				throw INTERRUPTED;
 			}
 
+			await this._terminal.newline();
+			await this._terminal.newline();
 			await this._terminal.writeln(
 				locales.get("tests_emulator_crashed"),
 				theme.ERROR
@@ -480,6 +482,8 @@ export default class TestCommand extends Command {
 				throw INTERRUPTED;
 			}
 
+			await this._terminal.newline();
+			await this._terminal.newline();
 			await this._terminal.writeln(
 				locales.get("tests_emulator_crashed"),
 				theme.ERROR
