@@ -70,7 +70,7 @@ export default class Book {
 		} else if (chapter.number < maxChapterNumber) {
 			return true;
 		} else if (chapter.number === this.constructor.INTEGRATION_CHAPTER_NUMBER) {
-			// HACK: hardcoding a bit
+			// HACK: Hardcoding a bit
 			const ids = this.constructor.CHAPTER_IDS;
 			const nextPendingCPU = this.nextPendingLevelOfChapter(ids.CPU);
 			const nextPendingPPU = this.nextPendingLevelOfChapter(ids.PPU);

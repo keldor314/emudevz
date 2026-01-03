@@ -408,7 +408,7 @@ export default class EmulatorRunner extends PureComponent {
 						reason: "debug-button",
 					});
 			});
-			Level.current.highlightMultiFileEditor();
+			Level.current.focusMultiFileEditor();
 		}
 	};
 

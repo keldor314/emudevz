@@ -229,7 +229,14 @@ export default class Level {
 		bus.emit("unpin" + this.debuggerPinSuffix, { changeFocus: false });
 	}
 
-	highlightMultiFileEditor() {
+	focusConsole() {
+		const instance = this.$layout.findInstance("Console");
+		if (instance == null) return;
+		const instanceName = this.$layout.getInstanceName(instance);
+		this.$layout.focus(instanceName);
+	}
+
+	focusMultiFileEditor() {
 		const instance = this.$layout.findInstance("MultiFile");
 		if (instance == null) return;
 		const instanceName = this.$layout.getInstanceName(instance);

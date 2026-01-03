@@ -31,9 +31,10 @@ export default class OpenCommand extends FilesystemCommand {
 				Level.current.launchEmulator(rom, name);
 			} else return ERR_CANNOT_LAUNCH_EMULATOR;
 		} else {
-			if (level.canLaunch(Component, customArgs))
+			if (level.canLaunch(Component, customArgs)) {
 				store.dispatch.savedata.openFile(filePath);
-			else return ERR_CANNOT_OPEN_FILE;
+				Level.current.focusConsole();
+			} else return ERR_CANNOT_OPEN_FILE;
 		}
 		return true;
 	}

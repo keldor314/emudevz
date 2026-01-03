@@ -97,6 +97,7 @@ export default class Terminal {
 		if (dictionary != null) this._setUpDictionaryLinks(dictionary);
 
 		this.autocompleteOptions = [];
+		this._splitter = new GraphemeSplitter();
 	}
 
 	async start(
@@ -179,7 +180,7 @@ export default class Terminal {
 			this._interruptIfNeeded();
 			this._xterm.write(style(text));
 		} else {
-			const characters = new GraphemeSplitter().splitGraphemes(text);
+			const characters = this._splitter.splitGraphemes(text);
 			let lastCharacter = " ";
 
 			await async.sleep();
@@ -270,6 +271,7 @@ export default class Terminal {
 		input.caretIndex = 0;
 
 		if (isValid) await this.newline();
+		this._xterm.scrollToBottom();
 	}
 
 	cancelPrompt(reason = CANCELED) {
@@ -393,86 +395,6 @@ export default class Terminal {
 		}
 	}
 
-	async _redrawInput() {
-		if (!this.isExpectingInput) return;
-
-		const input = this._input;
-		const { y, ybase } = this.buffer;
-		const currentAbsoluteY = y + ybase;
-		const startAbsoluteY = input.position.y;
-		const startColumn = input.position.x;
-
-		const previousRows = Math.max(1, input.renderedRows || 1);
-
-		let sequence = "";
-		// move to input start
-		if (currentAbsoluteY > startAbsoluteY)
-			sequence += ansiEscapes.cursorMove(
-				0,
-				-(currentAbsoluteY - startAbsoluteY)
-			);
-		sequence += ansiEscapes.cursorTo(startColumn);
-		sequence += ansiEscapes.eraseEndLine;
-		for (let i = 1; i < previousRows; i++) {
-			sequence += ansiEscapes.cursorDown();
-			sequence += ansiEscapes.cursorTo(0);
-			sequence += ansiEscapes.eraseEndLine;
-		}
-		if (previousRows > 1) {
-			sequence += ansiEscapes.cursorMove(0, -(previousRows - 1));
-			sequence += ansiEscapes.cursorTo(startColumn);
-		}
-
-		await this.write(sequence);
-		await this.write(input.text);
-
-		// update rendered rows and position cursor at caret
-		const endPos = this._computePositionAfterText(input.text, startColumn);
-		const caretText = input.text.substring(0, input.caretIndex);
-		const caretPos = this._computePositionAfterText(caretText, startColumn);
-
-		input.renderedRows = endPos.rowsDown + 1;
-
-		let moveSeq = "";
-		const rowsUp = endPos.rowsDown - caretPos.rowsDown;
-		if (rowsUp > 0) moveSeq += ansiEscapes.cursorUp(rowsUp);
-		else if (rowsUp < 0) moveSeq += ansiEscapes.cursorDown(-rowsUp);
-		const horizontal = caretPos.column - endPos.column;
-		if (horizontal !== 0) moveSeq += ansiEscapes.cursorMove(horizontal, 0);
-		if (moveSeq) await this.write(moveSeq);
-	}
-
-	_computePositionAfterText(text, startColumn) {
-		let column = startColumn;
-		let rowsDown = 0;
-
-		for (let i = 0; i < text.length; i++) {
-			const ch = text[i];
-			if (ch === SHORT_NEWLINE) {
-				rowsDown += 1;
-				column = 0;
-			} else {
-				column += 1;
-				if (column >= this.width) {
-					column = 0;
-					rowsDown += 1;
-				}
-			}
-		}
-		return { rowsDown, column };
-	}
-
-	_updateRenderedRows() {
-		if (!this.isExpectingInput) return;
-
-		const startColumn = this._input.position.x;
-		const endPos = this._computePositionAfterText(
-			this._input.text,
-			startColumn
-		);
-		this._input.renderedRows = endPos.rowsDown + 1;
-	}
-
 	cancelSpeedFlag() {
 		this._speedFlag = false;
 	}
@@ -586,41 +508,86 @@ export default class Terminal {
 		}
 	}
 
-	async _onKey(e) {
+	_onKey(e) {
 		const isKeyDown = e.type === "keydown";
+		if (!isKeyDown) return true;
+
 		const isEnter = e.key === "Enter";
 		const isCtrlShiftC = e.ctrlKey && e.shiftKey && e.key === "C";
 		const isShiftEnter = e.shiftKey && isEnter;
 
+		// ctrl+arrows / ctrl+backspace / ctrl+delete
+		if (this.isExpectingInput && e.ctrlKey && !e.shiftKey && !e.altKey) {
+			if (e.key === "ArrowLeft") {
+				this._moveCaretWord(-1);
+				e.preventDefault();
+				return false;
+			}
+			if (e.key === "ArrowRight") {
+				this._moveCaretWord(+1);
+				e.preventDefault();
+				return false;
+			}
+			if (e.key === "Backspace") {
+				this._deleteWord(-1);
+				e.preventDefault();
+				return false;
+			}
+			if (e.key === "Delete") {
+				this._deleteWord(+1);
+				e.preventDefault();
+				return false;
+			}
+		}
+
+		// supr (delete char at caret)
+		if (this.isExpectingInput && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+			if (e.key === "Delete") {
+				this._deleteForward();
+				e.preventDefault();
+				return false;
+			}
+		}
+
+		// tab (autocomplete)
 		if (e.key === "Tab" && this._currentProgram.usesAutocomplete()) {
 			this._interceptingKey = TABULATION;
 			this._interceptingCallback = () => this._processAutocomplete();
-			return;
+			return true;
 		}
 
-		if (isKeyDown && isCtrlShiftC) {
+		// ctrl+shift+c (copy)
+		if (isCtrlShiftC) {
 			const selection = this._xterm.getSelection();
 			navigator.clipboard.writeText(selection);
 			e.preventDefault();
-			return;
+			return false;
 		}
 
-		if (isKeyDown && isEnter) {
-			if (isShiftEnter && this.isExpectingInput && this._input.multiLine) {
-				if (this._input.caretIndex === this._input.text.length) {
-					await this.newline();
-					this._input.append(SHORT_NEWLINE);
-					this._updateRenderedRows();
+		if (isEnter) {
+			(async () => {
+				if (isShiftEnter && this.isExpectingInput && this._input.multiLine) {
+					// shift+enter (new line)
+					if (this._input.caretIndex === this._input.text.length) {
+						await this.newline();
+						this._input.append(SHORT_NEWLINE);
+						this._updateRenderedRows();
+					} else {
+						this._input.insertAtCaret(SHORT_NEWLINE);
+						await this._redrawInput();
+					}
+					this._xterm.scrollToBottom();
 				} else {
-					this._input.insertAtCaret(SHORT_NEWLINE);
-					await this._redrawInput();
+					// enter (execute)
+					if (this._isWriting) this._speedFlag = true;
+					await this.confirmPrompt();
 				}
-			} else {
-				if (this._isWriting) this._speedFlag = true;
-				await this.confirmPrompt();
-			}
-			return;
+			})();
+			e.preventDefault();
+			return false;
 		}
+
+		return true;
 	}
 
 	async _onResize(e) {
@@ -638,7 +605,7 @@ export default class Terminal {
 			this._onData(data);
 		});
 		this._xterm.attachCustomKeyEventHandler((e) => {
-			this._onKey(e);
+			return this._onKey(e);
 		});
 		this._xterm.onResize((e) => {
 			this._onResize(e);
@@ -820,6 +787,102 @@ export default class Terminal {
 		if (data === KEY_LEFT || data === KEY_RIGHT) return false;
 	}
 
+	async _redrawInput() {
+		if (!this.isExpectingInput) return;
+
+		const input = this._input;
+		const { y, ybase } = this.buffer;
+		const currentAbsoluteY = y + ybase;
+		const startAbsoluteY = input.position.y;
+		const startColumn = input.position.x;
+
+		const previousRows = Math.max(1, input.renderedRows || 1);
+
+		let sequence = "";
+		// move to input start
+		if (currentAbsoluteY > startAbsoluteY)
+			sequence += ansiEscapes.cursorMove(
+				0,
+				-(currentAbsoluteY - startAbsoluteY)
+			);
+		sequence += ansiEscapes.cursorTo(startColumn);
+		sequence += ansiEscapes.eraseEndLine;
+		for (let i = 1; i < previousRows; i++) {
+			sequence += ansiEscapes.cursorDown();
+			sequence += ansiEscapes.cursorTo(0);
+			sequence += ansiEscapes.eraseEndLine;
+		}
+		if (previousRows > 1) {
+			sequence += ansiEscapes.cursorMove(0, -(previousRows - 1));
+			sequence += ansiEscapes.cursorTo(startColumn);
+		}
+
+		await this.write(sequence);
+		await this.write(input.text);
+
+		// update rendered rows and position cursor at caret
+		const endPos = this._computePositionAfterText(input.text, startColumn);
+		const caretText = input.text.substring(0, input.caretIndex);
+		const caretPos = this._computePositionAfterText(caretText, startColumn);
+
+		input.renderedRows = endPos.rowsDown + 1;
+
+		let moveSeq = "";
+		const rowsUp = endPos.rowsDown - caretPos.rowsDown;
+		if (rowsUp > 0) moveSeq += ansiEscapes.cursorUp(rowsUp);
+		else if (rowsUp < 0) moveSeq += ansiEscapes.cursorDown(-rowsUp);
+		const horizontal = caretPos.column - endPos.column;
+		if (horizontal !== 0) moveSeq += ansiEscapes.cursorMove(horizontal, 0);
+		if (moveSeq) await this.write(moveSeq);
+	}
+
+	_computePositionAfterText(text, startColumn) {
+		let column = startColumn;
+		let rowsDown = 0;
+
+		const getCellWidth = // HACK: Accessing xterm.js private API!
+			this._xterm._core?.unicodeService?.getStringCellWidth?.bind(
+				this._xterm._core.unicodeService
+			) ?? ((s) => s.length);
+
+		const graphemes = this._splitter.splitGraphemes(text);
+
+		for (let g of graphemes) {
+			if (g === SHORT_NEWLINE) {
+				rowsDown += 1;
+				column = 0;
+				continue;
+			}
+
+			const w = getCellWidth(g) || 0;
+
+			if (w > 0 && column + w > this.width) {
+				rowsDown += 1;
+				column = 0;
+			}
+
+			column += w;
+
+			if (column >= this.width) {
+				column = 0;
+				rowsDown += 1;
+			}
+		}
+
+		return { rowsDown, column };
+	}
+
+	_updateRenderedRows() {
+		if (!this.isExpectingInput) return;
+
+		const startColumn = this._input.position.x;
+		const endPos = this._computePositionAfterText(
+			this._input.text,
+			startColumn
+		);
+		this._input.renderedRows = endPos.rowsDown + 1;
+	}
+
 	_cursorToInputEndSeq(input) {
 		const { y, ybase } = this.buffer;
 		const curAbsY = y + ybase;
@@ -832,5 +895,61 @@ export default class Terminal {
 			ansiEscapes.cursorMove(0, endAbsY - curAbsY) +
 			ansiEscapes.cursorTo(end.column)
 		);
+	}
+
+	async _deleteForward() {
+		if (!this.isExpectingInput) return;
+
+		const input = this._input;
+		const i = input.caretIndex;
+		if (i >= input.text.length) return;
+
+		input.text = input.text.substring(0, i) + input.text.substring(i + 1);
+		await this._redrawInput();
+	}
+
+	async _moveCaretWord(dir) {
+		if (!this.isExpectingInput) return;
+
+		const input = this._input;
+		const next = this._wordBoundary(input.text, input.caretIndex, dir);
+		if (next === input.caretIndex) return;
+
+		input.caretIndex = next;
+		await this._redrawInput();
+	}
+
+	async _deleteWord(dir) {
+		if (!this.isExpectingInput) return;
+
+		const input = this._input;
+		const text = input.text;
+		const i = input.caretIndex;
+
+		const j = this._wordBoundary(text, i, dir);
+		if (j === i) return;
+
+		const start = Math.min(i, j);
+		const end = Math.max(i, j);
+
+		input.text = text.substring(0, start) + text.substring(end);
+		input.caretIndex = start;
+		await this._redrawInput();
+	}
+
+	_stepWhile(text, i, dir, predicate) {
+		while (
+			(dir < 0 ? i > 0 : i < text.length) &&
+			predicate(dir < 0 ? text[i - 1] : text[i])
+		)
+			i += dir;
+
+		return i;
+	}
+
+	_wordBoundary(text, i, dir) {
+		i = this._stepWhile(text, i, dir, (ch) => WHITESPACE_REGEXP.test(ch)); // skip spaces
+		i = this._stepWhile(text, i, dir, (ch) => !WHITESPACE_REGEXP.test(ch)); // skip word
+		return i;
 	}
 }
