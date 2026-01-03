@@ -279,7 +279,8 @@ export default class Terminal {
 
 		const input = this._input;
 		this._input = null;
-		this._xterm.write(this._cursorToInputEndSeq(input));
+		if (reason !== INTERRUPTED)
+			this._xterm.write(this._cursorToInputEndSeq(input));
 		if (warning != null)
 			await this.write(NEWLINE + "⚠️  " + warning, theme.ACCENT);
 
