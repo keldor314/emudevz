@@ -111,6 +111,11 @@ export default class Terminal {
 
 		if (title) await this.writeln(title, theme.SYSTEM);
 		if (subtitle) await this.writeln(subtitle, theme.COMMENT);
+		if (window.ROOT_USER) {
+			await this.newline();
+			await this.writehlln(locales.get("root_enabled"), theme.WARNING);
+		}
+
 		this._shell.availableCommands = availableCommands;
 
 		if (startup != null) {

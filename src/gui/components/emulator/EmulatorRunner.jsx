@@ -552,7 +552,7 @@ export default class EmulatorRunner extends PureComponent {
 			useConsole: hasIntegration
 				? false
 				: unlockedUnits.useConsole && settings.useConsole,
-			withLatestCode: true,
+			withLatestCode: !hasIntegration,
 			withHotReload: settings.withHotReload || hasIntegration,
 			syncToVideo: settings.syncToVideo,
 			audioBufferSize: settings.audioBufferSize,

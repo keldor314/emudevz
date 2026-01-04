@@ -30,6 +30,7 @@ import LevelHistoryModal from "../modals/LevelHistoryModal";
 import SupporterPackSettingsModal from "../modals/SupporterPackSettingsModal";
 import IconButton from "./IconButton";
 import ProgressList from "./ProgressList";
+import Tooltip from "./Tooltip";
 import VolumeSlider from "./VolumeSlider";
 import styles from "./NavBar.module.css";
 
@@ -116,16 +117,21 @@ class NavBar extends PureComponent {
 						{level.name[locales.language]}
 					</span>
 					{level.isUsingSnapshot && (
-						<Badge
-							bg="warning"
-							text="dark"
-							className={classNames(
-								styles.warning,
-								"d-none d-lg-block d-xl-block"
-							)}
+						<Tooltip
+							title={locales.get("using_old_snapshot_tooltip")}
+							placement="top"
 						>
-							{locales.get("using_old_snapshot")}
-						</Badge>
+							<Badge
+								bg="warning"
+								text="dark"
+								className={classNames(
+									styles.warning,
+									"d-none d-lg-block d-xl-block"
+								)}
+							>
+								{locales.get("using_old_snapshot")}
+							</Badge>
+						</Tooltip>
 					)}
 					<div className={styles.buttons}>
 						{dlc.installed() && (

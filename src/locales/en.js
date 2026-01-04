@@ -300,6 +300,8 @@ export default {
 	using_gamepad2: "Using gamepad 2",
 	using_keyboard: "Using keyboard: ",
 	using_old_snapshot: "⚠️ Using a read-only snapshot of your old code.",
+	using_old_snapshot_tooltip:
+		"You can use the `root` command to edit old stuff!",
 	using_your_emulator: "Using your emulator ✅",
 	volume: "Volume",
 	win_games_here_to_unlock_roms: "Win games here to unlock new ROMs",

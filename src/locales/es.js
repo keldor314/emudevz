@@ -314,6 +314,8 @@ export default {
 	using_gamepad2: "Usando joystick 2",
 	using_keyboard: "Usando teclado: ",
 	using_old_snapshot: "⚠️ Usando una copia solo lectura de tu código viejo.",
+	using_old_snapshot_tooltip:
+		"¡Puedes usar el comando `root` para editar cosas viejas!",
 	using_your_emulator: "Usando tu emulador ✅",
 	volume: "Volumen",
 	win_games_here_to_unlock_roms:
