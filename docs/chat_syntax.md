@@ -14,7 +14,7 @@ main:
   - ok, enough [end]
 
 more:
-  run: |-
+  run: |
     // this runs when the `more` state is reached
 
     // configure level to win on `end`
