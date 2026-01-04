@@ -20,9 +20,13 @@ play:
     {{Top}}.runner.setIntegration("RoboNinjaClimb");
     {{Top}}.loadROM("/roms/.all/RoboNinjaClimb.neees");
   messages:
-  - bueno, no lo es 🙃
-  - de hecho, morirás muchísimo
-  - te esperaré aquí 👀
+  - en realidad, morirás muchísimo
+  - si resulta ser demasiado...
+  - bueno, ¡tú creaste el emulador!
+  - así que siempre puedes intentar <hackear el juego> 😉
+  - el código debe estar almacenando cosas como la <salud> en alguna parte de la WRAM
+  - solo <llega al final>, como puedas 👀
+  - __(solo no uses __<save states>__, ¡eso es aburrido!)__
   events:
   - roboninjaclimb-end [finish]
 
@@ -49,7 +53,7 @@ savestate-yes:
   messages:
   - ¿usaste... <save states>?!
   - eso es trampa 😅
-  - de todos modos... lo lograste
+  - no era el hackeo que tenía en mente, ¡pero está bien!
   - "<! ROM recibida: 📄  /roms/RoboNinjaClimb.neees"
   - como prometí, puse la ROM en tu directorio 📁  ~/roms~
   - ¡disfruta!
@@ -61,11 +65,10 @@ savestate-no:
   run: |
     window.EmuDevz.achievements.unlock("emulator-robo-ninja-player")
   messages:
-  - ¡increíble! ¡¡lo terminaste sin <save states>!!
-  - eso es pura habilidad 🚀
+  - ¡increíble! jugaste como un dios... o hackeaste como uno 🤣
   - "<! ROM recibida: 📄  /roms/RoboNinjaClimb.neees"
   - como prometí, puse la ROM en tu directorio 📁  ~/roms~
-  - ¡disfruta tu victoria! te la ganaste
+  - ¡disfruta tu victoria! te la ganaste 🚀
   responses:
   - ▶️  continuar [end]
 
