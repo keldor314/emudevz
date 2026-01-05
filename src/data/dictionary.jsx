@@ -388,7 +388,7 @@ const dictionary = {
 			icon: "🔀",
 			en: "A mode of the frame sequencer that runs a five-step pattern.",
 			es:
-				"Un modo del secuenciador de frames de la APU de NES que ejecuta un patrón de cinco pasos.",
+				"Un modo del secuenciador de frames que ejecuta un patrón de cinco pasos.",
 		},
 		"Flag|_Flags": {
 			also: { es: "Bandera|_Banderas" },
@@ -541,9 +541,9 @@ const dictionary = {
 			},
 			icon: "🔢",
 			en:
-				"The bytes that the CPU interpret as code. It's often the product of translating assembly code, written by humans.",
+				"The bytes that the CPU interprets as code. It's often the product of translating assembly code, written by humans.",
 			es:
-				"Los bytes que la CPU interpreta cómo código. A menudo es el producto de traducir lenguaje ensamblador escrito por humanos.",
+				"Los bytes que la CPU interpreta como código. A menudo es el producto de traducir lenguaje ensamblador escrito por humanos.",
 		},
 		"Mapper|_Mappers": {
 			icon: "🗜️",
@@ -639,7 +639,7 @@ const dictionary = {
 			en:
 				"_(Non-maskable interrupt)_ A CPU interrupt triggered at the start of VBlank, when the PPU finishes drawing a frame.",
 			es:
-				"Una interrupción de CPU disparada al principio del VBlank, cuando la PPU termina de dibujar un frame.",
+				"_(Non-maskable interrupt)_ Una interrupción de CPU disparada al principio del VBlank, cuando la PPU termina de dibujar un frame.",
 		},
 		"Noise Channel": {
 			also: { es: "Canal Ruido" },
@@ -716,7 +716,7 @@ const dictionary = {
 			en:
 				"_(Operation code)_ A number that, inside the machine code, represents an instruction code. <br /><br />In the NEEES, it defines both the instruction and the addressing mode.",
 			es:
-				"_(Código de operación)_ Un número que, dentro del código máquina, define un código de instrucción. <br /><br />En la NEEES, define tanto la instrucción como el modo de direccionamiento.",
+				"_(Operation code)_ Un número que, dentro del código máquina, define un código de instrucción. <br /><br />En la NEEES, define tanto la instrucción como el modo de direccionamiento.",
 		},
 		"Overflow Flag": {
 			also: { es: "Bandera Overflow" },

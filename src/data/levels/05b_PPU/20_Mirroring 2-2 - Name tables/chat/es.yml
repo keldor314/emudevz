@@ -20,7 +20,7 @@ show:
 
 vertical:
   messages:
-  - el mirroring "VERTICAL" conecta $2000 a "A" y $2400 a "B", luego repite todo en $2800 y $2C00"
+  - el mirroring "VERTICAL" conecta $2000 a "A" y $2400 a "B", luego repite todo en $2800 y $2C00
   - <{vertical.png}>
   - y ahora están reflejadas verticalmente 😊
   responses:

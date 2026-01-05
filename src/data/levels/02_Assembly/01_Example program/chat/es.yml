@@ -177,7 +177,7 @@ finish:
     {{Bottom}}.setDelay(500);
   messages:
   - increíble, ahora conoces el funcionamiento básico de una CPU
-  - clickea el butón ⏮  y ejecuta la simulación las veces que necesites
+  - clickea el botón ⏮  y ejecuta la simulación las veces que necesites
   - cuando quieras, podemos ir al siguiente nivel
   responses:
   - 💪  creo que ya entendí todo [end]

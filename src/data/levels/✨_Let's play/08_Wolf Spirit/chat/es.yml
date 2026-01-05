@@ -22,7 +22,7 @@ play:
     {{Right}}.loadROM("/roms/.all/WolfSpirit.neees", "stream");
   messages:
   - ¡sí!
-  - vé y detiene al espíritu
+  - ve y detén al espíritu
   events:
   - wolfspirit-end [finish]
 

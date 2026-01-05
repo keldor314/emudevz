@@ -10,7 +10,7 @@ how:
   messages:
   - 🌊  el <audio> funciona definiendo ondas que coinciden directamente con lo que hacen los parlantes
   - 🎵  cuando un parlante vibra a una frecuencia particular, crea una nota
-  - 📈  como el tiempo es una <unidad contínua>, las computadoras almacenan las ondas como una secuencia de samples, que son números que definen la altura de la onda en un punto específico del tiempo
+  - 📈  como el tiempo es una <unidad continua>, las computadoras almacenan las ondas como una secuencia de samples, que son números que definen la altura de la onda en un punto específico del tiempo
   - 🔢  en la NEEES, los samples son números en el rango ~0-15~, y al emular la APU, enviamos 44100 samples por segundo a la placa de sonido
   - a eso se lo llama frecuencia de muestreo
   responses:

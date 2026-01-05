@@ -45,7 +45,7 @@ exercise:
       **renderScanline()**:
         **->** en la primera línea, si `showSprites` está apagada, ¡retorna! ¡<no hagas nada>!
       **_render(...)**:
-        **->** ignora los primeros 8 pixeles si es necesario:
+        **->** ignora los primeros 8 píxeles si es necesario:
           ```javascript if (!showSpritesInFirst8Pixels && x < 8)
             continue;```
       **->** en la comprobación de sprite-zero hit, agrega `showBackground` como condición

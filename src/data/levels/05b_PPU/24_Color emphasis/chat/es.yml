@@ -49,7 +49,7 @@ exercise:
 
 corollary:
   messages:
-    - el énfasis de color se usa, por ejemplo, en 🕊️ 🛰️  ~Spacegulls~ durante la pausa
-    - intenta pausar el juego con <Start> y la pantalla se volverá rojiza
+  - el énfasis de color se usa, por ejemplo, en 🕊️ 🛰️  ~Spacegulls~ durante la pausa
+  - intenta pausar el juego con <Start> y la pantalla se volverá rojiza
   responses:
-    - ▶️  continuar [end]
+  - ▶️  continuar [end]

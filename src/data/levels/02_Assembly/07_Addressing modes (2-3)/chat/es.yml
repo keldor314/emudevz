@@ -11,13 +11,6 @@ main:
       });
       {{Bottom}}.setMemoryStart(0x0);
     }
-
-    set((m) => {
-      m.chat.stopBlock = locales.get("not_now");
-      m.$canRun = false;
-      m.$canEdit = false;
-    });
-    {{Bottom}}.setMemoryStart(0x0);
   messages: []
   events:
   - compiled [main2]

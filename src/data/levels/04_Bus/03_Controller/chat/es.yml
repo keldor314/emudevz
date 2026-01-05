@@ -70,7 +70,7 @@ onread:
       **->** si `strobe`:
         **->** retorna el estado del primer botón <como número>
           (```javascript +boolean``` lo convierte en número)
-      **else:**
+      **->** si no:
         **->** determina si el botón actual está presionado (según ```javascript this.cursor```)
           (llamemos a esto `isPressed`)
         **->** incrementa ```javascript this.cursor```

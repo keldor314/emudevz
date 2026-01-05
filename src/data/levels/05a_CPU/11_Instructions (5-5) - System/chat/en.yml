@@ -5,7 +5,7 @@ main:
   - "and one of them is pretty trivial: `NOP`"
   - "`NOP` means \"No Operation\", and it does nothing!"
   - game developers used this as a placeholder, or to introduce timing delays to synchronize their systems
-  - so, last one is `BRK` which generates an <Software Interrupt>
+  - and last one is `BRK`, which generates a <Software Interrupt>
   responses:
   - what's an interrupt? [interrupt]
 

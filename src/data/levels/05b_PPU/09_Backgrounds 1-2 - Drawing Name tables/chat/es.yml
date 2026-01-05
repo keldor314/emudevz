@@ -80,7 +80,7 @@ help:
         const tile = new Tile(this.ppu, patternTableId, tileId, tileInsideY);
         for (let xx = 0; xx < 8; xx++) {
           const colorIndex = tile.getColorIndex(xx);
-          // TODO: Plotear cada pixel del tile
+          // TODO: Plotear cada píxel del tile
         }
       }```
   responses:

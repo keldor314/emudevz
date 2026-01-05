@@ -5,7 +5,7 @@ main:
   - "y una de ellas es bastante trivial: `NOP`"
   - "`NOP` significa \"No Operation\", ¡y no hace nada!"
   - los desarrolladores de juegos usaban esto como un espacio reservado, o para introducir retrasos de tiempo para sincronizar sus sistemas
-  - así que, la última es `BRK`, que genera un <Interrupción de Software>
+  - y la última es `BRK`, que genera una <Interrupción de Software>
   responses:
   - ¿qué es una interrupción? [interrupt]
 

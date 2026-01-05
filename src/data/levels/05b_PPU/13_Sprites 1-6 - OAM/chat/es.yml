@@ -55,6 +55,6 @@ spritesize:
 patterntable:
   messages:
   - en modo ~8x8~, el id de tile es el `byte1` de la entrada OAM, y el id de pattern table es ```javascript ppu.registers.ppuCtrl.sprite8x8PatternTableId```
-  - en modo ~8x16~, the id de tile es ```javascript (byte1 & 0b11111110)``` y el id de pattern table es ```javascript (byte1 & 0b00000001)```
+  - en modo ~8x16~, el id de tile es ```javascript (byte1 & 0b11111110)``` y el id de pattern table es ```javascript (byte1 & 0b00000001)```
   responses:
   - ...exercise

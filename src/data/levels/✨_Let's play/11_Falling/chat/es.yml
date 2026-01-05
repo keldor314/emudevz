@@ -9,7 +9,7 @@ main:
   - |-
     se llama 🙌 ☁️  ~Falling~
     <{screenshot.png;30x30}>
-  - un simple juego de <endless faller> donde esquivas obstáculos y recoges objetos
+  - un simple juego de <caída infinita> donde esquivas obstáculos y recoges objetos
   - si lo completas, te enviaré el <archivo ROM>
   - en el formato ~*.neees~
   responses:
@@ -22,7 +22,7 @@ play:
     {{Right}}.loadROM("/roms/.all/Falling.neees", "stream");
   messages:
   - no ganas...
-  - bueno, digamos que ganas si llegás a 30 puntos
+  - bueno, digamos que ganas si llegas a 30 puntos
   - 👀
   events:
   - falling-end [finish]

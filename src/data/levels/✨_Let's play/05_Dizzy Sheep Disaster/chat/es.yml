@@ -34,7 +34,7 @@ finish:
       filesystem.cp(`${Drive.ALLROMS_DIR}/${file}`, `${directory}/${file}`);
     });
   messages:
-  - ERES ~GENIAL~.
+  - ¡ese último nivel fue bastante desafiante!
   - "<! ROM recibida: 📄  /roms/DizzySheepDisaster.neees"
   - como prometí, puse la ROM en tu directorio 📁  ~/roms~
   - "<! ROM recibida: 📄  /roms/DreamDogDilemma.neees"

@@ -51,7 +51,7 @@ exercise:
 help:
   messages:
   - manejé eso por ti, ya que esa parte puede ser un poco rebuscada
-  - básicamente, llamar a ```javascript read(0x0802)``` debería retonar lo mismo que ```javascript read(0x0002)```
+  - básicamente, llamar a ```javascript read(0x0802)``` debería retornar lo mismo que ```javascript read(0x0002)```
   - y llamar a ```javascript write(0x0802, value)``` debería tener el mismo efecto que tiene ```javascript write(0x0002, value)```
   - por eso es que el rango $0800-$1FFF es un 🚽  espejo de $0000-$07FF
   - "aquí dejo un ejemplo con el otro rango espejo en $2008:"

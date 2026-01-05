@@ -94,8 +94,8 @@ exercise:
     📚  implementa en 🎛️  `APUControl`:
     **onWrite(value)**:
       **->** __mantén el comportamiento existente__
-      **->** if `!this.enablePulse1`:
+      **->** si `!this.enablePulse1`:
         **->** reinicia el contador de longitud de <Pulse 1>
-      **->** if `!this.enablePulse2`:
+      **->** si `!this.enablePulse2`:
         **->** reinicia el contador de longitud de <Pulse 2>
   responses: []
