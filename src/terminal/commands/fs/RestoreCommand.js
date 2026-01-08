@@ -17,17 +17,21 @@ export default class RestoreCommand extends FilesystemCommand {
 		if (completedLevels.length === 0) return await this._notAvailable();
 
 		const currentLevelId = Level.current.id;
-		let index = _.findLastIndex(
+		let startIndex = _.findLastIndex(
 			completedLevels,
 			(it) => it.levelId === currentLevelId
 		);
-		if (index <= 0) index = completedLevels.length; // (level not completed)
+		if (startIndex <= 0) startIndex = completedLevels.length; // (level not completed)
 
-		const previousLevelId = completedLevels[index - 1].levelId;
+		const snapshotIndex = _.findLastIndex(
+			completedLevels,
+			(it, i) =>
+				i < startIndex && filesystem.exists(Drive.snapshotDirOf(it.levelId))
+		);
+		if (snapshotIndex === -1) return await this._notAvailable();
+
+		const previousLevelId = completedLevels[snapshotIndex].levelId;
 		const previousSnapshotDir = Drive.snapshotDirOf(previousLevelId);
-
-		if (!filesystem.exists(previousSnapshotDir))
-			return await this._notAvailable();
 
 		const restoreTargets = this._fileArgs
 			.map((it) => filesystem.resolve(it, this._shell.workingDirectory))
