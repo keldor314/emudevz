@@ -242,6 +242,7 @@ export default class Terminal {
 			await this.newline();
 			await this.write(styledIndicator);
 			await async.sleep();
+			if (this._input == null) return;
 			const { x, y, ybase } = this.buffer;
 			this._input.position.x = x;
 			this._input.position.y = y + ybase;
@@ -270,7 +271,8 @@ export default class Terminal {
 
 		const input = this._input;
 		this._input = null;
-		await this.write(this._cursorToInputEndSeq(input));
+
+		if (input.multiLine) await this.write(this._cursorToInputEndSeq(input));
 
 		const isValid = input.confirm();
 		input.caretIndex = 0;
@@ -284,8 +286,9 @@ export default class Terminal {
 
 		const input = this._input;
 		this._input = null;
-		if (reason !== INTERRUPTED)
-			this._xterm.write(this._cursorToInputEndSeq(input));
+
+		if (input.multiLine) await this.write(this._cursorToInputEndSeq(input));
+
 		if (warning != null)
 			await this.write(NEWLINE + "⚠️  " + warning, theme.ACCENT);
 
