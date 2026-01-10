@@ -230,6 +230,8 @@ export default class CodeEditor extends PureComponent {
 				this.forceUpdate();
 			},
 			"emulator-started": () => {
+				if (window.EmuDevz.state.isRunningEmulatorTest) return;
+
 				this.setState({ actionName: ACTION_SYNC_EMULATOR });
 			},
 			"emulator-stopped": () => {
