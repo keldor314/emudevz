@@ -80,8 +80,10 @@ function registerIpc(ipcMain) {
 		}
 
 		try {
+			// StoreFlag.None = 0
+			// StoreFlag.AddToCart = 1
 			// StoreFlag.AddToCartAndShow = 2
-			client.overlay.activateToStore(DLC_APP_ID, 2);
+			client.overlay.activateToStore(DLC_APP_ID, 1);
 			return { ok: true };
 		} catch (err) {
 			const reason = err?.message || err?.toString() || "?";
