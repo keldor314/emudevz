@@ -14,7 +14,7 @@ how:
   - "(dos escrituras consecutivas: una para el byte alto, y una para el byte bajo)"
   - luego, escriben en 📦  PPUData el byte que quieren poner en esa dirección
   - <{PPUAddr_PPUData.png}>
-  - esto permite que el código del juego acceda a cualquier región de la memoria de la PPU, incluyendo 👾 CHR-RAM, 🐏 VRAM y 🎨 Palette RAM
+  - esto permite que el código del juego acceda a cualquier región de la memoria de la PPU, incluyendo 👾  CHR-RAM, 🐏  VRAM y 🎨  Palette RAM
   responses:
   - bien, supongo que necesito definir la VRAM en algún lugar [exercise]
 

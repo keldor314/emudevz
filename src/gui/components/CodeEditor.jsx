@@ -134,7 +134,8 @@ export default class CodeEditor extends PureComponent {
 			isPinned: !!args.isPinned,
 			isReadOnly: !!args.readOnly,
 			actionName:
-				(window.EmuDevz.isRunningEmulator()
+				(window.EmuDevz.isRunningEmulator() &&
+				!window.EmuDevz.state.isRunningEmulatorTest
 					? ACTION_SYNC_EMULATOR
 					: args.action) || NULL_ACTION,
 			onlyShowActionWhen: args.onlyShowActionWhen || null,

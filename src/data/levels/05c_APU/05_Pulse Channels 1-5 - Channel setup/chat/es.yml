@@ -30,7 +30,7 @@ exercise:
           new PulseChannel(this, 1, "enablePulse2")
         ],
       }```
-  - 📚  llama al método `step()` de los dos canales pulso al inicio de 🔊 `APU::step()`
+  - 📚  llama al método `step()` de los dos canales pulso al inicio de 🔊  `APU::step()`
   - |-
     📚  reemplaza el <código de prueba> actual en 🔊  `APU::sample(...)` con algo como:
       ```javascript const pulse1 = this.channels.pulses[0].sample();

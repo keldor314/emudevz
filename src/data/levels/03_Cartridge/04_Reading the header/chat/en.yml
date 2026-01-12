@@ -95,7 +95,7 @@ import:
   - |-
     just import it like this:
       ```javascript import byte from "/lib/byte";```
-  - 💡 you can test the library by using the `repl` command
+  - 💡  you can test the library by using the `repl` command
   - an interactive JS prompt! 🤯
   - |-
     try running these lines of code:
