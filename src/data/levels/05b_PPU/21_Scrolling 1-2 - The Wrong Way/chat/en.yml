@@ -77,7 +77,7 @@ exercise:
         **->** sets ```javascript this.x = 0```
         **->** sets ```javascript this.y = 0```
       **onWrite(value)**:
-        **->** if 📍 PPUAddr's `latch` is ```javascript false```:
+        **->** if 📍  PPUAddr's `latch` is ```javascript false```:
           **->** writes the `value` to ```javascript this.x```
         **->** if it's ```javascript true```:
           **->** writes the `value` to ```javascript this.y```
