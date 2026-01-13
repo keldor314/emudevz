@@ -9,14 +9,36 @@ main:
 how:
   messages:
   - a través de los registros de video llamados 📍  PPUAddr y 📦  PPUData
-  - son como un puente que conecta la 🧠  CPU y 🖥️  PPU
-  - primero, los juegos ponen la dirección PPU que quieren escribir en 📍  PPUAddr
+  - son como un puente que conecta la 🧠  CPU y la 🖥️  PPU
+  - primero, los juegos ponen en 📍  PPUAddr la dirección PPU a la que quieren escribir
   - "(dos escrituras consecutivas: una para el byte alto, y una para el byte bajo)"
   - luego, escriben en 📦  PPUData el byte que quieren poner en esa dirección
   - <{PPUAddr_PPUData.png}>
   - esto permite que el código del juego acceda a cualquier región de la memoria de la PPU, incluyendo 👾  CHR-RAM, 🐏  VRAM y 🎨  Palette RAM
   responses:
+  - (*) dame otro ejemplo 🤔 [example]
   - bien, supongo que necesito definir la VRAM en algún lugar [exercise]
+
+example:
+  messages:
+  - te doy el mismo ejemplo, pero en assembly
+  - supongamos que un juego de NEEES quiere escribir el byte $D7 en la dirección PPU $208F
+  - el código máquina solo puede escribir en direcciones de la CPU, ¿no?
+  - las direcciones PPU están en su propio espacio de direcciones, separado
+  - entonces usan 📍  PPUAddr y 📦  PPUData <como puente> entre la 🧠  CPU y la 🖥️  PPU
+  - |-
+    en nuestro ejemplo, harían:
+    ```raw
+    LDA #$20
+    STA $2006
+    LDA #$8F
+    STA $2006
+
+    LDA #$D7
+    STA $2007
+    ```
+  responses:
+  - ...how
 
 exercise:
   messages:

@@ -10,13 +10,34 @@ how:
   messages:
   - through the video registers called 📍  PPUAddr and 📦  PPUData
   - they are like a bridge that connects the 🧠  CPU and 🖥️  PPU
-  - first, games put the PPU address they want to write in 📍  PPUAddr
+  - first, games put into 📍  PPUAddr the PPU address they want to write to
   - "(two consecutive writes: one for the high byte, and one for the low byte)"
-  - then, they write to 📦  PPUData the byte they want to put in that address
+  - then, they write to 📦  PPUData the byte they want to put at that address
   - <{PPUAddr_PPUData.png}>
-  - this lets the game's code access any region in PPU memory, including 👾  CHR-RAM, 🐏  VRAM and 🎨  Palette RAM
+  - this lets the game's code access any region of PPU memory, including 👾  CHR-RAM, 🐏  VRAM and 🎨  Palette RAM
   responses:
+  - (*) give me another example 🤔 [example]
   - nice, I guess I need to define the VRAM somewhere [exercise]
+
+example:
+  messages:
+  - I'll give you the same example, but in assembly
+  - let's say a NEEES game wants to write the byte $D7 to PPU address $208F
+  - the machine code can only write to CPU addresses, right?
+  - PPU addresses are in their own separate address space
+  - what they do, then, is they use 📍  PPUAddr and 📦  PPUData <as a bridge> between the 🧠  CPU and 🖥️  PPU
+  - |-
+    in our example, they'd do:
+    ```raw
+    LDA #$20
+    STA $2006
+    LDA #$8F
+    STA $2006
+
+    LDA #$D7
+    STA $2007```
+  responses:
+  - ...how
 
 exercise:
   messages:
