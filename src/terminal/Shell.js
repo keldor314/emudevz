@@ -40,7 +40,15 @@ export default class Shell extends Program {
 	}
 
 	async runLine(commandLine) {
-		const commandParts = commandLine.trim().split(ARGUMENT_SEPARATOR);
+		const commandParts = commandLine
+			.trim()
+			.split(ARGUMENT_SEPARATOR)
+			.filter((it) => !_.isEmpty(it.trim()));
+		if (_.isEmpty(commandParts)) {
+			this._terminal.restart();
+			return;
+		}
+
 		const commandName = commandParts[0];
 		const args = commandParts.slice(1);
 
