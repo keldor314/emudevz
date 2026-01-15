@@ -229,6 +229,18 @@ export default class Level {
 		bus.emit("unpin" + this.debuggerPinSuffix, { changeFocus: false });
 	}
 
+	canSyncEmulator() {
+		const isRunningEmulator = window.EmuDevz.isRunningEmulator();
+		const isRunningEmulatorTest = window.EmuDevz.state.isRunningEmulatorTest;
+		const tv = this.$layout.findInstance("TV");
+		const isEmulatorTestPaneOpen =
+			tv?.state?.type === "videoTest" || tv?.state?.type === "audioTest";
+
+		return (
+			isRunningEmulator && !isRunningEmulatorTest && !isEmulatorTestPaneOpen
+		);
+	}
+
 	focusConsole() {
 		const instance = this.$layout.findInstance("Console");
 		if (instance == null) return;

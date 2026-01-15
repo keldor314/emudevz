@@ -134,8 +134,7 @@ export default class CodeEditor extends PureComponent {
 			isPinned: !!args.isPinned,
 			isReadOnly: !!args.readOnly,
 			actionName:
-				(window.EmuDevz.isRunningEmulator() &&
-				!window.EmuDevz.state.isRunningEmulatorTest
+				(Level.current.canSyncEmulator()
 					? ACTION_SYNC_EMULATOR
 					: args.action) || NULL_ACTION,
 			onlyShowActionWhen: args.onlyShowActionWhen || null,
@@ -231,7 +230,7 @@ export default class CodeEditor extends PureComponent {
 				this.forceUpdate();
 			},
 			"emulator-started": () => {
-				if (window.EmuDevz.state.isRunningEmulatorTest) return;
+				if (!Level.current.canSyncEmulator()) return;
 
 				this.setState({ actionName: ACTION_SYNC_EMULATOR });
 			},
