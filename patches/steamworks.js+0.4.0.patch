@@ -1,0 +1,13 @@
+diff --git a/node_modules/steamworks.js/index.js b/node_modules/steamworks.js/index.js
+index bc9e54d..249dadf 100644
+--- a/node_modules/steamworks.js/index.js
++++ b/node_modules/steamworks.js/index.js
+@@ -54,7 +54,7 @@ module.exports.electronEnableSteamOverlay = (disableEachFrameInvalidation) => {
+     }
+ 
+     electron.app.commandLine.appendSwitch('in-process-gpu')
+-    electron.app.commandLine.appendSwitch('disable-direct-composition')
++    // electron.app.commandLine.appendSwitch('disable-direct-composition') // DISABLED (causes ghost alt-tab entries on W11)
+ 
+     if (!disableEachFrameInvalidation) {
+         /** @param {electron.BrowserWindow} browserWindow */
