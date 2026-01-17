@@ -29,6 +29,10 @@
 	background-color: var(--failure, #d9534f);
 }
 
+.unlocked {
+	background-color: var(--unlocked, #b8a7e8);
+}
+
 .locked {
 	background-color: var(--locked, #acacac);
 	cursor: not-allowed;

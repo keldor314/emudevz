@@ -192,6 +192,7 @@ export const GLOBAL_THEME_GROUPS = [
 			{ key: "failure", label: "failure", defaultValue: "#d9534f" },
 			{ key: "warning", label: "warning", defaultValue: "#e8a931" },
 			{ key: "danger", label: "danger", defaultValue: "#ff07005e" },
+			{ key: "unlocked", label: "unlocked", defaultValue: "#b8a7e8" },
 			{ key: "locked", label: "locked", defaultValue: "#acacac" },
 			{ key: "disabled", label: "disabled", defaultValue: "#323232" },
 		],
