@@ -88,6 +88,6 @@ coordinates:
 
 color:
   messages:
-  - leer `paletteColors` con el `colorIndex` te dará el ~color~
+  - acceder a `paletteColors` con el `colorIndex` te dará el ~color~
   responses:
   - ...exercise

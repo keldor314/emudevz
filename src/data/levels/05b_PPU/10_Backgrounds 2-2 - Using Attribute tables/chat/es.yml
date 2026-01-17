@@ -62,7 +62,7 @@ math:
       const blockY = Math.floor((y % 32) / 16);
       const blockIndex = blockY * 2 + blockX;```
   - 🕵️  con este `blockIndex`, puedes tomar los bits requeridos de `block` usando `byte.getBits(...)`
-  - (necesitas leer 2 bits, comenzando desde el bit `blockIndex * 2`)
+  - (necesitas obtener 2 bits, comenzando desde el bit `blockIndex * 2`)
   - ¡y eso te dará el `paletteId` de ese punto ~(x, y)~!
   responses:
   - está 100% perfectamente claro ahora, ¡gracias! [clear]
