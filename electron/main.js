@@ -72,8 +72,8 @@ function createWindow() {
 	}
 
 	// Keyboard zoom shortcuts on Windows/Linux:
-	// - Ctrl+Shift++ or Ctrl+NumpadAdd: Zoom in
-	// - Ctrl+- or Ctrl+NumpadSubtract: Zoom out
+	// - Ctrl++ or Ctrl+NumpadAdd: Zoom in
+	// - Ctrl-- or Ctrl+NumpadSubtract: Zoom out
 	// - Ctrl+0: Reset zoom
 	win.webContents.on("before-input-event", (event, input) => {
 		if (input.type === "keyDown" && input.alt && input.code === "F4") {
@@ -84,6 +84,22 @@ function createWindow() {
 		}
 
 		if (input.type !== "keyDown") return;
+
+		// Fullscreen toggle
+		// Windows: Alt+Enter
+		// Mac: Ctrl+Cmd+F
+		const isMac = process.platform === "darwin";
+		if (
+			(!isMac &&
+				input.alt &&
+				(input.code === "Enter" || input.code === "NumpadEnter")) ||
+			(isMac && input.control && input.meta && input.code === "KeyF")
+		) {
+			win.setFullScreen(!win.isFullScreen());
+			event.preventDefault();
+			return;
+		}
+
 		const ctrlOrCmd = input.control || input.meta;
 		if (!ctrlOrCmd) return;
 
