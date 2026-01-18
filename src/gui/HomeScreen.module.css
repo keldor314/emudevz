@@ -54,3 +54,15 @@
 	white-space: nowrap;
 	color: var(--neutral-superlight, #ffffff);
 }
+
+.controlsHint {
+	user-select: none;
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	background: #6464641f;
+	border-radius: 16px;
+	font-size: x-small;
+	padding: 12px;
+	font-family: "Courier New", Courier, monospace;
+}

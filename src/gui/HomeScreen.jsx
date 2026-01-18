@@ -163,6 +163,20 @@ class HomeScreen extends PureComponent {
 						</button>
 					</div>
 				</div>
+
+				{window.EmuDevz.isDesktop() && (
+					<div className={styles.controlsHint}>
+						<div>
+							➕ <strong>Zoom in</strong>: &nbsp;&nbsp;&nbsp;Ctrl +
+						</div>
+						<div>
+							➖ <strong>Zoom out</strong>: &nbsp;&nbsp;Ctrl -
+						</div>
+						<div>
+							🔄 <strong>Reset zoom</strong>: Ctrl 0
+						</div>
+					</div>
+				)}
 			</>
 		);
 	}
