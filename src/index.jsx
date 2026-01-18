@@ -35,6 +35,10 @@ window.EmuDevz = {
 	isDesktop() {
 		return window.electronAPI?.isElectron;
 	},
+	resetState() {
+		this.state.isRunningEmulatorTest = false;
+		this.state.isRunningDebugger = false;
+	},
 	state: {
 		isRunningEmulatorTest: false,
 		isRunningDebugger: false,

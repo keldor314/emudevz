@@ -64,12 +64,14 @@ export default {
 					}
 				}
 
+				window.EmuDevz.resetState();
 				_dispatch_.savedata.setLastLevelId(levelId);
 				let r = parseInt(window.location.href.split("?r=")[1] ?? 0) + 1;
 				if (isNaN(r)) r = 1;
 				_dispatch_(replace(`/levels/${levelId}?r=${r}`));
 			},
 			goToReplacing(levelId) {
+				window.EmuDevz.resetState();
 				_dispatch_.savedata.setLastLevelId(levelId);
 				let r = parseInt(window.location.href.split("?r=")[1] ?? 0) + 1;
 				if (isNaN(r)) r = 1;
