@@ -64,19 +64,19 @@ cp pre-licenses.txt public/licenses.txt
 yarn licenses generate-disclaimer --prod >> public/licenses.txt
 ```
 
-## Known issues
+### Known issues
 
 These are notes from the January 2026 release on Steam. I hope these issues can be resolved in the future.
 
-### Windows
+#### Windows
 
 - On _Windows 11_, when using a full-screen Electron app with the Steam overlay, [ghost Alt-Tab windows are created](https://github.com/ceifa/steamworks.js/issues/95). As a workaround, fullscreen mode is disabled on Windows.
 
-### macOS
+#### macOS
 
 - The Steam overlay [doesn't seem to work](https://github.com/ceifa/steamworks.js/issues/160).
 
-### Linux
+#### Linux
 
 - The app doesn't boot in [sandbox mode](https://www.electronjs.org/docs/latest/tutorial/sandbox) when launched via Steam. As a workaround, Steam launches the app with `--no-sandbox`.
 - The app doesn't boot on [Arch Linux](https://archlinux.org) with the latest [Electron](https://www.electronjs.org/) when using the [Steam Linux Runtime 3.0](https://github.com/ValveSoftware/steam-runtime). As a workaround, Electron _36.9.5_ was used and forced to launch using _X11_ with `--enable-features=UseOzonePlatform --ozone-platform=x11`.
