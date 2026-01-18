@@ -14,6 +14,15 @@ const isDev = !app.isPackaged;
 
 app.setName("EmuDevz");
 
+// Match electron-builder appId for correct icon association
+if (process.platform === "win32") {
+	app.setAppUserModelId("io.r-labs.emudevz");
+}
+
+// Enable Steam integrations
+steam.registerIpc(ipcMain);
+steam.enableOverlay();
+
 // Set up custom app:// protocol
 protocol.registerSchemesAsPrivileged([
 	{
@@ -57,11 +66,6 @@ function createWindow() {
 
 	// Disable native menu bar (Alt)
 	if (!isDev) win.setMenu(null);
-
-	if (process.platform === "win32") {
-		// (match electron-builder appId for correct icon association)
-		app.setAppUserModelId("io.r-labs.emudevz");
-	}
 
 	// Dev: open dev server URL | Prod: serve via app:// protocol
 	if (isDev) {
@@ -193,6 +197,3 @@ ipcMain.handle("open-devtools", () => {
 	const win = BrowserWindow.getFocusedWindow();
 	if (win) win.webContents.openDevTools({ mode: "detach" });
 });
-
-steam.registerIpc(ipcMain);
-steam.enableOverlay();
