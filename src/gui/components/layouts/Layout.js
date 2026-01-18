@@ -1,5 +1,7 @@
 import { PureComponent } from "react";
 import _ from "lodash";
+import { DEFAULT_KEY_BINDINGS } from "../../../models/savedata";
+import store from "../../../store";
 import { sfx } from "../../sound";
 
 export default class Layout extends PureComponent {
@@ -52,6 +54,18 @@ export default class Layout extends PureComponent {
 		return components.find(
 			(it) => it?.constructor.id === typeId && condition(it)
 		);
+	}
+
+	getKeyBindings() {
+		const keyBindings =
+			store.getState().savedata?.keyBindings?.paneNavigation || {};
+
+		return {
+			paneNavigation: {
+				...DEFAULT_KEY_BINDINGS.paneNavigation,
+				...keyBindings,
+			},
+		};
 	}
 
 	_onPin = (pin) => {

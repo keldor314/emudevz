@@ -83,6 +83,7 @@ export default {
 	deleting: "Borrando",
 	disconnected:
 		"🔌  Desconectado. ¡Usa el comando `chat` para hablar de nuevo!",
+	down: "Abajo",
 	drag_and_drop_here: "¡Arrastra una ROM aquí!",
 	emulation_fullscreen: "Activar pantalla completa",
 	emulation_go_to_error: "Ir a la línea del error",
@@ -141,6 +142,7 @@ export default {
 	language_en: "Inglés",
 	language_es: "Español",
 	last_version: " (última versión)",
+	left: "Izquierda",
 	letsplay_unlock_msg1: "¡Nuevo",
 	letsplay_unlock_msg2: "juego de NEEES",
 	letsplay_unlock_msg3: "desbloqueado!",
@@ -159,6 +161,7 @@ export default {
 	open_devtools: "Herramientas para desarrolladores",
 	opening: "Abriendo",
 	optional: "(opcional)",
+	pane_navigation_keys: "Teclas de navegación entre paneles",
 	performance_tips_reload: "Recarga la página 😅",
 	performance_tips_remove_logs_after: "",
 	performance_tips_remove_logs_before: "Remueve cualquier llamada a",
@@ -198,6 +201,7 @@ export default {
 		"⚠️  <TODO> tu `/code` será reemplazado por la copia del nivel anterior.\r\n¿Continuar? ~(y/N)~",
 	restore_warning_paths:
 		"⚠️  Se reemplazarán estos paths en `/code` con la copia del nivel anterior: ~(y/N)~",
+	right: "Derecha",
 	rm_deleting_recursively: "💥  Borrando recursivamente...",
 	rm_recursive_flag: "(para omitir esta verificación, corre `rm -rf`)",
 	rm_with_files:
@@ -308,6 +312,7 @@ export default {
 	the_operation_failed: "La operación falló.",
 	toggle_markdown_edit: "Alternar edición de Markdown",
 	unlocks: "Desbloquea",
+	up: "Arriba",
 	using_bugged_emulator: "Usando BrokenNEEES ❌",
 	using_default_emulator: "Usando BrokenNEEES ⚠️",
 	using_gamepad1: "Usando joystick 1",

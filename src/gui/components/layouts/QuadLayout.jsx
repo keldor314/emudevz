@@ -125,8 +125,10 @@ export default class QuadLayout extends Layout {
 
 	onKeyDown = (e) => {
 		const { selectedX, selectedY } = this.state;
+		const keys = this.getKeyBindings().paneNavigation;
+		const key = e.key?.toUpperCase?.() || "";
 
-		if (e.key === "ArrowRight" && e.altKey) {
+		if ((key === "ARROWRIGHT" || key === keys.right) && e.altKey) {
 			if (selectedX === "Left") {
 				if (selectedY === "Top") this.focus("TopRight");
 				else this.focus("BottomRight");
@@ -135,7 +137,7 @@ export default class QuadLayout extends Layout {
 			e.stopPropagation();
 		}
 
-		if (e.key === "ArrowLeft" && e.altKey) {
+		if ((key === "ARROWLEFT" || key === keys.left) && e.altKey) {
 			if (selectedX === "Right") {
 				if (selectedY === "Top") this.focus("TopLeft");
 				else this.focus("BottomLeft");
@@ -144,7 +146,7 @@ export default class QuadLayout extends Layout {
 			e.stopPropagation();
 		}
 
-		if (e.key === "ArrowUp" && e.altKey) {
+		if ((key === "ARROWUP" || key === keys.up) && e.altKey) {
 			if (selectedY === "bottom") {
 				if (selectedX === "Left") this.focus("TopLeft");
 				else this.focus("TopRight");
@@ -153,7 +155,7 @@ export default class QuadLayout extends Layout {
 			e.stopPropagation();
 		}
 
-		if (e.key === "ArrowDown" && e.altKey) {
+		if ((key === "ARROWDOWN" || key === keys.down) && e.altKey) {
 			if (selectedY === "Top") {
 				if (selectedX === "Left") this.focus("BottomLeft");
 				else this.focus("BottomRight");

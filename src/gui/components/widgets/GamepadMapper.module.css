@@ -37,35 +37,12 @@
 	align-items: center;
 }
 
-.buttonBox {
-	min-height: 24px;
-	padding: 4px;
-	margin: 4px;
-	border-radius: 4px;
-	border: 1px solid #888;
-	background: #222;
-	color: #eee;
-	font-size: 10px;
-	cursor: pointer;
-
-	display: block;
-	width: 32px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	text-align: center;
-}
-
-.buttonBox:hover {
-	filter: brightness(2);
-}
-
 .longButton {
 	width: 48px;
 }
 
 .redButton {
-	background: #f03a17;
+	background: #f03a17 !important;
 	border-radius: 32px;
 }
 

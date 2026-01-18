@@ -5,10 +5,12 @@ import { FaUndo } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import locales, { LANGUAGES } from "../../../locales";
+import { DEFAULT_KEY_BINDINGS } from "../../../models/savedata";
 import { filepicker, savefile, toast } from "../../../utils";
 import Button from "../widgets/Button";
 import GamepadMapper from "../widgets/GamepadMapper";
 import IconButton from "../widgets/IconButton";
+import KeyMapper from "../widgets/KeyMapper";
 import VolumeSlider from "../widgets/VolumeSlider";
 import styles from "./SettingsModal.module.css";
 
@@ -34,6 +36,7 @@ class SettingsModal extends PureComponent {
 			setCrtFilter,
 			open,
 			gameMode,
+			keyBindings,
 		} = this.props;
 		const {
 			areYouSureRestore,
@@ -154,6 +157,29 @@ class SettingsModal extends PureComponent {
 									<GamepadMapper player={1} extended={gameMode === "free"} />
 									<GamepadMapper player={2} extended={gameMode === "free"} />
 								</div>
+							)}
+						</Form.Group>
+						<Form.Group style={{ marginTop: MARGIN }}>
+							{open && (
+								<KeyMapper
+									title={`⌨️ ${locales.get("pane_navigation_keys")}`}
+									items={[
+										{ id: "up", label: locales.get("up") },
+										{ id: "left", label: locales.get("left") },
+										{ id: "down", label: locales.get("down") },
+										{ id: "right", label: locales.get("right") },
+									]}
+									mapping={keyBindings?.paneNavigation}
+									defaultMapping={DEFAULT_KEY_BINDINGS.paneNavigation}
+									onChange={(paneNavigation) => {
+										this.props.setKeyBindings({
+											...(keyBindings || DEFAULT_KEY_BINDINGS),
+											paneNavigation,
+										});
+									}}
+									onReset={this.props.setDefaultKeyBindings}
+									resetTooltip={locales.get("restore_defaults")}
+								/>
 							)}
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
@@ -342,6 +368,7 @@ const mapStateToProps = ({ savedata }) => ({
 	crtFilter: savedata.crtFilter,
 	emulatorSettings: savedata.emulatorSettings,
 	gameMode: savedata.gameMode,
+	keyBindings: savedata.keyBindings,
 });
 const mapDispatchToProps = ({ savedata }) => ({
 	setLanguage: savedata.setLanguage,
@@ -349,6 +376,8 @@ const mapDispatchToProps = ({ savedata }) => ({
 	setCrtFilter: savedata.setCrtFilter,
 	setEmulatorSettings: savedata.setEmulatorSettings,
 	setDefaultKeyboardMappings: savedata.setDefaultKeyboardMappings,
+	setKeyBindings: savedata.setKeyBindings,
+	setDefaultKeyBindings: savedata.setDefaultKeyBindings,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);

@@ -1,17 +1,8 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import classNames from "classnames";
-import Tooltip from "./Tooltip";
+import { ButtonBox, getKeyLabel } from "./KeyMapper";
 import styles from "./GamepadMapper.module.css";
-
-const getKeyLabel = (key) => {
-	if (key === "ARROWLEFT") return "◄";
-	if (key === "ARROWRIGHT") return "►";
-	if (key === "ARROWUP") return "▲";
-	if (key === "ARROWDOWN") return "▼";
-	if (key === " ") return "SPACE";
-	return key || "?";
-};
 
 class GamepadMapper extends PureComponent {
 	state = { waitingKey: null };
@@ -31,7 +22,7 @@ class GamepadMapper extends PureComponent {
 
 		const mappings = keyboardMappings[player];
 
-		const ButtonBox = ({ button, className, children, ...rest }) => {
+		const MappedButtonBox = ({ button, className, children, ...rest }) => {
 			const isWaitingKey = waitingKey && waitingKey.button === button;
 			const text = isWaitingKey ? "..." : children;
 
@@ -44,16 +35,14 @@ class GamepadMapper extends PureComponent {
 			}
 
 			return (
-				<Tooltip title={text} placement="top">
-					<div
-						onClick={() => this._waitForKey(player, button)}
-						className={classNames(styles.buttonBox, className)}
-						style={isDuplicate ? { filter: "blur(2px)" } : undefined}
-						{...rest}
-					>
-						{text}
-					</div>
-				</Tooltip>
+				<ButtonBox
+					onClick={() => this._waitForKey(player, button)}
+					className={className}
+					isDuplicate={isDuplicate}
+					{...rest}
+				>
+					{text}
+				</ButtonBox>
 			);
 		};
 
@@ -64,96 +53,96 @@ class GamepadMapper extends PureComponent {
 			>
 				{extended && (
 					<div className={styles.lr}>
-						<ButtonBox
+						<MappedButtonBox
 							player={player}
 							button="BUTTON_L"
 							className={styles.longButton}
 						>
 							{getKeyLabel(mappings.BUTTON_L)}
-						</ButtonBox>
-						<ButtonBox
+						</MappedButtonBox>
+						<MappedButtonBox
 							player={player}
 							button="BUTTON_R"
 							className={styles.longButton}
 						>
 							{getKeyLabel(mappings.BUTTON_R)}
-						</ButtonBox>
+						</MappedButtonBox>
 					</div>
 				)}
 
 				<div className={styles.mainGamepad}>
 					<div className={classNames(styles.box, styles.dpad)}>
 						<div />
-						<ButtonBox player={player} button="BUTTON_UP">
+						<MappedButtonBox player={player} button="BUTTON_UP">
 							{getKeyLabel(mappings.BUTTON_UP)}
-						</ButtonBox>
+						</MappedButtonBox>
 						<div />
-						<ButtonBox player={player} button="BUTTON_LEFT">
+						<MappedButtonBox player={player} button="BUTTON_LEFT">
 							{getKeyLabel(mappings.BUTTON_LEFT)}
-						</ButtonBox>
+						</MappedButtonBox>
 						<div />
-						<ButtonBox player={player} button="BUTTON_RIGHT">
+						<MappedButtonBox player={player} button="BUTTON_RIGHT">
 							{getKeyLabel(mappings.BUTTON_RIGHT)}
-						</ButtonBox>
+						</MappedButtonBox>
 						<div />
-						<ButtonBox player={player} button="BUTTON_DOWN">
+						<MappedButtonBox player={player} button="BUTTON_DOWN">
 							{getKeyLabel(mappings.BUTTON_DOWN)}
-						</ButtonBox>
+						</MappedButtonBox>
 						<div />
 					</div>
 
 					<div className={styles.startSelect}>
-						<ButtonBox
+						<MappedButtonBox
 							player={player}
 							button="BUTTON_SELECT"
 							className={styles.longButton}
 						>
 							{getKeyLabel(mappings.BUTTON_SELECT)}
-						</ButtonBox>
-						<ButtonBox
+						</MappedButtonBox>
+						<MappedButtonBox
 							player={player}
 							button="BUTTON_START"
 							className={styles.longButton}
 						>
 							{getKeyLabel(mappings.BUTTON_START)}
-						</ButtonBox>
+						</MappedButtonBox>
 					</div>
 
 					<div className={styles.mainButtons}>
 						{extended && (
 							<div className={classNames(styles.box, styles.ab)}>
-								<ButtonBox
+								<MappedButtonBox
 									player={player}
 									button="BUTTON_Y"
 									className={styles.redButton}
 								>
 									{getKeyLabel(mappings.BUTTON_Y)}
-								</ButtonBox>
-								<ButtonBox
+								</MappedButtonBox>
+								<MappedButtonBox
 									player={player}
 									button="BUTTON_X"
 									className={styles.redButton}
 								>
 									{getKeyLabel(mappings.BUTTON_X)}
-								</ButtonBox>
+								</MappedButtonBox>
 							</div>
 						)}
 
 						<div className={classNames(styles.box, styles.ab)}>
-							<ButtonBox
+							<MappedButtonBox
 								player={player}
 								button="BUTTON_B"
 								className={styles.redButton}
 							>
 								{getKeyLabel(mappings.BUTTON_B)}
-							</ButtonBox>
-							<ButtonBox
+							</MappedButtonBox>
+							<MappedButtonBox
 								player={player}
 								button="BUTTON_A"
 								className={styles.redButton}
 							>
 								{getKeyLabel(mappings.BUTTON_A)}
-							</ButtonBox>
+							</MappedButtonBox>
 						</div>
 					</div>
 				</div>
@@ -181,6 +170,7 @@ class GamepadMapper extends PureComponent {
 			e.stopPropagation();
 			window.removeEventListener("keydown", onKey);
 			this._onKey = null;
+
 			const { waitingKey } = this.state;
 			if (!waitingKey) return;
 
@@ -191,6 +181,7 @@ class GamepadMapper extends PureComponent {
 			this.props.setKeyboardMappings(mappings);
 			this.setState({ waitingKey: null });
 		};
+
 		this._onKey = onKey;
 		window.addEventListener("keydown", this._onKey);
 	};
