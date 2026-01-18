@@ -1,5 +1,5 @@
 /**
- * An abstract class that represents a generic mapper.
+ * An abstract base type that represents a generic mapper.
  * It's connected to two different memory areas:
  * - CPU $4020-$FFFF (for PRG ROM, PRG RAM, and mapper registers)
  * - PPU $0000-$1FFF (for CHR ROM / Pattern tables)

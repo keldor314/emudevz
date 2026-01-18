@@ -157,7 +157,7 @@ export default {
 	opening: "Opening",
 	optional: "(optional)",
 	pane_navigation_keys: "Pane navigation keys",
-	performance_tips_reload: "Reload the page 😅",
+	performance_tips_reload: "Reload the page 😅 (Ctrl+R)",
 	performance_tips_remove_logs_after: "calls",
 	performance_tips_remove_logs_before: "Remove any",
 	performance_tips_title: "Performance tips",

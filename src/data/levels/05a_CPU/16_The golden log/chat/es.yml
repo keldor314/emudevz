@@ -72,11 +72,12 @@ fix:
 unexpected:
   messages:
   - 💥  ¡¿qué?! 💥
-  - eso fue inesperado
+  - quizá tengas un bug sutil que mis unit tests no detectaron
   - intenta analizar esa línea exacta en el archivo de log
   - "la instrucción que falló está en la <línea anterior>, por ejemplo:"
   - <{failure_example.png}>
   - "aquí, la instrucción `ADC #$69` falló: debería haber cambiado [A] de $00 a $69, pero cambió a $4B en su lugar"
+  - y recuerda el formato del log, 📄  ~/roms/_test/golden_log_format.md~
   - deberías poder encontrar la causa usando este método
   - si no, pide ayuda en línea 🌎
   events:

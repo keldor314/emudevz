@@ -72,11 +72,12 @@ fix:
 unexpected:
   messages:
   - 💥  what?! 💥
-  - that was unexpected
+  - maybe you have a subtle bug that my unit tests didn't catch
   - try analyzing that exact line in the log file
   - "the instruction that failed is in the <previous line>, for example:"
   - <{failure_example.png}>
   - "here, the instruction `ADC #$69` failed: it should've changed [A] from $00 to $69, but it changed to $4B instead"
+  - and remember the log format, 📄  ~/roms/_test/golden_log_format.md~
   - you should be able to find the cause using this method
   - if not, ask for help online 🌎
   events:

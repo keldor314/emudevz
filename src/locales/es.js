@@ -164,7 +164,7 @@ export default {
 	opening: "Abriendo",
 	optional: "(opcional)",
 	pane_navigation_keys: "Teclas de navegación entre paneles",
-	performance_tips_reload: "Recarga la página 😅",
+	performance_tips_reload: "Recarga la página 😅 (Ctrl+R)",
 	performance_tips_remove_logs_after: "",
 	performance_tips_remove_logs_before: "Remueve cualquier llamada a",
 	performance_tips_title: "Consejos de rendimiento",
