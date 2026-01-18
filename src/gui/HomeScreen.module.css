@@ -60,7 +60,8 @@
 	position: absolute;
 	top: 16px;
 	left: 16px;
-	background: #6464641f;
+	background: var(--neutral-translucent, #1e1e1e80);
+	color: var(--neutral-superlight, #ffffff);
 	border-radius: 16px;
 	font-size: x-small;
 	padding: 12px;
