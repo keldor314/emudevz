@@ -11,8 +11,8 @@ const { pathToFileURL } = require("node:url");
 const steam = require("./steam");
 
 const isDev = !app.isPackaged;
-const isWin = process.platform === "win32";
-const isMac = process.platform === "darwin";
+const isWindows = process.platform === "win32";
+const isMacOS = process.platform === "darwin";
 
 app.setName("EmuDevz");
 
@@ -51,13 +51,13 @@ function createWindow() {
 		title: "EmuDevz",
 		width: 1280,
 		height: 800,
-		fullscreen: !isWin,
+		fullscreen: !isWindows,
 		resizable: true,
 		center: true,
 		autoHideMenuBar: true,
 		icon: iconPath,
 		backgroundColor: "#000000",
-		show: true,
+		show: !isWindows,
 		webPreferences: {
 			preload: path.join(__dirname, "preload.js"),
 			contextIsolation: true,
@@ -93,15 +93,15 @@ function createWindow() {
 
 		// Fullscreen toggle
 		// Windows/Linux: Alt+Enter
-		// Mac: Ctrl+Cmd+F
+		// macOS: Ctrl+Cmd+F
 		if (
-			(!isMac &&
+			(!isMacOS &&
 				input.alt &&
 				(input.code === "Enter" || input.code === "NumpadEnter")) ||
-			(isMac && input.control && input.meta && input.code === "KeyF")
+			(isMacOS && input.control && input.meta && input.code === "KeyF")
 		) {
 			// HACK: W11 has a bug where fullscreen electron apps that use the Steam overlay create ghost alt-tab entries
-			if (!isWin) win.setFullScreen(!win.isFullScreen());
+			if (!isWindows) win.setFullScreen(!win.isFullScreen());
 			event.preventDefault();
 			return;
 		}
@@ -158,6 +158,8 @@ function createWindow() {
 		}
 		return { action: "allow" };
 	});
+
+	return win;
 }
 
 app.whenReady().then(() => {
@@ -181,7 +183,11 @@ app.whenReady().then(() => {
 		});
 	}
 
-	createWindow();
+	const win = createWindow();
+	if (isWindows) {
+		win.maximize();
+		win.show();
+	}
 });
 
 // Open window on start
