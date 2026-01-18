@@ -14,7 +14,10 @@ export default class HelpCommand extends Command {
 
 	async execute() {
 		if (this._isKeys) {
-			await this._terminal.writehlln(locales.get("help_shortcuts"));
+			const isDesktop = window?.EmuDevz?.isDesktop?.();
+			await this._terminal.writehlln(
+				locales.get(isDesktop ? "help_shortcuts_desktop" : "help_shortcuts")
+			);
 			return;
 		}
 

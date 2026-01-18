@@ -111,6 +111,8 @@ export default {
 	help_more: "💬  Para ayuda adicional, corre `help -a`",
 	help_shortcuts:
 		"🚀  General:\n  ♐  Cambiar panel activo:\n     `Alt+{DirectionalKey}` (o click del mouse)\n💻  Terminal:\n  🛑  Cerrar app:\n     `Ctrl+C`\n  🕑  Acelerar chat:\n     `Enter`\n  📜  Scrollear terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (o rueda del mouse)\n  📋  Copiar/pegar:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocompletar:\n     `Tab`\n📝  Editor de código:\n  ▶️  Ejecutar código:\n     `Alt+Enter`\n  🔍  Buscar archivo:\n     `Ctrl+P`\n  ❌  Cerrar archivo:\n     `Ctrl+E`",
+	help_shortcuts_desktop:
+		"🚀  General:\n  ♐  Cambiar panel activo:\n     `Alt+{DirectionalKey}` (o click del mouse)\n💻  Terminal:\n  🛑  Cerrar app:\n     `Ctrl+C`\n  🕑  Acelerar chat:\n     `Enter`\n  📜  Scrollear terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (o rueda del mouse)\n  📋  Copiar/pegar:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocompletar:\n     `Tab`\n📝  Editor de código:\n  ▶️  Ejecutar código:\n     `Alt+Enter`\n  🔍  Buscar archivo:\n     `Ctrl+P`\n  🔁  Pestaña siguiente/anterior:\n     `Ctrl+Tab`/`Ctrl+Shift+Tab`\n  ❌  Cerrar archivo:\n     `Ctrl+W`",
 	hexadecimal: "Hexadecimal",
 	hot_reload: "Recarga en caliente",
 	input_disconnected: "Desconectado",

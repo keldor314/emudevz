@@ -231,6 +231,7 @@ class MultiFile extends PureComponent {
 
 		return (
 			<Tab
+				data-filepath={filePath}
 				title={tabIcon + $path.parse(filePath).base}
 				active={this.props.selectedFile === filePath}
 				dragging={isDragging}
@@ -392,6 +393,26 @@ class MultiFile extends PureComponent {
 		});
 	};
 
+	_scrollTabIntoView = (filePath) => {
+		const scroll = this._tabsScroll;
+		if (!scroll || !filePath) return;
+
+		const element = Array.from(scroll.querySelectorAll("[data-filepath]")).find(
+			(it) => it.dataset.filepath === filePath
+		);
+		if (!element) return;
+
+		const containerRect = scroll.getBoundingClientRect();
+		const rect = element.getBoundingClientRect();
+		const targetLeft =
+			scroll.scrollLeft +
+			(rect.left - containerRect.left) -
+			containerRect.width / 2 +
+			rect.width / 2;
+
+		scroll.scrollTo({ left: targetLeft, behavior: "smooth" });
+	};
+
 	_closeSelectedFile = () => {
 		if (_.isEmpty(this.props.openFiles)) return;
 
@@ -400,7 +421,15 @@ class MultiFile extends PureComponent {
 
 	_onKeyDown = (e) => {
 		const isCtrlP = (e.ctrlKey || e.metaKey) && e.code === "KeyP";
+		const isCtrlW =
+			window.EmuDevz.isDesktop() &&
+			(e.ctrlKey || e.metaKey) &&
+			e.code === "KeyW";
 		const isCtrlE = (e.ctrlKey || e.metaKey) && e.code === "KeyE";
+		const isCtrlTab =
+			window.EmuDevz.isDesktop() &&
+			(e.ctrlKey || e.metaKey) &&
+			e.code === "Tab";
 		const isEsc = e.code === "Escape";
 
 		if (isCtrlP) {
@@ -409,9 +438,24 @@ class MultiFile extends PureComponent {
 			return;
 		}
 
-		if (isCtrlE) {
+		if (isCtrlE || isCtrlW) {
 			e.preventDefault();
 			this._closeSelectedFile();
+			this._refresh();
+			return;
+		}
+
+		if (isCtrlTab) {
+			e.preventDefault();
+			const { openFiles, selectedFile } = this.props;
+			if (_.isEmpty(openFiles)) return;
+
+			const length = openFiles.length;
+			const index = Math.max(0, openFiles.indexOf(selectedFile));
+			const next = (index + (e.shiftKey ? -1 : 1) + length) % length;
+			const nextFile = openFiles[next];
+			this._scrollTabIntoView(nextFile);
+			this.props.setSelectedFile(nextFile);
 			this._refresh();
 			return;
 		}

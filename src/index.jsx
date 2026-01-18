@@ -89,6 +89,12 @@ document.onkeydown = (e) => {
 	const isCtrlE = (e.ctrlKey || e.metaKey) && e.code === "KeyE";
 	if (isCtrlE) e.preventDefault();
 
+	// Disable 'Close tab' shortcut
+	if (window.EmuDevz.isDesktop()) {
+		const isCtrlW = (e.ctrlKey || e.metaKey) && e.code === "KeyW";
+		if (isCtrlW) e.preventDefault();
+	}
+
 	// Disable Save shortcut
 	const isCtrlS = (e.ctrlKey || e.metaKey) && e.code === "KeyS";
 	if (isCtrlS) e.preventDefault();

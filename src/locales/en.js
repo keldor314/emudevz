@@ -107,6 +107,8 @@ export default {
 	help_more: "💬  For additional help, run `help -a`",
 	help_shortcuts:
 		"🚀  General:\n  ♐  Switch active pane:\n     `Alt+{DirectionalKey}` (or mouse click)\n💻  Terminal:\n  🛑  Close app:\n     `Ctrl+C`\n  🕑  Speed up chat:\n     `Enter`\n  📜  Scroll terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (or mouse wheel)\n  📋  Copy/paste:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocomplete:\n     `Tab`\n📝  Code editor:\n  ▶️  Run code:\n     `Alt+Enter`\n  🔍  Find file:\n     `Ctrl+P`\n  ❌  Close file:\n     `Ctrl+E`",
+	help_shortcuts_desktop:
+		"🚀  General:\n  ♐  Switch active pane:\n     `Alt+{DirectionalKey}` (or mouse click)\n💻  Terminal:\n  🛑  Close app:\n     `Ctrl+C`\n  🕑  Speed up chat:\n     `Enter`\n  📜  Scroll terminal:\n     `Ctrl+Shift+PageUp`/`Ctrl+Shift+PageDown` (or mouse wheel)\n  📋  Copy/paste:\n     `Ctrl+Shift+C`/`Ctrl+Shift+V`\n  🧲  Autocomplete:\n     `Tab`\n📝  Code editor:\n  ▶️  Run code:\n     `Alt+Enter`\n  🔍  Find file:\n     `Ctrl+P`\n  🔁  Next/previous tab:\n     `Ctrl+Tab`/`Ctrl+Shift+Tab`\n  ❌  Close file:\n     `Ctrl+W`",
 	hexadecimal: "Hexadecimal",
 	hot_reload: "Hot reload",
 	input_disconnected: "Disconnected",
