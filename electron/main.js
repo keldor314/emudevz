@@ -92,12 +92,10 @@ function createWindow() {
 		if (input.type !== "keyDown") return;
 
 		// Fullscreen toggle
-		// Windows/Linux: Alt+Enter
+		// Windows/Linux: F11
 		// macOS: Ctrl+Cmd+F
 		if (
-			(!isMacOS &&
-				input.alt &&
-				(input.code === "Enter" || input.code === "NumpadEnter")) ||
+			(!isMacOS && input.code === "F11") ||
 			(isMacOS && input.control && input.meta && input.code === "KeyF")
 		) {
 			// HACK: W11 has a bug where fullscreen electron apps that use the Steam overlay create ghost alt-tab entries
