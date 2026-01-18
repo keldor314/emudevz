@@ -14,11 +14,6 @@ const isDev = !app.isPackaged;
 
 app.setName("EmuDevz");
 
-// Match electron-builder appId for correct icon association
-if (process.platform === "win32") {
-	app.setAppUserModelId("io.r-labs.emudevz");
-}
-
 // Enable Steam integrations
 steam.registerIpc(ipcMain);
 steam.enableOverlay();
