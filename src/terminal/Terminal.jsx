@@ -480,11 +480,18 @@ export default class Terminal {
 		if (this._processCommonKeys(data)) return;
 		data = this._normalize(data, SHORT_NEWLINE);
 
+		if (data === KEY_CTRL_C) {
+			await this.interrupt();
+			return;
+		}
+
+		if (this.isExpectingKey) {
+			this._keyInput.resolve(data);
+			this._keyInput = null;
+			return;
+		}
+
 		switch (data) {
-			case KEY_CTRL_C: {
-				await this.interrupt();
-				break;
-			}
 			case KEY_BACKSPACE: {
 				await this.backspace();
 				break;
@@ -507,12 +514,6 @@ export default class Terminal {
 				break;
 			}
 			default: {
-				if (this.isExpectingKey) {
-					this._keyInput.resolve(data);
-					this._keyInput = null;
-					return;
-				}
-
 				await this.addInput(data);
 				await this._currentProgram.onData(data);
 			}
@@ -524,8 +525,11 @@ export default class Terminal {
 		if (!isKeyDown) return true;
 
 		const isEnter = e.key === "Enter";
+		const isTab = e.key === "Tab";
 		const isCtrlShiftC = e.ctrlKey && e.shiftKey && e.key === "C";
 		const isShiftEnter = e.shiftKey && isEnter;
+
+		if (this.isExpectingKey && (isEnter || isTab)) return true;
 
 		// ctrl+arrows / ctrl+backspace / ctrl+delete
 		if (this.isExpectingInput && e.ctrlKey && !e.shiftKey && !e.altKey) {
@@ -561,7 +565,7 @@ export default class Terminal {
 		}
 
 		// tab (autocomplete)
-		if (e.key === "Tab" && this._currentProgram.usesAutocomplete()) {
+		if (isTab && this._currentProgram.usesAutocomplete()) {
 			this._interceptingKey = TABULATION;
 			this._interceptingCallback = () => this._processAutocomplete();
 			return true;
@@ -786,7 +790,7 @@ export default class Terminal {
 			return true;
 		}
 
-		if (data === KEY_FULLSCREEN) {
+		if (data === KEY_FULLSCREEN && !window.EmuDevz.isDesktop()) {
 			document.body.requestFullscreen();
 			return true;
 		}
