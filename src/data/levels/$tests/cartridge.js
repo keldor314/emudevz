@@ -57,7 +57,7 @@ it("the file `/code/index.js` exports <an object> containing the `Cartridge` cla
 it("instantiating a `Cartridge` with a <valid header> saves a `bytes` property", () => {
   const Cartridge = mainModule.default.Cartridge;
 
-  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a]);
+  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, ...new Uint8Array(12)]);
   expect(new Cartridge(bytes).bytes).to.equalN(bytes, "bytes");
 })({
   locales: {
@@ -71,11 +71,11 @@ it("instantiating a `Cartridge` with an <invalid header> throws an error", () =>
   const Cartridge = mainModule.default.Cartridge;
 
   [
-    [0x11, 0x22, 0x33, 0x44],
-    [0x99, 0x45, 0x53, 0x1a],
-    [0x4e, 0x99, 0x53, 0x1a],
-    [0x4e, 0x45, 0x99, 0x1a],
-    [0x4e, 0x45, 0x53, 0x99],
+    [0x11, 0x22, 0x33, 0x44, ...new Uint8Array(12)],
+    [0x99, 0x45, 0x53, 0x1a, ...new Uint8Array(12)],
+    [0x4e, 0x99, 0x53, 0x1a, ...new Uint8Array(12)],
+    [0x4e, 0x45, 0x99, 0x1a, ...new Uint8Array(12)],
+    [0x4e, 0x45, 0x53, 0x99, ...new Uint8Array(12)],
   ].forEach((wrongBytes) => {
     const bytes = new Uint8Array(wrongBytes);
     expect(() => new Cartridge(bytes)).to.throw(Error, /Invalid ROM/);
@@ -92,7 +92,7 @@ it("instantiating a `Cartridge` with an <invalid header> throws an error", () =>
 it("has a `header` property with <metadata> (PRG-ROM pages)", () => {
   const Cartridge = mainModule.default.Cartridge;
   // prettier-ignore
-  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
+  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random(), ...new Uint8Array(8)]);
 
   for (let i = 0; i < 256; i++) {
     bytes[4] = i;
@@ -111,7 +111,7 @@ it("has a `header` property with <metadata> (PRG-ROM pages)", () => {
 it("has a `header` property with <metadata> (CHR-ROM pages)", () => {
   const Cartridge = mainModule.default.Cartridge;
   // prettier-ignore
-  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
+  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random(), ...new Uint8Array(8)]);
 
   for (let i = 0; i < 256; i++) {
     bytes[5] = i;
@@ -132,7 +132,7 @@ it("has a `header` property with <metadata> (CHR-ROM pages)", () => {
 it("has a `header` property with <metadata> (512-byte padding)", () => {
   const Cartridge = mainModule.default.Cartridge;
   // prettier-ignore
-  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
+  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random(), ...new Uint8Array(8)]);
 
   [
     [false, 0b00000000],
@@ -157,7 +157,7 @@ it("has a `header` property with <metadata> (512-byte padding)", () => {
 it("has a `header` property with <metadata> (PRG-RAM presence)", () => {
   const Cartridge = mainModule.default.Cartridge;
   // prettier-ignore
-  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
+  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random(), ...new Uint8Array(8)]);
 
   [
     [false, 0b00000000],
@@ -179,7 +179,7 @@ it("has a `header` property with <metadata> (PRG-RAM presence)", () => {
 it("has a `header` property with <metadata> (mirroring id)", () => {
   const Cartridge = mainModule.default.Cartridge;
   // prettier-ignore
-  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
+  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random(), ...new Uint8Array(8)]);
 
   [
     ["HORIZONTAL", 0b00000000],
@@ -203,7 +203,7 @@ it("has a `header` property with <metadata> (mirroring id)", () => {
 it("has a `header` property with <metadata> (mapper id)", () => {
   const Cartridge = mainModule.default.Cartridge;
   // prettier-ignore
-  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random()]);
+  const bytes = new Uint8Array([0x4e, 0x45, 0x53, 0x1a, byte.random(), byte.random(), byte.random(), byte.random(), ...new Uint8Array(8)]);
 
   for (let i = 0; i < 256; i++) {
     const lowNybble = byte.lowNybbleOf(i);
