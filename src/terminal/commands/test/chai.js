@@ -27,6 +27,17 @@ chai.Assertion.addChainableMethod("equalN", function (expected, name) {
 	);
 });
 
+chai.Assertion.addChainableMethod("eqNoCase", function (expected, name) {
+	const expectedUpperCase = expected.toUpperCase();
+	const actualUpperCase = this._obj?.toUpperCase?.() ?? this._obj;
+
+	this.assert(
+		actualUpperCase === expectedUpperCase,
+		`expected ${name} to equal ${expected}, but got ${this._obj}`,
+		`expected ${name} not to equal ${expected}`
+	);
+});
+
 const toHex = (x) => (_.isFinite(x) ? `0x${x.toString(16).toUpperCase()}` : x);
 chai.Assertion.addChainableMethod("equalHex", function (expected, name) {
 	const actual = this._obj;

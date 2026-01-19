@@ -9,33 +9,33 @@ beforeEach(() => {
 });
 
 it("the first 7 instructions are equal", () => {
-	expect(instructions[0]?.line).to.equalN("INX", "1st instruction");
-	expect(instructions[1]?.line).to.equalN("LDA #$08", "2nd instruction");
-	expect(instructions[2]?.line).to.equalN("LDA $C002", "3rd instruction");
-	expect(instructions[3]?.line).to.equalN("LDA $15", "4th instruction");
-	expect(instructions[4]?.line).to.equalN("BNE @label", "5th instruction");
-	expect(instructions[5]?.line).to.equalN("INY", "6th instruction");
-	expect(instructions[6]?.line).to.equalN("INY", "7th instruction");
+	expect(instructions[0]?.line).to.eqNoCase("INX", "1st instruction");
+	expect(instructions[1]?.line).to.eqNoCase("LDA #$08", "2nd instruction");
+	expect(instructions[2]?.line).to.eqNoCase("LDA $C002", "3rd instruction");
+	expect(instructions[3]?.line).to.eqNoCase("LDA $15", "4th instruction");
+	expect(instructions[4]?.line).to.eqNoCase("BNE @label", "5th instruction");
+	expect(instructions[5]?.line).to.eqNoCase("INY", "6th instruction");
+	expect(instructions[6]?.line).to.eqNoCase("INY", "7th instruction");
 })({
 	locales: { es: "las primeras 7 instrucciones son iguales" },
 });
 
 it("sets up an indirect jump to $403C", () => {
-	expect(instructions[7]?.line).to.equalN("LDA #$3C", "8th instruction");
-	expect(instructions[8]?.line).to.equalN("STA $4080", "9th instruction");
-	expect(instructions[9]?.line).to.equalN("LDA #$40", "10th instruction");
-	expect(instructions[10]?.line).to.equalN("STA $4081", "11th instruction");
-	expect(instructions[11]?.line).to.equalN("JMP ($4080)", "12th instruction");
+	expect(instructions[7]?.line).to.eqNoCase("LDA #$3C", "8th instruction");
+	expect(instructions[8]?.line).to.eqNoCase("STA $4080", "9th instruction");
+	expect(instructions[9]?.line).to.eqNoCase("LDA #$40", "10th instruction");
+	expect(instructions[10]?.line).to.eqNoCase("STA $4081", "11th instruction");
+	expect(instructions[11]?.line).to.eqNoCase("JMP ($4080)", "12th instruction");
 })({
 	locales: { es: "configura un salto indirecto hacia $403C" },
 });
 
 it("the last 2 instructions are `STY $1001` and `INX`", () => {
-	expect(instructions[instructions.length - 2]?.line).to.equalN(
+	expect(instructions[instructions.length - 2]?.line).to.eqNoCase(
 		"STY $1001",
 		"penultimate instruction"
 	);
-	expect(instructions[instructions.length - 1]?.line).to.equalN(
+	expect(instructions[instructions.length - 1]?.line).to.eqNoCase(
 		"INX",
 		"last instruction"
 	);
