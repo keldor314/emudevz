@@ -74,7 +74,7 @@ export default class CPUDebugger extends PureComponent {
 	async initialize(args, level) {
 		this._level = level;
 
-		if (Number.isFinite(args.delay)) this.setState({ _delay: args.delay });
+		if (_.isFinite(args.delay)) this.setState({ _delay: args.delay });
 
 		this.setState({
 			_isInitialized: true,

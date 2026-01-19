@@ -8,6 +8,7 @@ import React, {
 import $path from "path-browserify-esm";
 import Form from "react-bootstrap/Form";
 import classNames from "classnames";
+import _ from "lodash";
 import filesystem, { fuzzy } from "../../../filesystem";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
@@ -149,7 +150,9 @@ export default forwardRef(function FileSearch(props, ref) {
 
 		const combined = [...classMatches, ...fuzzyMatches];
 		setMatches(combined);
-		if (selected >= combined.length) setSelected(0);
+
+		if (!_.isFinite(selected) || selected < 0 || selected >= combined.length)
+			setSelected(0);
 	}, [input, files, selected]);
 
 	const _onSelect = (filePath, lineNumber, shouldKeepFocus) => {
@@ -331,12 +334,16 @@ export default forwardRef(function FileSearch(props, ref) {
 		}
 
 		if (isArrowDown) {
+			if (matches.length === 0) return;
+
 			setSelected((selected + 1) % matches.length);
 			e.preventDefault();
 			return;
 		}
 
 		if (isArrowUp) {
+			if (matches.length === 0) return;
+
 			setSelected((selected === 0 ? matches.length : selected) - 1);
 			e.preventDefault();
 			return;
