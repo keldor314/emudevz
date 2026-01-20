@@ -4,7 +4,7 @@ El modo de direccionamiento **Indirect** tiene una falla:
 
 Si la dirección cae en el borde de una página `($aaFF)`, lee el byte menos significativo de `$aaFF` como es esperado, pero toma el byte más significativo de `$aa00` (en vez de `$ab00`).
 
-Así que, en vez de `read16(address)`, la implementación debería ser algo así:
+Así que, en vez de solo llamar a `read16(address)`, la implementación del modo **Indirect** debería ser algo así:
 
 ```javascript
 buildU16(
