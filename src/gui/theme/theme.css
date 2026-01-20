@@ -390,7 +390,7 @@ code {
 
 /* react-diff-viewer */
 /* // HACK: Coupled to current version. */
-.css-1ri4lr5-diff-container > tbody {
+.react-diff-1ri4lr5-diff-container > tbody {
 	display: flex;
 	flex-direction: column;
 	flex: 1;
