@@ -9,6 +9,7 @@ If you want to add support for other languages, you should change these files (e
   - The final credits shouldn't be localized.
 - Change the `meta.json` file in each level to localize the `name` and the console `subtitle` keys.
 - Localize all unit tests in `src/data/levels/$tests` and the `test.js` files. **This is optional**.
+- Localize all theme titles and description in `src/models/themes/theme.js`.
 - Create a file in `src/data/levels/02_Assembly/$help/ja.txt` with help for the Assembly chapter.
   - Each line should match the ones from other languages.
 
