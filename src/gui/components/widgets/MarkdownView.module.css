@@ -2,7 +2,6 @@
 	width: 100%;
 	height: 100%;
 	padding: 16px;
-	user-select: none;
 	overflow: auto;
 	background-color: var(--background-ui, #18181a);
 	color: var(--text-markdown, #cccccc);

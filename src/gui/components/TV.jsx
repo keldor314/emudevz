@@ -251,9 +251,10 @@ export default class TV extends PureComponent {
 		e.preventDefault();
 
 		const file = e.dataTransfer.files[0];
+		if (!file) return;
+
 		const name = $path.parse(file.name).name;
 		const reader = new FileReader();
-		if (!file) return;
 
 		reader.onload = (event) => {
 			const rom = event.target.result;
