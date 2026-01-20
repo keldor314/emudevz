@@ -8,6 +8,7 @@ import Level from "../../level/Level";
 import locales from "../../locales";
 import testContext from "../../terminal/commands/test/context";
 import { bus } from "../../utils";
+import { checkKeyBinding } from "../../utils/keyBindings";
 import { NEEESTestLogger } from "../../utils/nes";
 import { sfx } from "../sound";
 import IconButton from "./widgets/IconButton";
@@ -165,9 +166,7 @@ export default class NEEESTester extends PureComponent {
 	};
 
 	_onKeyDown = (e) => {
-		const isAltEnter = e.altKey && e.code === "Enter";
-
-		if (isAltEnter) {
+		if (checkKeyBinding(e, "runCode")) {
 			if (!this._canRun()) return;
 			this._onRun();
 			return;

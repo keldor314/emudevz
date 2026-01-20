@@ -10,6 +10,7 @@ import locales from "../../locales";
 import Terminal from "../../terminal/Terminal";
 import OpenCommand from "../../terminal/commands/fs/OpenCommand";
 import { bus } from "../../utils";
+import { checkKeyBinding } from "../../utils/keyBindings";
 import extensions from "../extensions";
 import { sfx } from "../sound";
 import CodeEditor from "./CodeEditor";
@@ -420,44 +421,42 @@ class MultiFile extends PureComponent {
 	};
 
 	_onKeyDown = (e) => {
-		const isCtrlP = (e.ctrlKey || e.metaKey) && e.code === "KeyP";
-		const isCtrlW =
-			window.EmuDevz.isDesktop() &&
-			(e.ctrlKey || e.metaKey) &&
-			e.code === "KeyW";
-		const isCtrlE = (e.ctrlKey || e.metaKey) && e.code === "KeyE";
-		const isCtrlTab =
-			window.EmuDevz.isDesktop() &&
-			(e.ctrlKey || e.metaKey) &&
-			e.code === "Tab";
 		const isEsc = e.code === "Escape";
 
-		if (isCtrlP) {
+		if (checkKeyBinding(e, "fileSearch")) {
 			e.preventDefault();
 			this._search();
 			return;
 		}
 
-		if (isCtrlE || isCtrlW) {
+		const isCloseFile =
+			checkKeyBinding(e, "closeFile") ||
+			(window.EmuDevz.isDesktop() && checkKeyBinding(e, "closeFileDesktop"));
+		if (isCloseFile) {
 			e.preventDefault();
 			this._closeSelectedFile();
 			this._refresh();
 			return;
 		}
 
-		if (isCtrlTab) {
-			e.preventDefault();
-			const { openFiles, selectedFile } = this.props;
-			if (_.isEmpty(openFiles)) return;
+		if (window.EmuDevz.isDesktop()) {
+			const isNextTab = checkKeyBinding(e, "nextTab");
+			const isPreviousTab = checkKeyBinding(e, "previousTab");
 
-			const length = openFiles.length;
-			const index = Math.max(0, openFiles.indexOf(selectedFile));
-			const next = (index + (e.shiftKey ? -1 : 1) + length) % length;
-			const nextFile = openFiles[next];
-			this._scrollTabIntoView(nextFile);
-			this.props.setSelectedFile(nextFile);
-			this._refresh();
-			return;
+			if (isNextTab || isPreviousTab) {
+				e.preventDefault();
+				const { openFiles, selectedFile } = this.props;
+				if (_.isEmpty(openFiles)) return;
+
+				const length = openFiles.length;
+				const index = Math.max(0, openFiles.indexOf(selectedFile));
+				const next = (index + (isPreviousTab ? -1 : 1) + length) % length;
+				const nextFile = openFiles[next];
+				this._scrollTabIntoView(nextFile);
+				this.props.setSelectedFile(nextFile);
+				this._refresh();
+				return;
+			}
 		}
 
 		if (isEsc && this.state.isSearching) {

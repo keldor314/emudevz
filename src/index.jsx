@@ -8,8 +8,10 @@ import GlobalThemeProvider from "./gui/GlobalThemeProvider";
 import HomeScreen from "./gui/HomeScreen";
 import PlayScreen from "./gui/PlayScreen";
 import { music, sfx } from "./gui/sound";
+import { DEFAULT_KEY_BINDINGS } from "./models/savedata";
 import store, { history } from "./store";
 import { achievements, bus, dlc } from "./utils";
+import { checkKeyBinding } from "./utils/keyBindings";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./gui/theme/crt.css";
 import "./gui/theme/theme.css";
@@ -81,23 +83,21 @@ dlc.check().then(() => {
 document.onkeydown = (e) => {
 	music.start(); // run music!
 
+	// Prevent default for all configured shortcuts
+	for (const bindingName of Object.keys(DEFAULT_KEY_BINDINGS)) {
+		if (checkKeyBinding(e, bindingName)) {
+			e.preventDefault();
+
+			// Emit file search from anywhere!
+			if (bindingName === "fileSearch" && !document.fullscreenElement)
+				bus.emit("file-search");
+			break;
+		}
+	}
+
 	// Disable Print shortcut
 	const isCtrlP = (e.ctrlKey || e.metaKey) && e.code === "KeyP";
-	const isFullscreen = document.fullscreenElement != null;
-	if (isCtrlP) {
-		if (!isFullscreen) bus.emit("file-search");
-		e.preventDefault();
-	}
-
-	// Disable Addressbar shortcut
-	const isCtrlE = (e.ctrlKey || e.metaKey) && e.code === "KeyE";
-	if (isCtrlE) e.preventDefault();
-
-	// Disable 'Close tab' shortcut
-	if (window.EmuDevz.isDesktop()) {
-		const isCtrlW = (e.ctrlKey || e.metaKey) && e.code === "KeyW";
-		if (isCtrlW) e.preventDefault();
-	}
+	if (isCtrlP) e.preventDefault();
 
 	// Disable Save shortcut
 	const isCtrlS = (e.ctrlKey || e.metaKey) && e.code === "KeyS";

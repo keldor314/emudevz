@@ -17,6 +17,19 @@ import styles from "./SettingsModal.module.css";
 const MARGIN = 16;
 const SAVEFILE_EXTENSION = ".devz";
 
+const KEY_BINDING_ITEMS = [
+	{ id: "paneNavigationUp", label: locales.get("pane_navigation_up") },
+	{ id: "paneNavigationDown", label: locales.get("pane_navigation_down") },
+	{ id: "paneNavigationLeft", label: locales.get("pane_navigation_left") },
+	{ id: "paneNavigationRight", label: locales.get("pane_navigation_right") },
+	{ id: "runCode", label: locales.get("run_code") },
+	{ id: "fileSearch", label: locales.get("file_search") },
+	{ id: "closeFile", label: locales.get("close_file") },
+	{ id: "closeFileDesktop", label: locales.get("close_file_desktop") },
+	{ id: "nextTab", label: locales.get("next_tab") },
+	{ id: "previousTab", label: locales.get("previous_tab") },
+];
+
 class SettingsModal extends PureComponent {
 	state = {
 		areYouSureRestore: false,
@@ -24,6 +37,7 @@ class SettingsModal extends PureComponent {
 		isLoadingSaveBackup: false,
 		isLoadingSaveRestore: false,
 		isLoadingSaveDelete: false,
+		keyBindingsExpanded: false,
 	};
 
 	render() {
@@ -44,6 +58,7 @@ class SettingsModal extends PureComponent {
 			isLoadingSaveBackup,
 			isLoadingSaveRestore,
 			isLoadingSaveDelete,
+			keyBindingsExpanded,
 		} = this.state;
 
 		return (
@@ -160,25 +175,37 @@ class SettingsModal extends PureComponent {
 							)}
 						</Form.Group>
 						<Form.Group style={{ marginTop: MARGIN }}>
-							{open && (
-								<KeyMapper
-									title={`⌨️ ${locales.get("pane_navigation_keys")}`}
-									items={[
-										{ id: "up", label: locales.get("up") },
-										{ id: "left", label: locales.get("left") },
-										{ id: "down", label: locales.get("down") },
-										{ id: "right", label: locales.get("right") },
-									]}
-									mapping={keyBindings?.paneNavigation}
-									defaultMapping={DEFAULT_KEY_BINDINGS.paneNavigation}
-									onChange={(paneNavigation) => {
-										this.props.setKeyBindings({
-											...(keyBindings || DEFAULT_KEY_BINDINGS),
-											paneNavigation,
-										});
+							<Form.Label
+								className={styles.controlsTitle}
+								style={{ cursor: "pointer" }}
+								onClick={() =>
+									this.setState({
+										keyBindingsExpanded: !keyBindingsExpanded,
+									})
+								}
+							>
+								<span>
+									{keyBindingsExpanded ? "▼" : "►"} ⌨️{" "}
+									{locales.get("keyboard_shortcuts")}
+								</span>
+								<IconButton
+									Icon={FaUndo}
+									tooltip={locales.get("restore_defaults")}
+									onClick={(e) => {
+										e.stopPropagation();
+										this.props.setDefaultKeyBindings();
 									}}
-									onReset={this.props.setDefaultKeyBindings}
-									resetTooltip={locales.get("restore_defaults")}
+								/>
+							</Form.Label>
+							{keyBindingsExpanded && open && (
+								<KeyMapper
+									items={KEY_BINDING_ITEMS}
+									mapping={keyBindings}
+									defaultMapping={DEFAULT_KEY_BINDINGS}
+									layout="column"
+									onChange={(newBindings) => {
+										this.props.setKeyBindings(newBindings);
+									}}
 								/>
 							)}
 						</Form.Group>

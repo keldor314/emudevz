@@ -80,16 +80,14 @@ export default class TripleLayout extends Layout {
 
 	onKeyDown = (e) => {
 		const { selected, lastVerticalSelection } = this.state;
-		const keys = this.getKeyBindings().paneNavigation;
-		const key = e.key?.toUpperCase?.() || "";
 
-		if ((key === "ARROWRIGHT" || key === keys.right) && e.altKey) {
+		if (this.checkKeyBinding(e, "paneNavigationRight")) {
 			if (selected === "Left") this.focus(lastVerticalSelection);
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
-		if ((key === "ARROWLEFT" || key === keys.left) && e.altKey) {
+		if (this.checkKeyBinding(e, "paneNavigationLeft")) {
 			if (selected !== "Left") {
 				this.setState({ lastVerticalSelection: selected });
 				this.focus("Left");
@@ -98,13 +96,13 @@ export default class TripleLayout extends Layout {
 			e.stopPropagation();
 		}
 
-		if ((key === "ARROWUP" || key === keys.up) && e.altKey) {
+		if (this.checkKeyBinding(e, "paneNavigationUp")) {
 			if (selected !== "Top") this.focus("Top");
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
-		if ((key === "ARROWDOWN" || key === keys.down) && e.altKey) {
+		if (this.checkKeyBinding(e, "paneNavigationDown")) {
 			if (selected !== "Bottom") this.focus("Bottom");
 			e.preventDefault();
 			e.stopPropagation();

@@ -5,13 +5,33 @@ import IconButton from "./IconButton";
 import Tooltip from "./Tooltip";
 import styles from "./KeyMapper.module.css";
 
-export const getKeyLabel = (key) => {
+const MODIFIER_KEYS = new Set(["CONTROL", "ALT", "SHIFT", "META", "ALTGRAPH"]);
+
+const formatKeyPart = (key) => {
 	if (key === "ARROWLEFT") return "◄";
 	if (key === "ARROWRIGHT") return "►";
 	if (key === "ARROWUP") return "▲";
 	if (key === "ARROWDOWN") return "▼";
 	if (key === " ") return "SPACE";
-	return key || "?";
+	return key;
+};
+
+export const getKeyLabel = (keyBinding) => {
+	if (!keyBinding) return "?";
+	return keyBinding.split("+").map(formatKeyPart).join("+");
+};
+
+export const buildKeyBindingFromEvent = (event) => {
+	const parts = [];
+	if (event.ctrlKey || event.metaKey) parts.push("CTRL");
+	if (event.altKey) parts.push("ALT");
+	if (event.shiftKey) parts.push("SHIFT");
+	parts.push(event.key.toUpperCase());
+	return parts.join("+");
+};
+
+export const isModifierKey = (event) => {
+	return MODIFIER_KEYS.has(event.key.toUpperCase());
 };
 
 export const ButtonBox = ({
@@ -19,13 +39,18 @@ export const ButtonBox = ({
 	className,
 	children,
 	isDuplicate = false,
+	wide = false,
 	...rest
 }) => {
 	return (
 		<Tooltip title={children} placement="top">
 			<div
 				onClick={onClick}
-				className={classNames(styles.buttonBox, className)}
+				className={classNames(
+					styles.buttonBox,
+					wide && styles.buttonBoxWide,
+					className
+				)}
 				style={isDuplicate ? { filter: "blur(2px)" } : undefined}
 				{...rest}
 			>
@@ -47,6 +72,7 @@ export default class KeyMapper extends PureComponent {
 			onReset,
 			resetTooltip,
 			className,
+			layout = "row",
 		} = this.props;
 		const { waitingKey } = this.state;
 
@@ -59,29 +85,37 @@ export default class KeyMapper extends PureComponent {
 			counts[v] = (counts[v] || 0) + 1;
 		}
 
+		const isColumn = layout === "column";
+
 		return (
 			<div className={classNames(styles.container, className)}>
-				<div className={styles.titleRow}>
-					<span>{title}</span>
-					{!!onReset && (
-						<IconButton
-							Icon={FaUndo}
-							tooltip={resetTooltip}
-							onClick={onReset}
-						/>
-					)}
-				</div>
+				{(title || onReset) && (
+					<div className={styles.titleRow}>
+						<span>{title}</span>
+						{!!onReset && (
+							<IconButton
+								Icon={FaUndo}
+								tooltip={resetTooltip}
+								onClick={onReset}
+							/>
+						)}
+					</div>
+				)}
 
-				<div className={styles.keysRow}>
+				<div className={isColumn ? styles.keysColumn : styles.keysRow}>
 					{items.map((it) => {
 						const value = effective[it.id];
 						const isDuplicate = value && counts[value] > 1;
 						return (
-							<div key={it.id} className={styles.keyGroup}>
+							<div
+								key={it.id}
+								className={isColumn ? styles.keyGroupRow : styles.keyGroup}
+							>
 								<div className={styles.keyLabel}>{it.label}</div>
 								<ButtonBox
 									onClick={() => this._waitFor(it.id)}
 									isDuplicate={isDuplicate}
+									wide={isColumn}
 								>
 									{waitingKey === it.id ? "..." : getKeyLabel(value)}
 								</ButtonBox>
@@ -111,6 +145,9 @@ export default class KeyMapper extends PureComponent {
 		const onKey = (e) => {
 			e.preventDefault();
 			e.stopPropagation();
+
+			if (isModifierKey(e)) return;
+
 			window.removeEventListener("keydown", onKey);
 			this._onKey = null;
 
@@ -121,7 +158,7 @@ export default class KeyMapper extends PureComponent {
 				...(this.props.defaultMapping || {}),
 				...(this.props.mapping || {}),
 			};
-			next[waitingKey] = e.key.toUpperCase();
+			next[waitingKey] = buildKeyBindingFromEvent(e);
 			this.props.onChange(next);
 			this.setState({ waitingKey: null });
 		};

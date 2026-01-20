@@ -90,28 +90,26 @@ export default class TripleBottomLayout extends Layout {
 
 	onKeyDown = (e) => {
 		const { selected, lastHorizontalSelection } = this.state;
-		const keys = this.getKeyBindings().paneNavigation;
-		const key = e.key?.toUpperCase?.() || "";
 
-		if ((key === "ARROWRIGHT" || key === keys.right) && e.altKey) {
+		if (this.checkKeyBinding(e, "paneNavigationRight")) {
 			if (selected !== "Right") this.focus("Right");
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
-		if ((key === "ARROWLEFT" || key === keys.left) && e.altKey) {
+		if (this.checkKeyBinding(e, "paneNavigationLeft")) {
 			if (selected !== "Left") this.focus("Left");
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
-		if ((key === "ARROWUP" || key === keys.up) && e.altKey) {
+		if (this.checkKeyBinding(e, "paneNavigationUp")) {
 			if (selected === "Bottom") this.focus(lastHorizontalSelection);
 			e.preventDefault();
 			e.stopPropagation();
 		}
 
-		if ((key === "ARROWDOWN" || key === keys.down) && e.altKey) {
+		if (this.checkKeyBinding(e, "paneNavigationDown")) {
 			if (selected !== "Bottom") {
 				this.setState({ lastHorizontalSelection: selected });
 				this.focus("Bottom");

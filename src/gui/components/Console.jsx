@@ -11,6 +11,7 @@ import store from "../../store";
 import Terminal from "../../terminal/Terminal";
 import { bus, dlc } from "../../utils";
 import { ansi256ToHex } from "../../utils/ansi256";
+import { checkKeyBinding } from "../../utils/keyBindings";
 import styles from "./Console.module.css";
 
 const ImageAddon = window.ImageAddon.ImageAddon;
@@ -112,18 +113,16 @@ export default class Console extends PureComponent {
 	};
 
 	_onKeyDownCapture = (e) => {
-		const isCtrlP = (e.ctrlKey || e.metaKey) && e.code === "KeyP";
-		if (isCtrlP) {
+		if (checkKeyBinding(e, "fileSearch")) {
 			e.preventDefault();
 			bus.emit("file-search");
 		}
 
 		if (
-			(e.code === "ArrowLeft" ||
-				e.code === "ArrowRight" ||
-				e.code === "ArrowUp" ||
-				e.code === "ArrowDown") &&
-			e.altKey
+			checkKeyBinding(e, "paneNavigationUp") ||
+			checkKeyBinding(e, "paneNavigationDown") ||
+			checkKeyBinding(e, "paneNavigationLeft") ||
+			checkKeyBinding(e, "paneNavigationRight")
 		)
 			e.preventDefault();
 	};

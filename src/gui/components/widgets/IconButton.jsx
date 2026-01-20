@@ -36,9 +36,9 @@ export default class IconButton extends PureComponent {
 					disabled && styles.disabled,
 					className
 				)}
-				onClick={() => {
+				onClick={(e) => {
 					if (disabled) return;
-					onClick();
+					onClick(e);
 				}}
 				ref={$ref}
 				{...rest}

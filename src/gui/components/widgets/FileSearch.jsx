@@ -14,6 +14,7 @@ import Level from "../../../level/Level";
 import locales from "../../../locales";
 import LsCommand from "../../../terminal/commands/fs/LsCommand";
 import { toast } from "../../../utils";
+import { checkKeyBinding } from "../../../utils/keyBindings";
 import extensions from "../../extensions";
 import { isRomFileForCurrentMode } from "../../rom";
 import styles from "./FileSearch.module.css";
@@ -325,9 +326,8 @@ export default forwardRef(function FileSearch(props, ref) {
 		const isArrowDown = e.code === "ArrowDown";
 		const isArrowUp = e.code === "ArrowUp";
 		const isEnter = e.code === "Enter";
-		const isCtrlP = e.ctrlKey && e.code === "KeyP";
 
-		if (isEsc || isCtrlP) {
+		if (isEsc || checkKeyBinding(e, "fileSearch")) {
 			e.preventDefault();
 			if (onBlur) onBlur();
 			return;

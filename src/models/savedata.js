@@ -40,12 +40,16 @@ const DEFAULT_KEY_MAP = () => ({
 });
 
 export const DEFAULT_KEY_BINDINGS = Object.freeze({
-	paneNavigation: {
-		up: "ARROWUP",
-		down: "ARROWDOWN",
-		left: "ARROWLEFT",
-		right: "ARROWRIGHT",
-	},
+	paneNavigationUp: "ALT+ARROWUP",
+	paneNavigationDown: "ALT+ARROWDOWN",
+	paneNavigationLeft: "ALT+ARROWLEFT",
+	paneNavigationRight: "ALT+ARROWRIGHT",
+	runCode: "ALT+ENTER",
+	fileSearch: "CTRL+P",
+	closeFile: "CTRL+E",
+	closeFileDesktop: "CTRL+W",
+	nextTab: "CTRL+TAB",
+	previousTab: "CTRL+SHIFT+TAB",
 });
 
 const INITIAL_STATE = () => ({
@@ -67,9 +71,7 @@ const INITIAL_STATE = () => ({
 	selectedFile: Drive.MAIN_FILE,
 	inputTypes: { 1: "keyboard", 2: "disconnected" }, // values: "keyboard" | "gamepad1" | "gamepad2" | "disconnected"
 	keyboardMappings: DEFAULT_KEY_MAP(),
-	keyBindings: {
-		paneNavigation: { ...DEFAULT_KEY_BINDINGS.paneNavigation },
-	},
+	keyBindings: {},
 	freeModeSetings: {
 		romExtension: ".gb",
 		screenWidth: 240,
@@ -191,12 +193,7 @@ export default {
 			return { ...state, keyBindings };
 		},
 		setDefaultKeyBindings(state) {
-			return {
-				...state,
-				keyBindings: {
-					paneNavigation: { ...DEFAULT_KEY_BINDINGS.paneNavigation },
-				},
-			};
+			return { ...state, keyBindings: {} };
 		},
 		setUnlockedUnits(state, unlockedUnits) {
 			return { ...state, unlockedUnits };

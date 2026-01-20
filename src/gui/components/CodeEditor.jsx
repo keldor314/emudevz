@@ -25,6 +25,7 @@ import {
 	lineHighlighter,
 	pasteIndent,
 } from "../../utils/codemirror";
+import { checkKeyBinding } from "../../utils/keyBindings";
 import IconButton from "./widgets/IconButton";
 import styles from "./CodeEditor.module.css";
 
@@ -257,9 +258,7 @@ export default class CodeEditor extends PureComponent {
 	};
 
 	_onKeyDown = (e) => {
-		const isAltEnter = e.altKey && e.code === "Enter";
-
-		if (isAltEnter) {
+		if (checkKeyBinding(e, "runCode")) {
 			if (!this._isActionEnabled()) return;
 			const action = this._getAction();
 			action.run();
