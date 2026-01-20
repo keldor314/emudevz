@@ -281,6 +281,7 @@ it("can <increment> and <decrement> registers", () => {
 
 it("can update the Zero Flag", () => {
   const cpu = newCPU();
+  expect(cpu.flags.z).to.equalN(false, "z");
 
   expect(cpu.flags).to.respondTo("updateZero");
 
@@ -298,14 +299,15 @@ it("can update the Zero Flag", () => {
 
 it("can update the Negative Flag", () => {
   const cpu = newCPU();
+  expect(cpu.flags.n).to.equalN(false, "n");
 
   expect(cpu.flags).to.respondTo("updateNegative");
 
-  cpu.flags.updateNegative(2);
-  expect(cpu.flags.n).to.equalN(false, "n");
-
   cpu.flags.updateNegative(129);
   expect(cpu.flags.n).to.equalN(true, "n");
+
+  cpu.flags.updateNegative(2);
+  expect(cpu.flags.n).to.equalN(false, "n");
 })({
   locales: {
     es: "puede actualizar la Bandera Negative",
