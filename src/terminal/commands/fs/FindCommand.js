@@ -43,7 +43,11 @@ export default class FindCommand extends FilesystemCommand {
 						`📌  ${filePath}:${lineNumber} 📌`,
 						theme.ACCENT
 					);
-					await this._terminal.writehlln(`\`\`\`javascript ${line}\`\`\``);
+
+					const sanitizedLine = line.replace(/`/g, "");
+					await this._terminal.writehlln(
+						`\`\`\`javascript ${sanitizedLine}\`\`\``
+					);
 					await this._terminal.newline();
 				}
 			}
