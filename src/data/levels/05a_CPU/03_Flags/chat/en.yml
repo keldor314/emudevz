@@ -16,9 +16,9 @@ main:
 
 notall:
   messages:
-  - right, right, with some exceptions
+  - all of them, yeah, bits 5 and 4 aren't flags!
   - bit 5 is always 1
-  - bit 4 ("b")... depends... on... things - we'll ignore it for now 😂
+  - bit 4 ("b")... depends... on... things - assume it's 0 for now 😂
   responses:
   - fair enough, what should I do? [exercise]
 

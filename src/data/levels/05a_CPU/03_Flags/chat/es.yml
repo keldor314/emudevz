@@ -16,9 +16,9 @@ main:
 
 notall:
   messages:
-  - bueno, bueno, con algunas excepciones
+  - todas, sí, ¡los bits 5 y 4 no son banderas!
   - el bit 5 es siempre 1
-  - el bit 4 ("b")... depende... de... cosas - vamos a ignorarlo por ahora 😂
+  - el bit 4 ("b")... depende... de... cosas - asume que es 0 por ahora 😂
   responses:
   - está bien, ¿qué debería hacer? [exercise]
 
