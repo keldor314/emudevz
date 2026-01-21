@@ -16,16 +16,16 @@ export default {
 
 		// instructions
 		const instructions = [];
+		let byteOffset = 0;
 		lir.forEach((lir) => {
-			const address = lir.address;
-
 			if (lir instanceof Instruction) {
 				instructions.push({
-					address,
+					address: byteOffset,
 					line: lir.source,
 					lineIndex: lir.line.lineNumber - 1,
 					size: lir.bytes.length,
 				});
+				byteOffset += lir.bytes.length;
 			}
 		});
 
