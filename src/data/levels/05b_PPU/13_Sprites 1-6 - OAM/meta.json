@@ -38,7 +38,7 @@
 	},
 	"videoTests": [
 		{
-			"rom": "/roms/.all/JupiterScope2.neees",
+			"rom": "/roms/_test/game_climber.neees",
 			"frames": 60,
 			"ppu": "TestPPU.v5.js"
 		},

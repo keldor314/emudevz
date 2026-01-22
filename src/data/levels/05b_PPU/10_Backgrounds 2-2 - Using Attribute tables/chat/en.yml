@@ -17,7 +17,7 @@ main:
       **->** reads the color index from memory:
         reads from PPU address ```javascript startAddress + colorIndex```
         (let's call this `masterColorIndex`)
-      **->** returns a color from the master palette, using `masterColorIndex`
+      **->** returns a color from the master palette, using `masterColorIndex % 64`
         (you can import and use 📄  ~/lib/ppu/masterPalette.js~ for the list of colors)
   - |-
     📚  implement this method in 🏞️  `BackgroundRenderer`:

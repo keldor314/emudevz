@@ -1244,7 +1244,7 @@ export default class PPU {
 		const startAddress = 0x3f00 + paletteId * 4;
 		const masterColorIndex = this.memory.read(startAddress + colorIndex);
 
-		return masterPalette[masterColorIndex];
+		return masterPalette[masterColorIndex % 64];
 	}
 
 	step(onFrame, onInterrupt) {
