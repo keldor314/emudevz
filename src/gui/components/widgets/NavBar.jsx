@@ -272,7 +272,13 @@ class NavBar extends PureComponent {
 		sfx.play("save");
 
 		const filename = new Date().toJSON().split("T")[0] + SAVEFILE_EXTENSION;
-		await savefile.export(filename);
+
+		try {
+			Level.current.startEffect("running", { sfx: false });
+			await savefile.export(filename);
+		} finally {
+			Level.current.stopEffect();
+		}
 	};
 
 	_openLevelHistory = () => {
