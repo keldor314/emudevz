@@ -1,3 +1,4 @@
+import _ from "lodash";
 import filesystem, { Drive } from "../filesystem";
 import { bus } from "../utils";
 import {
@@ -327,10 +328,11 @@ export default {
 				if (alreadyOpenFile == null) {
 					this.setOpenFiles([...openFiles, filePath]);
 					this.setSelectedFile(filePath);
+					bus.emit("file-opened", { filePath });
 				} else {
 					this.setSelectedFile(alreadyOpenFile);
+					bus.emit("file-opened", { filePath: alreadyOpenFile });
 				}
-				bus.emit("file-opened");
 			},
 			closeFile(filePath, _state_) {
 				const state = _state_[KEY];
@@ -344,8 +346,22 @@ export default {
 				if (
 					selectedFile != null &&
 					filesystem.normalize(selectedFile) === normalizedFilePath
-				)
-					this.setSelectedFile(newOpenFiles[0]);
+				) {
+					const currentIndex = _.findIndex(openFiles, (it) => {
+						return filesystem.normalize(it) === normalizedFilePath;
+					});
+
+					if (currentIndex > -1) {
+						if (currentIndex === openFiles.length - 1) {
+							this.setSelectedFile(newOpenFiles[newOpenFiles.length - 1]);
+						} else {
+							this.setSelectedFile(newOpenFiles[currentIndex]);
+						}
+					} else {
+						this.setSelectedFile(newOpenFiles[0]);
+					}
+				}
+
 				this.setOpenFiles(newOpenFiles);
 				bus.emit("file-closed");
 			},

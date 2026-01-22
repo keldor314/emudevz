@@ -177,19 +177,16 @@ class MultiFile extends PureComponent {
 		this._search();
 	};
 
-	_onFileOpened = () => {
+	_onFileOpened = ({ filePath }) => {
 		sfx.play("open");
-
-		this._tabsScroll?.scrollTo({
-			left: this._tabsScroll.scrollWidth,
-			behavior: "smooth",
+		setTimeout(() => {
+			this._scrollToTab(filePath);
 		});
 	};
 
 	_onFileClosed = () => {
 		sfx.play("close");
-
-		this._tabsScroll?.scrollTo({ left: 0, behavior: "smooth" });
+		this._scrollToSelectedTab();
 	};
 
 	_search = () => {
@@ -394,7 +391,11 @@ class MultiFile extends PureComponent {
 		});
 	};
 
-	_scrollTabIntoView = (filePath) => {
+	_scrollToSelectedTab = () => {
+		this._scrollToTab(this.props.selectedFile);
+	};
+
+	_scrollToTab = (filePath) => {
 		const scroll = this._tabsScroll;
 		if (!scroll || !filePath) return;
 
@@ -452,7 +453,7 @@ class MultiFile extends PureComponent {
 				const index = Math.max(0, openFiles.indexOf(selectedFile));
 				const next = (index + (isPreviousTab ? -1 : 1) + length) % length;
 				const nextFile = openFiles[next];
-				this._scrollTabIntoView(nextFile);
+				this._scrollToTab(nextFile);
 				this.props.setSelectedFile(nextFile);
 				this._refresh();
 				return;
