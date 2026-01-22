@@ -1154,6 +1154,7 @@ it("has a `backgroundRenderer` property", () => {
 it("`BackgroundRenderer`: `renderScanline()` calls `PPU::plot(...)` 256 times", () => {
   const PPU = mainModule.default.PPU;
   const ppu = new PPU({});
+  ppu.scanline = 0;
   ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
   ppu.onLoad?.(dummyMapper);
   ppu.registers?.ppuMask?.onWrite?.(0x1e);
