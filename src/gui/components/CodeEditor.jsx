@@ -209,6 +209,9 @@ export default class CodeEditor extends PureComponent {
 					height="100%"
 					theme={this._getThemeExtension()}
 					readOnly={!isEditionEnabled}
+					basicSetup={{
+						foldKeymap: false,
+					}}
 					extensions={LANGUAGES[language](filePath, extraLangOptions)}
 					onChange={this._setCode}
 					autoFocus
