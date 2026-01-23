@@ -5,7 +5,10 @@ import { FaUndo } from "react-icons/fa";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import locales, { LANGUAGES } from "../../../locales";
-import { DEFAULT_KEY_BINDINGS } from "../../../models/savedata";
+import {
+	DEFAULT_ADVANCED_SETTINGS,
+	DEFAULT_KEY_BINDINGS,
+} from "../../../models/savedata";
 import { filepicker, savefile, toast } from "../../../utils";
 import Button from "../widgets/Button";
 import GamepadMapper from "../widgets/GamepadMapper";
@@ -38,6 +41,7 @@ class SettingsModal extends PureComponent {
 		isLoadingSaveRestore: false,
 		isLoadingSaveDelete: false,
 		keyBindingsExpanded: false,
+		advancedSettingsExpanded: false,
 	};
 
 	render() {
@@ -51,6 +55,7 @@ class SettingsModal extends PureComponent {
 			open,
 			gameMode,
 			keyBindings,
+			advancedSettings,
 		} = this.props;
 		const {
 			areYouSureRestore,
@@ -59,6 +64,7 @@ class SettingsModal extends PureComponent {
 			isLoadingSaveRestore,
 			isLoadingSaveDelete,
 			keyBindingsExpanded,
+			advancedSettingsExpanded,
 		} = this.state;
 
 		return (
@@ -206,6 +212,41 @@ class SettingsModal extends PureComponent {
 									onChange={(newBindings) => {
 										this.props.setKeyBindings(newBindings);
 									}}
+								/>
+							)}
+						</Form.Group>
+						<Form.Group style={{ marginTop: MARGIN }}>
+							<Form.Label
+								className={styles.controlsTitle}
+								style={{ cursor: "pointer" }}
+								onClick={() =>
+									this.setState({
+										advancedSettingsExpanded: !advancedSettingsExpanded,
+									})
+								}
+							>
+								<span>
+									{advancedSettingsExpanded ? "▼" : "►"} ⚙️{" "}
+									{locales.get("advanced_settings")}
+								</span>
+								<IconButton
+									Icon={FaUndo}
+									tooltip={locales.get("restore_defaults")}
+									onClick={(e) => {
+										e.stopPropagation();
+										this.props.setDefaultAdvancedSettings();
+									}}
+								/>
+							</Form.Label>
+							{advancedSettingsExpanded && (
+								<Form.Control
+									as="textarea"
+									rows={10}
+									value={advancedSettings || DEFAULT_ADVANCED_SETTINGS}
+									onChange={(e) => {
+										this.props.setAdvancedSettings(e.target.value);
+									}}
+									style={{ fontFamily: "monospace", fontSize: "small" }}
 								/>
 							)}
 						</Form.Group>
@@ -384,6 +425,8 @@ class SettingsModal extends PureComponent {
 		this.setState({
 			areYouSureRestore: false,
 			areYouSureDelete: false,
+			keyBindingsExpanded: false,
+			advancedSettingsExpanded: false,
 		});
 		this.props.setSettingsOpen(false);
 	};
@@ -396,6 +439,7 @@ const mapStateToProps = ({ savedata }) => ({
 	emulatorSettings: savedata.emulatorSettings,
 	gameMode: savedata.gameMode,
 	keyBindings: savedata.keyBindings,
+	advancedSettings: savedata.advancedSettings,
 });
 const mapDispatchToProps = ({ savedata }) => ({
 	setLanguage: savedata.setLanguage,
@@ -405,6 +449,8 @@ const mapDispatchToProps = ({ savedata }) => ({
 	setDefaultKeyboardMappings: savedata.setDefaultKeyboardMappings,
 	setKeyBindings: savedata.setKeyBindings,
 	setDefaultKeyBindings: savedata.setDefaultKeyBindings,
+	setAdvancedSettings: savedata.setAdvancedSettings,
+	setDefaultAdvancedSettings: savedata.setDefaultAdvancedSettings,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsModal);

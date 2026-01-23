@@ -53,6 +53,39 @@ export const DEFAULT_KEY_BINDINGS = Object.freeze({
 	previousTab: "CTRL+SHIFT+TAB",
 });
 
+export const DEFAULT_ADVANCED_SETTINGS = JSON.stringify(
+	{
+		codeEditor: {
+			lineNumbers: true,
+			highlightActiveLineGutter: true,
+			highlightSpecialChars: true,
+			history: true,
+			foldGutter: true,
+			drawSelection: true,
+			dropCursor: true,
+			allowMultipleSelections: true,
+			indentOnInput: true,
+			syntaxHighlighting: true,
+			bracketMatching: true,
+			closeBrackets: true,
+			autocompletion: true,
+			rectangularSelection: true,
+			crosshairCursor: true,
+			highlightActiveLine: true,
+			highlightSelectionMatches: true,
+			closeBracketsKeymap: true,
+			defaultKeymap: true,
+			searchKeymap: true,
+			historyKeymap: true,
+			foldKeymap: true,
+			completionKeymap: true,
+			lintKeymap: true,
+		},
+	},
+	null,
+	2
+);
+
 const INITIAL_STATE = () => ({
 	version: 1,
 	saveId: guid(),
@@ -73,6 +106,7 @@ const INITIAL_STATE = () => ({
 	inputTypes: { 1: "keyboard", 2: "disconnected" }, // values: "keyboard" | "gamepad1" | "gamepad2" | "disconnected"
 	keyboardMappings: DEFAULT_KEY_MAP(),
 	keyBindings: {},
+	advancedSettings: DEFAULT_ADVANCED_SETTINGS,
 	freeModeSetings: {
 		romExtension: ".gb",
 		screenWidth: 240,
@@ -195,6 +229,12 @@ export default {
 		},
 		setDefaultKeyBindings(state) {
 			return { ...state, keyBindings: {} };
+		},
+		setAdvancedSettings(state, advancedSettings) {
+			return { ...state, advancedSettings };
+		},
+		setDefaultAdvancedSettings(state) {
+			return { ...state, advancedSettings: DEFAULT_ADVANCED_SETTINGS };
 		},
 		setUnlockedUnits(state, unlockedUnits) {
 			return { ...state, unlockedUnits };

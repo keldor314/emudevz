@@ -7,6 +7,7 @@ export default {
 	_steam: "Steam",
 	_trailer: "Trailer",
 	_web: "Web",
+	advanced_settings: "Configuración avanzada",
 	also: "también",
 	apu: "APU",
 	backup: "Resguardar",

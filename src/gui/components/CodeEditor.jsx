@@ -209,10 +209,8 @@ export default class CodeEditor extends PureComponent {
 					height="100%"
 					theme={this._getThemeExtension()}
 					readOnly={!isEditionEnabled}
-					basicSetup={{
-						foldKeymap: false,
-					}}
 					extensions={LANGUAGES[language](filePath, extraLangOptions)}
+					basicSetup={this._getBasicSetupOptions()}
 					onChange={this._setCode}
 					autoFocus
 					ref={(ref) => {
@@ -415,6 +413,17 @@ export default class CodeEditor extends PureComponent {
 		const themeKey =
 			(dlc.installed() && store.getState().savedata?.editorTheme) || "oneDark";
 		return editorTheme.getById(themeKey);
+	}
+
+	_getBasicSetupOptions() {
+		try {
+			const advancedSettings = JSON.parse(
+				store.getState().savedata?.advancedSettings
+			);
+			return advancedSettings?.codeEditor || {};
+		} catch {
+			return {};
+		}
 	}
 }
 
