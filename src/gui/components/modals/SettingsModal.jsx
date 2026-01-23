@@ -247,6 +247,7 @@ class SettingsModal extends PureComponent {
 										this.props.setAdvancedSettings(e.target.value);
 									}}
 									style={{ fontFamily: "monospace", fontSize: "small" }}
+									spellCheck={false}
 								/>
 							)}
 						</Form.Group>
