@@ -178,7 +178,7 @@ it("includes a `flags` property with 6 booleans", () => {
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
 
-it("`FlagsRegister`: can be <serialized> into a byte", () => {
+it("`FlagsRegister`: can be <packed> into a byte", () => {
   const cpu = newCPU();
   cpu.flags.i = false;
 
@@ -205,7 +205,7 @@ it("`FlagsRegister`: can be <serialized> into a byte", () => {
   expect(cpu.flags.getValue()).to.equalBin(0b10101100, "[-z] => getValue()");
 })({
   locales: {
-    es: "`FlagsRegister`: puede ser <serializado> en un byte",
+    es: "`FlagsRegister`: puede ser <empaquetado> en un byte",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
@@ -242,6 +242,96 @@ it("`FlagsRegister`: can be <set> from a byte", () => {
 })({
   locales: {
     es: "`FlagsRegister`: puede ser <asignado> desde un byte",
+  },
+  use: ({ id }, book) => id >= book.getId("5a.3"),
+});
+
+it("`FlagsRegister`: can assign ~C~ from a byte (bit 0)", () => {
+  const cpu = newCPU();
+
+  cpu.flags.setValue(0b00000001);
+  expect(cpu.flags.c).to.equalN(true, "c");
+
+  cpu.flags.setValue(0b00000000);
+  expect(cpu.flags.c).to.equalN(false, "c");
+})({
+  locales: {
+    es: "`FlagsRegister`: puede asignar ~C~ desde un byte (bit 0)",
+  },
+  use: ({ id }, book) => id >= book.getId("5a.3"),
+});
+
+it("`FlagsRegister`: can assign ~Z~ from a byte (bit 1)", () => {
+  const cpu = newCPU();
+
+  cpu.flags.setValue(0b00000010);
+  expect(cpu.flags.z).to.equalN(true, "z");
+
+  cpu.flags.setValue(0b00000000);
+  expect(cpu.flags.z).to.equalN(false, "z");
+})({
+  locales: {
+    es: "`FlagsRegister`: puede asignar ~Z~ desde un byte (bit 1)",
+  },
+  use: ({ id }, book) => id >= book.getId("5a.3"),
+});
+
+it("`FlagsRegister`: can assign ~I~ from a byte (bit 2)", () => {
+  const cpu = newCPU();
+
+  cpu.flags.setValue(0b00000100);
+  expect(cpu.flags.i).to.equalN(true, "i");
+
+  cpu.flags.setValue(0b00000000);
+  expect(cpu.flags.i).to.equalN(false, "i");
+})({
+  locales: {
+    es: "`FlagsRegister`: puede asignar ~I~ desde un byte (bit 2)",
+  },
+  use: ({ id }, book) => id >= book.getId("5a.3"),
+});
+
+it("`FlagsRegister`: can assign ~D~ from a byte (bit 3)", () => {
+  const cpu = newCPU();
+
+  cpu.flags.setValue(0b00001000);
+  expect(cpu.flags.d).to.equalN(true, "d");
+
+  cpu.flags.setValue(0b00000000);
+  expect(cpu.flags.d).to.equalN(false, "d");
+})({
+  locales: {
+    es: "`FlagsRegister`: puede asignar ~D~ desde un byte (bit 3)",
+  },
+  use: ({ id }, book) => id >= book.getId("5a.3"),
+});
+
+it("`FlagsRegister`: can assign ~V~ from a byte (bit 6)", () => {
+  const cpu = newCPU();
+
+  cpu.flags.setValue(0b01000000);
+  expect(cpu.flags.v).to.equalN(true, "v");
+
+  cpu.flags.setValue(0b00000000);
+  expect(cpu.flags.v).to.equalN(false, "v");
+})({
+  locales: {
+    es: "`FlagsRegister`: puede asignar ~V~ desde un byte (bit 6)",
+  },
+  use: ({ id }, book) => id >= book.getId("5a.3"),
+});
+
+it("`FlagsRegister`: can assign ~N~ from a byte (bit 7)", () => {
+  const cpu = newCPU();
+
+  cpu.flags.setValue(0b10000000);
+  expect(cpu.flags.n).to.equalN(true, "n");
+
+  cpu.flags.setValue(0b00000000);
+  expect(cpu.flags.n).to.equalN(false, "n");
+})({
+  locales: {
+    es: "`FlagsRegister`: puede asignar ~N~ desde un byte (bit 7)",
   },
   use: ({ id }, book) => id >= book.getId("5a.3"),
 });
