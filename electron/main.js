@@ -112,11 +112,12 @@ function createWindow() {
 
 		// Zoom in
 		if (
-			input.code === "NumpadAdd" ||
-			input.key === "+" ||
-			input.key === "=" ||
-			input.code === "Digit3" ||
-			input.code === "Numpad3"
+			!input.alt &&
+			(input.code === "NumpadAdd" ||
+				input.key === "+" ||
+				input.key === "=" ||
+				input.code === "Digit3" ||
+				input.code === "Numpad3")
 		) {
 			const current = win.webContents.getZoomFactor();
 			win.webContents.setZoomFactor(clamp(current + step, 0.5, 3));
@@ -125,11 +126,12 @@ function createWindow() {
 		}
 		// Zoom out
 		if (
-			input.code === "NumpadSubtract" ||
-			input.key === "-" ||
-			input.key === "_" ||
-			input.code === "Digit1" ||
-			input.code === "Numpad1"
+			!input.alt &&
+			(input.code === "NumpadSubtract" ||
+				input.key === "-" ||
+				input.key === "_" ||
+				input.code === "Digit1" ||
+				input.code === "Numpad1")
 		) {
 			const current = win.webContents.getZoomFactor();
 			win.webContents.setZoomFactor(clamp(current - step, 0.5, 3));
@@ -138,9 +140,8 @@ function createWindow() {
 		}
 		// Reset zoom
 		if (
-			input.key === "0" ||
-			input.code === "Digit0" ||
-			input.code === "Numpad0"
+			!input.alt &&
+			(input.key === "0" || input.code === "Digit0" || input.code === "Numpad0")
 		) {
 			win.webContents.setZoomFactor(1);
 			event.preventDefault();
