@@ -234,11 +234,19 @@ class HomeScreen extends PureComponent {
 			sprites.background.tilePosition.y = BACKGROUND_TILE_Y;
 			sprites.background.alpha = BACKGROUND_ALPHA;
 
-			const app = new PIXI.Application({
-				resizeTo: div,
-				backgroundColor: BACKGROUND_COLOR,
-			});
-			this._app = app;
+			try {
+				this._app = new PIXI.Application({
+					resizeTo: div,
+					backgroundColor: BACKGROUND_COLOR,
+				});
+			} catch (e) {
+				if (e?.message?.includes?.("WebGL unsupported in this browser")) {
+					const overlay = document.getElementById("webgl-overlay");
+					if (overlay != null) overlay.style.display = "flex";
+				}
+				throw e;
+			}
+			const app = this._app;
 
 			app.stage = new Stage();
 			const crtFilter = this._createCRTFilter();

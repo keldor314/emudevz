@@ -396,9 +396,9 @@ code {
 	flex: 1;
 }
 
-/* Too small overlay */
+/* Overlays */
 
-#too-small-overlay {
+._overlay {
 	position: fixed;
 	inset: 0;
 	width: 100dvw;
@@ -414,12 +414,12 @@ code {
 	pointer-events: auto;
 }
 
-.too-small-overlay__content {
+._overlay_content {
 	text-align: center;
 	font-size: xx-large;
 }
 
-.too-small-overlay__subtitle {
+._overlay_subtitle {
 	margin-top: 0.5rem;
 	font-size: medium;
 	opacity: 0.85;
