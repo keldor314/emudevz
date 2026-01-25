@@ -32,7 +32,7 @@ exercise:
       ```javascript if (this.registers.ppuMask.showBackground)
         this.loopy.onPlot(x);```
   - |-
-    📚  en 🎛️  `PPUCtrl`, elimina el campo `nameTableId`; reemplaza su asignación en el método `onWrite(...)` con:
+    📚  en 🎛️  `PPUCtrl`, elimina el campo `nameTableId` y agrega esto al final de `onWrite(...)`:
       ```javascript this.ppu.loopy.onPPUCtrlWrite(value);```
   - |-
     📚  en 📊  `PPUStatus`, reemplaza el código que desactiva el `latch` de 📍  `PPUAddr` con:
