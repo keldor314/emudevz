@@ -16,6 +16,11 @@ body {
 	font-family: "Open Sans";
 }
 
+* {
+	-webkit-user-drag: none;
+	user-drag: none;
+}
+
 #container,
 #root {
 	height: 100%;
@@ -209,7 +214,6 @@ code {
 	color: var(--link-highlight, #9db5dc);
 	cursor: pointer;
 	text-decoration: none;
-	-webkit-user-drag: none;
 }
 
 .highlight-link:hover {
