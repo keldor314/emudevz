@@ -81,6 +81,11 @@ export const DEFAULT_ADVANCED_SETTINGS = JSON.stringify(
 			completionKeymap: true,
 			lintKeymap: true,
 		},
+		layout: {
+			triple: {
+				resizable: false,
+			},
+		},
 	},
 	null,
 	2

@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import _ from "lodash";
 import codeEval from "../level/codeEval";
+import store from "../store";
 import components from "./components";
 import layouts from "./components/layouts";
 import NavBar from "./components/widgets/NavBar";
@@ -21,7 +22,11 @@ class LevelScreen extends PureComponent {
 
 		return (
 			<>
-				<Layout {...Components} ref={this.onReady} resizable={isFreeMode} />
+				<Layout
+					{...Components}
+					ref={this.onReady}
+					resizable={isFreeMode || this._getResizableSetting()}
+				/>
 				<NavBar chapter={chapter} level={level} />
 			</>
 		);
@@ -86,6 +91,17 @@ class LevelScreen extends PureComponent {
 		e.preventDefault();
 		e.stopPropagation();
 	};
+
+	_getResizableSetting() {
+		try {
+			const advancedSettings = JSON.parse(
+				store.getState().savedata?.advancedSettings
+			);
+			return advancedSettings?.layout?.triple?.resizable || false;
+		} catch {
+			return false;
+		}
+	}
 }
 
 export default LevelScreen;
