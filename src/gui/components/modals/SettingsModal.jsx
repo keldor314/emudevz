@@ -20,7 +20,7 @@ import styles from "./SettingsModal.module.css";
 const MARGIN = 16;
 const SAVEFILE_EXTENSION = ".devz";
 
-const KEY_BINDING_ITEMS = [
+const KEY_BINDING_ITEMS = () => [
 	{ id: "paneNavigationUp", label: locales.get("pane_navigation_up") },
 	{ id: "paneNavigationDown", label: locales.get("pane_navigation_down") },
 	{ id: "paneNavigationLeft", label: locales.get("pane_navigation_left") },
@@ -205,7 +205,7 @@ class SettingsModal extends PureComponent {
 							</Form.Label>
 							{keyBindingsExpanded && open && (
 								<KeyMapper
-									items={KEY_BINDING_ITEMS}
+									items={KEY_BINDING_ITEMS()}
 									mapping={keyBindings}
 									defaultMapping={DEFAULT_KEY_BINDINGS}
 									layout="column"
