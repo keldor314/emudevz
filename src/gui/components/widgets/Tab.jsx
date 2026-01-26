@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { FaArrowAltCircleLeft, FaBook, FaTimes } from "react-icons/fa";
 import classNames from "classnames";
+import Drive from "../../../filesystem/Drive";
 import locales from "../../../locales";
 import IconButton from "./IconButton";
 import Tooltip from "./Tooltip";
@@ -37,7 +38,10 @@ export default class Tab extends PureComponent {
 				{...rest}
 			>
 				<Tooltip title={tooltip}>
-					<span className={styles.title}>{title}</span>
+					<span className={styles.title}>
+						{title}
+						{tooltip.startsWith(Drive.SNAPSHOTS_DIR) ? " ⚠️" : ""}
+					</span>
 				</Tooltip>
 
 				{canPin && (
