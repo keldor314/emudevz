@@ -607,7 +607,7 @@ export default class Terminal {
 	}
 
 	async _onResize(e) {
-		if (this.isExpectingInput)
+		if (this.isExpectingInput && this._input.text !== "")
 			await this.cancelPrompt(CANCELED, locales.get("resize_warning"));
 	}
 
