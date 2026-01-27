@@ -105,20 +105,39 @@ it("`ADC`: updates the Carry and Overflow flags", () => {
   const cpu = newCPU();
   const instructions = mainModule.default.instructions;
 
+  // no carry, no overflow
   cpu.a.setValue(50);
   instructions.ADC.run(cpu, 10);
+  expect(cpu.a.getValue()).to.equalN(60, "getValue()");
   expect(cpu.flags.c).to.equalN(false, "c");
   expect(cpu.flags.v).to.equalN(false, "v");
 
   // positive (60) + positive (75) = negative (-121) => overflow
   cpu.flags.c = false;
   instructions.ADC.run(cpu, 75);
+  expect(cpu.a.getValue()).to.equalN(135, "getValue()"); // -121
   expect(cpu.flags.c).to.equalN(false, "c");
   expect(cpu.flags.v).to.equalN(true, "v");
 
   // result is over 255 => carry
   cpu.flags.c = false;
   instructions.ADC.run(cpu, 122);
+  expect(cpu.a.getValue()).to.equalN(1, "getValue()"); // -121 + 122
+  expect(cpu.flags.c).to.equalN(true, "c");
+  expect(cpu.flags.v).to.equalN(false, "v");
+
+  // negative (-60) + negative (-80) = positive (116) => overflow
+  cpu.a.setValue(byte.toU8(-60));
+  cpu.flags.c = false;
+  instructions.ADC.run(cpu, byte.toU8(-80));
+  expect(cpu.a.getValue()).to.equalN(116, "getValue()");
+  expect(cpu.flags.c).to.equalN(true, "c"); // 196 + 176 = 372 > 255
+  expect(cpu.flags.v).to.equalN(true, "v");
+
+  // carry-in can be the only reason for carry out
+  cpu.a.setValue(255);
+  cpu.flags.c = true;
+  instructions.ADC.run(cpu, 0x00);
   expect(cpu.flags.c).to.equalN(true, "c");
   expect(cpu.flags.v).to.equalN(false, "v");
 })({
@@ -1016,8 +1035,10 @@ it("`SBC`: updates the Carry and Overflow flags", () => {
   const cpu = newCPU();
   const instructions = mainModule.default.instructions;
 
+  // no carry, no overflow
   cpu.a.setValue(50);
   instructions.SBC.run(cpu, 10);
+  expect(cpu.a.getValue()).to.equalN(39, "getValue()"); // 50 - 10 - 1
   expect(cpu.flags.c).to.equalN(true, "c");
   expect(cpu.flags.v).to.equalN(false, "v");
 
@@ -1025,19 +1046,29 @@ it("`SBC`: updates the Carry and Overflow flags", () => {
   cpu.a.setValue(40);
   cpu.flags.c = true;
   instructions.SBC.run(cpu, byte.toU8(-100));
+  expect(cpu.a.getValue()).to.equalN(140, "getValue()"); // -116
   expect(cpu.flags.c).to.equalN(false, "c"); // borrow!
-  expect(cpu.flags.v).to.equalN(true, "v"); //  |
-  //                                  v
-  //                                  00101000 (40)
-  //                                - 10011100 (-100)
-  //                                  ^
+  //   v
+  //   00101000 (40)
+  // - 10011100 (-100)
+  //   ^
+  expect(cpu.flags.v).to.equalN(true, "v");
 
   // negative (-40) - positive (100) = positive (116) => overflow
   cpu.a.setValue(byte.toU8(-40));
   cpu.flags.c = true;
   instructions.SBC.run(cpu, 100);
-  expect(cpu.flags.c).to.equalN(true, "c");
+  expect(cpu.a.getValue()).to.equalN(116, "getValue()");
+  expect(cpu.flags.c).to.equalN(true, "c"); // no borrow
   expect(cpu.flags.v).to.equalN(true, "v");
+
+  // no borrow even if result has bit 7 set (C must stay 1)
+  cpu.a.setValue(0x80);
+  cpu.flags.c = true;
+  instructions.SBC.run(cpu, 0);
+  expect(cpu.a.getValue()).to.equalN(0x80, "getValue()");
+  expect(cpu.flags.c).to.equalN(true, "c"); // no borrow
+  expect(cpu.flags.v).to.equalN(false, "v");
 })({
   locales: {
     es: "`SBC`: actualiza las banderas Carry y Overflow",
