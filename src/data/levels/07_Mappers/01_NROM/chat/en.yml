@@ -43,7 +43,7 @@ nrom:
   - |-
     check out these files to understand how it works:
       📄  ~/docs/lib/Mapper.en.md~
-      📄  ~/code/mappers/0_NROM.js~
-      📄  ~/code/mappers/mappers.js~
+      📄  ~/tmpl/mappers/0_NROM.js~
+      📄  ~/tmpl/mappers/mappers.js~
   responses:
   - ▶️  continue [end]

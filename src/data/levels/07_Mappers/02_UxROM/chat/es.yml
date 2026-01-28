@@ -33,7 +33,9 @@ exercise:
       **->** retorna un objeto que combina ```javascript super.getSaveState()``` con uno que incluye la <página actual>
     **setSaveState(saveState)**:
       **->** llama a ```javascript super.setSaveState(saveState)``` pero también restaura la <página actual>
-  - 📚  agrega tu clase `UxROM` a 📄  ~/code/mappers/mappers.js~
+  - |-
+    📚  agrega tu clase `UxROM` a 📄  ~/code/mappers/mappers.js~
+      (si no tienes el archivo, créalo desde 📄  ~/tmpl/mappers/mappers.js~)
   - |-
     para probar este mapper, puedes correr uno de los siguientes juegos:
       💦 🏛️  <Böbl>
