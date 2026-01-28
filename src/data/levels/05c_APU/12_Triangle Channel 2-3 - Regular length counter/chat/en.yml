@@ -4,7 +4,7 @@ main:
   - did you listen to the emulator? 😂
   - we need to silence these triangle waves urgently!
   - "the Triangle Channel should be silenced:"
-  - 📡  when its timer is below 8 (already covered ✅ )
+  - 📡  when its timer is below 2 (already covered ✅ )
   - 🔇  when games mute the channel with an 🎛️  APUControl write
   - 📏  when its length counter is 0
   - 📏  when its linear length counter is 0
