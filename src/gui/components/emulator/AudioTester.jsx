@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import { FaTimes } from "react-icons/fa";
+import _ from "lodash";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
 import testContext from "../../../terminal/commands/test/context";
@@ -138,7 +139,12 @@ export default class AudioTester extends PureComponent {
 				) {
 					const sampleA = this._samples.A.mix[i];
 					const sampleB = this._samples.B.mix[i];
-					if (Math.abs(sampleA - sampleB) > SAMPLE_EPSILON) success = false;
+					if (
+						!_.isFinite(sampleA) ||
+						!_.isFinite(sampleB) ||
+						Math.abs(sampleA - sampleB) > SAMPLE_EPSILON
+					)
+						success = false;
 					i++;
 				}
 
