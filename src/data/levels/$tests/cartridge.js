@@ -208,8 +208,8 @@ it("has a `header` property with <metadata> (mapper id)", () => {
   for (let i = 0; i < 256; i++) {
     const lowNybble = byte.lowNybbleOf(i);
     const highNybble = byte.highNybbleOf(i);
-    bytes[6] = byte.buildU8(lowNybble, 0);
-    bytes[7] = byte.buildU8(highNybble, 0);
+    bytes[6] = byte.buildU8(lowNybble, 0b1011);
+    bytes[7] = byte.buildU8(highNybble, 0b1010);
     expect(new Cartridge(bytes).header.mapperId).to.equalN(i, "mapperId");
   }
 })({
@@ -232,16 +232,19 @@ const buildRom = (
   withPadding = false,
   flags6 = 0b00000000,
   prgPages = 1 + byte.random(3),
-  chrPages = 1 + byte.random(3)
+  chrPages = 1 + byte.random(3),
+  trailerBytes = 99
 ) => {
   const header = buildHeader(withPadding, flags6, prgPages, chrPages);
   const prg = [];
   const chr = [];
+  const trailer = [];
   for (let i = 0; i < prgPages * 16384; i++) prg.push(byte.random());
   for (let i = 0; i < chrPages * 8192; i++) chr.push(byte.random());
-  const bytes = new Uint8Array([...header, ...prg, ...chr]);
+  for (let i = 0; i < trailerBytes; i++) trailer.push(byte.random());
+  const bytes = new Uint8Array([...header, ...prg, ...chr, ...trailer]);
 
-  return { header, prg, chr, bytes };
+  return { header, prg, chr, trailer, bytes };
 };
 
 it("`prg()` returns <the code> (no padding)", () => {
@@ -250,7 +253,10 @@ it("`prg()` returns <the code> (no padding)", () => {
 
   const cartridge = new Cartridge(bytes);
   expect(cartridge).to.respondTo("prg");
-  expect(cartridge.prg(), "prg()").to.eql(new Uint8Array(prg));
+
+  const userPrg = cartridge.prg();
+  expect(userPrg?.length).to.equalN(prg.length, "prg().length");
+  expect(userPrg, "prg()").to.eql(new Uint8Array(prg));
 })({
   locales: {
     es: "`prg()` retorna <el código> (sin relleno)",
@@ -264,7 +270,10 @@ it("`prg()` returns <the code> (with padding)", () => {
 
   const cartridge = new Cartridge(bytes);
   expect(cartridge).to.respondTo("prg");
-  expect(cartridge.prg(), "prg()").to.eql(new Uint8Array(prg));
+
+  const userPrg = cartridge.prg();
+  expect(userPrg?.length).to.equalN(prg.length, "prg().length");
+  expect(userPrg, "prg()").to.eql(new Uint8Array(prg));
 })({
   locales: {
     es: "`prg()` retorna <el código> (con relleno)",
@@ -280,7 +289,10 @@ it("`chr()` returns <the graphics> (using CHR-ROM)", () => {
 
   const cartridge = new Cartridge(bytes);
   expect(cartridge).to.respondTo("chr");
-  expect(cartridge.chr(), "chr()").to.eql(new Uint8Array(chr));
+
+  const userChr = cartridge.chr();
+  expect(userChr?.length).to.equalN(chr.length, "chr().length");
+  expect(userChr, "chr()").to.eql(new Uint8Array(chr));
 })({
   locales: {
     es: "`chr()` retorna <los gráficos> (usando CHR-ROM)",
@@ -294,7 +306,10 @@ it("`chr()` returns <the graphics> (using CHR-RAM)", () => {
 
   const cartridge = new Cartridge(bytes);
   expect(cartridge).to.respondTo("chr");
-  expect(cartridge.chr(), "chr()").to.eql(new Uint8Array(8192));
+
+  const userChr = cartridge.chr();
+  expect(userChr?.length).to.equalN(8192, "chr().length");
+  expect(userChr, "chr()").to.eql(new Uint8Array(8192));
 })({
   locales: {
     es: "`chr()` retorna <los gráficos> (usando CHR-RAM)",
