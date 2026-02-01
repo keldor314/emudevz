@@ -31,7 +31,7 @@ exercise:
       **->** define un array `sprites`
       **->** para cada id de sprite posible (~0-63~):
         **->** crea un `sprite` usando ```javascript this._createSprite(...)```
-        **->** si el `sprite` debe renderizarse en la scanline actual, y `sprites` tiene menos de 9 elementos:
+        **->** si el `sprite` debe renderizarse en la scanline actual:
           **->** si `sprites` tiene menos de 8 elementos:
             **->** agrega `sprite` al array `sprites`
           **->** de lo contrario:

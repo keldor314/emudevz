@@ -31,7 +31,7 @@ exercise:
       **->** defines a `sprites` array
       **->** for each possible sprite id (~0-63~):
         **->** creates a `sprite` using ```javascript this._createSprite(...)```
-        **->** if the `sprite` should render in the current scanline, and `sprites` has less than 9 items:
+        **->** if the `sprite` should render in the current scanline:
           **->** if `sprites` has less than 8 items:
             **->** pushes `sprite` to the `sprites` array
           **->** else:
