@@ -20,8 +20,11 @@ why:
 
 tutorial:
   messages:
-  - ¡honestamente, como prefieras llamarlo! 🤷
-  - yo diría que <es un juego> porque tiene un objetivo claro, un conjunto de reglas y tareas en las que puedes tener éxito o fallar
+  - honestamente, ¡como prefieras llamarlo! 🤷
+  - creo que es ambas cosas
+  - pero busca ser primero un tutorial guiado, y después un juego
+  - aun así, lo llamo <un juego> porque tiene un objetivo claro, un conjunto de reglas y desafíos en los que puedes tener éxito o fallar
+  - ¡y porque creo que es divertido!
   responses:
   - ...main
 

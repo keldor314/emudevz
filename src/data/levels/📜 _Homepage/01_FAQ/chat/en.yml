@@ -22,7 +22,10 @@ why:
 tutorial:
   messages:
   - honestly, whatever you want to call it! 🤷
-  - I'd say <it's a game> since it has a clear goal, a set of rules, and tasks where you can succeed or fail
+  - I think it's both
+  - but it aims to be a guided tutorial first, and a game second
+  - I still call it <a game> because it has a clear goal, a set of rules, and challenges where you can succeed or fail
+  - and because I think it's fun!
   responses:
   - ...main
 
