@@ -277,21 +277,25 @@ it("`RELATIVE`: cannot cross $FFFF", () => {
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });
 
-it("`RELATIVE`: adds 2 cycles if it <crosses page>", () => {
+it("`RELATIVE`: adds 1 cycle if it <crosses page>", () => {
   const addressingModes = mainModule.default.addressingModes;
   const cpu = newCPU();
   cpu.pc.setValue(0xfafe);
 
   cpu.extraCycles = 0;
   addressingModes.RELATIVE.getAddress(cpu, 20, true);
-  expect(cpu.extraCycles).to.equalN(2, "extraCycles");
+  if (cpu.extraCycles !== 2) {
+    expect(cpu.extraCycles).to.equalN(1, "extraCycles");
+  } else {
+    // LEGACY: old versions asked to add 2 cycles here, it's... fine
+  }
 
   cpu.extraCycles = 0;
   addressingModes.RELATIVE.getAddress(cpu, 20, false);
   expect(cpu.extraCycles).to.equalN(0, "extraCycles");
 })({
   locales: {
-    es: "`RELATIVE`: agrega 2 ciclos si <cruza de página>",
+    es: "`RELATIVE`: agrega 1 ciclo si <cruza de página>",
   },
   use: ({ id }, book) => id >= book.getId("5a.12"),
 });

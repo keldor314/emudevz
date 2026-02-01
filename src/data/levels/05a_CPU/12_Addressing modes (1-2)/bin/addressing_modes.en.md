@@ -24,9 +24,6 @@
 
 <hr>
 
-**(\*)** These addressing modes define the _output_ as the sum of a _base address_ and an offset, adding `N` extra cycles (`cpu.extraCycles += N`) if a page boundary is crossed. That is, when the _base address_ and _output_ differ in their most significant byte.
+**(\*)** These addressing modes define the _output_ as the sum of a _base address_ and an offset, adding `1` extra cycle (`cpu.extraCycles++`) if a page boundary is crossed. That is, when the _base address_ and _output_ differ in their most significant byte.
 
-- In the **Relative** mode, `N` = 2
-- In the **indexed** modes, `N` = 1
-
-⚠️ Not all opcodes have this cross-page penalty, so the addressing modes receive a `hasPageCrossPenalty` boolean that indicates whether to add extra cycles when a page boundary is crossed.
+⚠️ Not all opcodes have this page-cross penalty, so the addressing modes receive a `hasPageCrossPenalty` boolean that indicates whether to add extra cycles when a page boundary is crossed.
