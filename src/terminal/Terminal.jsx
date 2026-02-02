@@ -752,6 +752,11 @@ export default class Terminal {
 	async _processAutocomplete() {
 		if (!this.isExpectingInput || this._input.isEmpty()) return;
 
+		if (this._input.caretIndex < this._input.text.length) {
+			this._input.caretIndex = this._input.text.length;
+			await this._redrawInput();
+		}
+
 		const text = this._input.text;
 		const lastPart = _.last(text.split(ARGUMENT_SEPARATOR));
 		const options = this.autocompleteOptions.filter((it) =>
