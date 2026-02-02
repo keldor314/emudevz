@@ -22,7 +22,7 @@ exercise:
   - exactamente eso ✅
   - "aquí hay una función que define todos los opcodes por ti:"
   - 📄  ~/lib/cpu/defineOperations.js~
-  - solo necesitas llamarla, pasando los objetos `instructions` y `addressingModes`
+  - solo necesitas llamarla, pasando los objetos `instructions` y `addressingModes` que ya tienes
   - |-
     📚  agrega la siguiente propiedad a tu 🧠  `CPU`:
       ```javascript this.operations = defineOperations(instructions, addressingModes);```
