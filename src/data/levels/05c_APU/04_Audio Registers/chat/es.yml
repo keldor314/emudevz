@@ -37,7 +37,7 @@ exercise:
   - 📚  crea una clase `AudioRegisters`, utilizando esa plantilla
   - |-
     📚  agrega una propiedad `registers` a 🔊  `APU`, asignada a:
-         ```javascript new AudioRegisters(this)```
+      ```javascript new AudioRegisters(this)```
   - |-
     📚  por último, mapéalos en 🐏  `CPUMemory` (regiones $4000-$4013, $4015 y $4017):
       - las <lecturas> deberían retornar ```javascript this.apu.registers.read(address)```
