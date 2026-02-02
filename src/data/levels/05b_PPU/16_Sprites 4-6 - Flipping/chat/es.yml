@@ -3,6 +3,7 @@ main:
   - como viste en el nivel de OAM, los sprites pueden 🤸  <voltearse>, tanto horizontal como verticalmente
   - esto está representado en nuestra clase `Sprite` con los atributos `flipX` y `flipY`
   - 📚  cambia tu 🛸  `SpriteRenderer` para que dibuje los píxeles correctos, dependiendo de estos atributos
+  - ten en cuenta que `Sprite::tileIdFor(...)` ya invierte el id del tile en modo ~8x16~, así que solo deberías ajustar las coordenadas internas X e Y
   responses:
   - (*) espera, ¿qué quisiste decir con ~voltearse~? [whats]
   - (*) necesito ayuda con el volteo horizontal [horizontal]

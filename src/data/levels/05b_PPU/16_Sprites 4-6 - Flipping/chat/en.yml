@@ -3,6 +3,7 @@ main:
   - as you saw in the OAM level, sprites can be 🤸  <flipped>, both horizontally and vertically
   - this is represented in our `Sprite` class with the `flipX` and `flipY` attributes
   - 📚  change your 🛸  `SpriteRenderer` so it plots the right pixels, depending on these attributes
+  - keep in mind that `Sprite::tileIdFor(...)` already flips the tile id in ~8x16~ mode, so you should only adjust the internal X and Y coordinates
   responses:
   - (*) wait, what did you mean by ~flipped~? [whats]
   - (*) I need help with the horizontal flip [horizontal]
