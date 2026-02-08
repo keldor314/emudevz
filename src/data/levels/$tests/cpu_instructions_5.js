@@ -1,5 +1,7 @@
 const { EmulatorBuilder, testHelpers, evaluate, byte } = $;
 
+const KB = 1024;
+
 let mainModule, NEEES;
 before(async () => {
   mainModule = await evaluate();
@@ -16,23 +18,21 @@ function newCPU(prgBytes = []) {
 // 5a.11 Instructions (5/5): System (interrupts)
 
 it("the CPU can handle <RESET> interrupts", () => {
-  const cpu = newCPU();
+  // set up read16(0xfffc) => 0x3125
+  const prg = [];
+  const vectorIndex = 16 * KB - (0x10000 - 0xfffc);
+  prg[vectorIndex] = 0x25;
+  prg[vectorIndex + 1] = 0x31;
+
+  const cpu = newCPU(prg);
   cpu.cycle = 8;
   cpu.pc.setValue(0x1234);
   cpu.flags.setValue(0);
 
-  const interrupt = {
+  const returnValue = cpu.interrupt({
     id: "RESET",
     vector: 0xfffc,
-  };
-  const memoryRead = cpu.memory.read.bind(cpu.memory);
-  cpu.memory.read = (address) => {
-    if (address === interrupt.vector) return 0x25;
-    else if (address === interrupt.vector + 1) return 0x31;
-    else return memoryRead(address);
-  };
-
-  const returnValue = cpu.interrupt(interrupt);
+  });
 
   expect(cpu.stack.pop()).to.equalBin(0b00100000, "pop()");
   expect(cpu.stack.pop16()).to.equalHex(0x1234, "pop16()");
@@ -48,24 +48,22 @@ it("the CPU can handle <RESET> interrupts", () => {
 });
 
 it("the CPU can handle NMI interrupts", () => {
-  const cpu = newCPU();
+  // set up read16(0xfffa) => 0x3125
+  const prg = [];
+  const vectorIndex = 16 * KB - (0x10000 - 0xfffa);
+  prg[vectorIndex] = 0x25;
+  prg[vectorIndex + 1] = 0x31;
+
+  const cpu = newCPU(prg);
   cpu.cycle = 8;
   cpu.pc.setValue(0x1234);
   cpu.flags.setValue(0);
 
-  const interrupt = {
+  cpu.flags.i = true;
+  const returnValue = cpu.interrupt({
     id: "NMI",
     vector: 0xfffa,
-  };
-  const memoryRead = cpu.memory.read.bind(cpu.memory);
-  cpu.memory.read = (address) => {
-    if (address === 0xfffa) return 0x25;
-    else if (address === 0xfffb) return 0x31;
-    else return memoryRead(address);
-  };
-
-  cpu.flags.i = true;
-  const returnValue = cpu.interrupt(interrupt);
+  });
 
   expect(cpu.stack.pop()).to.equalBin(0b00100100, "pop()");
   expect(cpu.stack.pop16()).to.equalHex(0x1234, "pop16()");
@@ -81,23 +79,21 @@ it("the CPU can handle NMI interrupts", () => {
 });
 
 it("the CPU can handle <IRQ> interrupts", () => {
-  const cpu = newCPU();
+  // set up read16(0xfffe) => 0x3125
+  const prg = [];
+  const vectorIndex = 16 * KB - (0x10000 - 0xfffe);
+  prg[vectorIndex] = 0x25;
+  prg[vectorIndex + 1] = 0x31;
+
+  const cpu = newCPU(prg);
   cpu.cycle = 8;
   cpu.pc.setValue(0x1234);
   cpu.flags.setValue(0);
 
-  const interrupt = {
+  const returnValue = cpu.interrupt({
     id: "IRQ",
     vector: 0xfffe,
-  };
-  const memoryRead = cpu.memory.read.bind(cpu.memory);
-  cpu.memory.read = (address) => {
-    if (address === 0xfffe) return 0x25;
-    else if (address === 0xffff) return 0x31;
-    else return memoryRead(address);
-  };
-
-  const returnValue = cpu.interrupt(interrupt);
+  });
 
   expect(cpu.stack.pop()).to.equalBin(0b00100000, "pop()");
   expect(cpu.stack.pop16()).to.equalHex(0x1234, "pop16()");
@@ -113,25 +109,23 @@ it("the CPU can handle <IRQ> interrupts", () => {
 });
 
 it("the CPU ignores <IRQ> interrupts if the ~I~ flag is set", () => {
-  const cpu = newCPU();
+  // set up read16(0xfffe) => 0x3125
+  const prg = [];
+  const vectorIndex = 16 * KB - (0x10000 - 0xfffe);
+  prg[vectorIndex] = 0x25;
+  prg[vectorIndex + 1] = 0x31;
+
+  const cpu = newCPU(prg);
   cpu.cycle = 8;
   cpu.pc.setValue(0x1234);
   cpu.flags.setValue(0);
   const sp = cpu.sp.getValue();
 
-  const interrupt = {
+  cpu.flags.i = true;
+  const returnValue = cpu.interrupt({
     id: "IRQ",
     vector: 0xfffe,
-  };
-  const memoryRead = cpu.memory.read.bind(cpu.memory);
-  cpu.memory.read = (address) => {
-    if (address === 0xfffe) return 0x25;
-    else if (address === 0xffff) return 0x31;
-    else return memoryRead(address);
-  };
-
-  cpu.flags.i = true;
-  const returnValue = cpu.interrupt(interrupt);
+  });
 
   expect(cpu.sp.getValue()).to.equalHex(sp, "getValue()");
   expect(cpu.flags.i).to.equalN(true, "i");
@@ -158,18 +152,17 @@ it('`BRK`: argument == "no"', () => {
 });
 
 it("`BRK`: increments [PC] and triggers a <BRK> interrupt (bit 4 from flags should be on)", () => {
-  const cpu = newCPU();
+  // set up read16(0xfffe) => 0x3125
+  const prg = [];
+  const vectorIndex = 16 * KB - (0x10000 - 0xfffe);
+  prg[vectorIndex] = 0x25;
+  prg[vectorIndex + 1] = 0x31;
+
+  const cpu = newCPU(prg);
   const instructions = mainModule.default.instructions;
   cpu.cycle = 8;
   cpu.pc.setValue(0x1234);
   cpu.flags.setValue(0);
-
-  const memoryRead = cpu.memory.read.bind(cpu.memory);
-  cpu.memory.read = (address) => {
-    if (address === 0xfffe) return 0x25;
-    else if (address === 0xffff) return 0x31;
-    else return memoryRead(address);
-  };
 
   instructions.BRK.run(cpu);
 
@@ -187,19 +180,18 @@ it("`BRK`: increments [PC] and triggers a <BRK> interrupt (bit 4 from flags shou
 });
 
 it("`BRK`: works even if the ~I~ flag is set", () => {
-  const cpu = newCPU();
+  // set up read16(0xfffe) => 0x3125
+  const prg = [];
+  const vectorIndex = 16 * KB - (0x10000 - 0xfffe);
+  prg[vectorIndex] = 0x25;
+  prg[vectorIndex + 1] = 0x31;
+
+  const cpu = newCPU(prg);
   const instructions = mainModule.default.instructions;
   cpu.cycle = 8;
   cpu.pc.setValue(0x1234);
   cpu.flags.setValue(0);
   cpu.flags.i = true;
-
-  const memoryRead = cpu.memory.read.bind(cpu.memory);
-  cpu.memory.read = (address) => {
-    if (address === 0xfffe) return 0x25;
-    else if (address === 0xffff) return 0x31;
-    else return memoryRead(address);
-  };
 
   instructions.BRK.run(cpu);
 
