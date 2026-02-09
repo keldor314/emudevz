@@ -32,7 +32,8 @@ function navigate(_dispatch_, path, go = push) {
 	if (isNaN(r)) r = 1;
 
 	if (window.EmuDevz.state.didRunEmulator) {
-		history.replaceState(null, "", `/#${path}?r=${r}`);
+		const base = window.location.pathname.replace(/\/[^/]*$/, "/");
+		history.replaceState(null, "", `${base}#${path}?r=${r}`);
 		window.location.reload();
 	} else {
 		_dispatch_(go(`${path}?r=${r}`));
