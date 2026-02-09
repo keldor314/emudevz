@@ -171,11 +171,12 @@ class Music {
 		this._forcedTrackIndex = null;
 	}
 
-	getCurrentTime() {
-		if (this._audio == null) return 0;
+	saveSecond() {
+		if (window.EmuDevz.state.isClearingSavefile) return;
 
-		const value = this._audio.currentTime || 0;
-		return isFinite(value) && value >= 0 ? value : 0;
+		const second = this._getCurrentTime();
+		if (isFinite(second) && second >= 0)
+			store.dispatch.savedata.setMusicSecond(second);
 	}
 
 	_playCurrentTrack(startSecond = 0) {
@@ -214,6 +215,13 @@ class Music {
 		if (isFinite(value) && value >= 0 && value < TRACKS.length) return value;
 
 		return 0;
+	}
+
+	_getCurrentTime() {
+		if (this._audio == null) return 0;
+
+		const value = this._audio.currentTime || 0;
+		return isFinite(value) && value >= 0 ? value : 0;
 	}
 
 	_loadSecond() {

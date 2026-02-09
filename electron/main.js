@@ -90,6 +90,22 @@ function createWindow() {
 			return;
 		}
 
+		// Disable back/forward navigation
+		if (
+			input.type === "keyDown" &&
+			(input.key === "BrowserBack" || input.key === "BrowserForward")
+		) {
+			event.preventDefault();
+			return;
+		}
+		if (
+			input.type === "mouseDown" &&
+			(input.key === "BrowserBack" || input.key === "BrowserForward")
+		) {
+			event.preventDefault();
+			return;
+		}
+
 		if (input.type !== "keyDown") return;
 
 		// Fullscreen toggle

@@ -45,6 +45,7 @@ window.EmuDevz = {
 		isRunningEmulatorTest: false,
 		isRunningDebugger: false,
 		isClearingSavefile: false,
+		didRunEmulator: false,
 		lastOpenNewTabTime: 0,
 	},
 };
@@ -122,6 +123,15 @@ document.onfullscreenchange = (event) => {
 	if (screen != null) screen.style.border = isFullscreen ? "none" : "";
 };
 
+// Disable back/forward mouse buttons (button 3 = back, button 4 = forward)
+document.addEventListener(
+	"mousedown",
+	(e) => {
+		if (e.button === 3 || e.button === 4) e.preventDefault();
+	},
+	true
+);
+
 // Make the page visible once everything loaded
 window.addEventListener(
 	"load",
@@ -152,11 +162,7 @@ store.subscribe(updateCrtClass);
 
 // Persist current music second on page unload
 window.addEventListener("beforeunload", () => {
-	if (window.EmuDevz.state.isClearingSavefile) return;
-
-	const second = music.getCurrentTime();
-	if (isFinite(second) && second >= 0)
-		store.dispatch.savedata.setMusicSecond(second);
+	music.saveSecond();
 });
 
 // Show overlay if window is too small

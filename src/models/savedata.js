@@ -348,7 +348,7 @@ export default {
 					}
 				}
 
-				if (levelId != null && !book.isUnlocked(levelId)) {
+				if (!_.isEmpty(levelId) && !book.isUnlocked(levelId)) {
 					const firstLevel = book.chapters[0].levels[0];
 					_dispatch_.level.goToReplacing(firstLevel.id);
 					return false;

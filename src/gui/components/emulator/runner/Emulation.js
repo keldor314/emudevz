@@ -72,6 +72,7 @@ export default class Emulation {
 		this.neees = new NEEES(this._onFrame, this._onAudio);
 		this.bytes = bytes;
 		window.EmuDevz.emulation = this;
+		window.EmuDevz.state.didRunEmulator = true;
 
 		this.frameTimer = new FrameTimer(() => {
 			this._updateInput(getInput());

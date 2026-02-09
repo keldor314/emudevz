@@ -3,6 +3,7 @@ import {
 	SAVESTATE_KEY_PREFIX,
 	SAVESTATE_RESET_COMMAND,
 } from "../gui/components/emulator/Emulator";
+import { music } from "../gui/sound";
 import Book from "../level/Book";
 import { analytics } from "../utils";
 
@@ -13,6 +14,30 @@ const INITIAL_STATE = () => ({
 	isChapterSelectOpen: false,
 	isCreditsOpen: false,
 });
+
+function navigate(_dispatch_, path, go = push) {
+	// HACK: Sometimes, we need to reload the full page
+	// the game evaluates player code by using `moduleEval.js`,
+	// which calls `eval(...)`, incorporating their code into EmuDevz's code
+	// this has two downsides:
+	// - if the player code enters an infinite loop, the game could freeze
+	// - the codebase gets bigger on each run, harming performance and effectively leaking memory
+	// since code evaluation cannot be undone, the only solution would be to run player code inside a WebWorker
+	// but that would make debugging harder, and it'd be a huge architectural change, so I'm trying to avoid that
+	// as a cheap but effective hack, we'll force a full page reload if the user has run the emulator
+
+	music.saveSecond();
+
+	let r = parseInt(window.location.href.split("?r=")[1] ?? 0) + 1;
+	if (isNaN(r)) r = 1;
+
+	if (window.EmuDevz.state.didRunEmulator) {
+		history.replaceState(null, "", `/#${path}?r=${r}`);
+		window.location.reload();
+	} else {
+		_dispatch_(go(`${path}?r=${r}`));
+	}
+}
 
 export default {
 	state: INITIAL_STATE(),
@@ -66,16 +91,13 @@ export default {
 
 				window.EmuDevz.resetState();
 				_dispatch_.savedata.setLastLevelId(levelId);
-				let r = parseInt(window.location.href.split("?r=")[1] ?? 0) + 1;
-				if (isNaN(r)) r = 1;
-				_dispatch_(replace(`/levels/${levelId}?r=${r}`));
+				navigate(_dispatch_, `/levels/${levelId}`);
 			},
 			goToReplacing(levelId) {
 				window.EmuDevz.resetState();
 				_dispatch_.savedata.setLastLevelId(levelId);
-				let r = parseInt(window.location.href.split("?r=")[1] ?? 0) + 1;
-				if (isNaN(r)) r = 1;
-				_dispatch_(replace(`/levels/${levelId}?r=${r}`));
+
+				navigate(_dispatch_, `/levels/${levelId}`, replace);
 			},
 			goToLastLevel(__, _state_) {
 				if (
@@ -90,7 +112,7 @@ export default {
 			},
 			goHome() {
 				this.reset();
-				_dispatch_(push("/"));
+				navigate(_dispatch_, "/");
 			},
 			resetProgress(__, _state_) {
 				const state = _state_[KEY];
