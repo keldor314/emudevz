@@ -9,6 +9,8 @@ const {
 const path = require("node:path");
 const { pathToFileURL } = require("node:url");
 const steam = require("./steam");
+const fs = require("node:fs");
+const fsp = require("node:fs/promises");
 
 const isDev = !app.isPackaged;
 const isWindows = process.platform === "win32";
@@ -183,7 +185,7 @@ app.whenReady().then(() => {
 	if (!isDev) {
 		const buildDir = path.join(app.getAppPath(), "build");
 
-		protocol.handle("app", (request) => {
+		protocol.handle("app", async (request) => {
 			const urlObj = new URL(request.url);
 			let pathname = urlObj.pathname || "/";
 			if (pathname === "/") pathname = "/index.html";
@@ -194,6 +196,48 @@ app.whenReady().then(() => {
 			const safe = rel && !rel.startsWith("..") && !path.isAbsolute(rel);
 
 			const filePath = safe ? abs : path.join(buildDir, "index.html");
+
+			// Music files need Range support
+			if (pathname.startsWith("/music/") && pathname.endsWith(".mp3")) {
+				const range = request.headers.get("range");
+				if (range) {
+					const size = (await fsp.stat(filePath)).size;
+
+					const match = range.match(/^bytes=(\d+)-(\d*)$/i);
+					if (!match)
+						return new Response(null, {
+							status: 416,
+							headers: { "Content-Range": `bytes */${size}` },
+						});
+
+					const start = Number(match[1]);
+					const end = match[2]
+						? Math.min(Number(match[2]), size - 1)
+						: size - 1;
+
+					if (
+						!Number.isFinite(start) ||
+						!Number.isFinite(end) ||
+						start < 0 ||
+						end < start ||
+						start >= size
+					)
+						return new Response(null, {
+							status: 416,
+							headers: { "Content-Range": `bytes */${size}` },
+						});
+
+					return new Response(fs.createReadStream(filePath, { start, end }), {
+						status: 206,
+						headers: {
+							"Content-Type": "audio/mpeg",
+							"Accept-Ranges": "bytes",
+							"Content-Range": `bytes ${start}-${end}/${size}`,
+							"Content-Length": String(end - start + 1),
+						},
+					});
+				}
+			}
 
 			return net.fetch(pathToFileURL(filePath).toString());
 		});
