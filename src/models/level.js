@@ -5,6 +5,7 @@ import {
 } from "../gui/components/emulator/Emulator";
 import { music } from "../gui/sound";
 import Book from "../level/Book";
+import store from "../store";
 import { analytics } from "../utils";
 
 const KEY = "level";
@@ -31,7 +32,7 @@ function navigate(_dispatch_, path, go = push) {
 	let r = parseInt(window.location.href.split("?r=")[1] ?? 0) + 1;
 	if (isNaN(r)) r = 1;
 
-	if (window.EmuDevz.state.didRunEmulator) {
+	if (window.EmuDevz.state.didRunEmulator && !shouldPreventReload()) {
 		const base = window.location.pathname.replace(/\/[^/]*$/, "/");
 		history.replaceState(null, "", `${base}#${path}?r=${r}`);
 		window.location.reload();
@@ -135,3 +136,14 @@ export default {
 		};
 	},
 };
+
+function shouldPreventReload() {
+	try {
+		const advancedSettings = JSON.parse(
+			store.getState().savedata?.advancedSettings
+		);
+		return advancedSettings?.layout?.preventReload || false;
+	} catch {
+		return false;
+	}
+}

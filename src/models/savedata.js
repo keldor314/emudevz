@@ -85,6 +85,7 @@ export const DEFAULT_ADVANCED_SETTINGS = JSON.stringify(
 			triple: {
 				resizable: false,
 			},
+			preventReload: false,
 		},
 	},
 	null,
