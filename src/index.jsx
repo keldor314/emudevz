@@ -123,15 +123,6 @@ document.onfullscreenchange = (event) => {
 	if (screen != null) screen.style.border = isFullscreen ? "none" : "";
 };
 
-// Disable back/forward mouse buttons (button 3 = back, button 4 = forward)
-document.addEventListener(
-	"mousedown",
-	(e) => {
-		if (e.button === 3 || e.button === 4) e.preventDefault();
-	},
-	true
-);
-
 // Make the page visible once everything loaded
 window.addEventListener(
 	"load",
