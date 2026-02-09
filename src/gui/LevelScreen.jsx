@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import _ from "lodash";
 import codeEval from "../level/codeEval";
-import store from "../store";
+import { getAdvancedSetting } from "../models/savedata";
 import components from "./components";
 import layouts from "./components/layouts";
 import NavBar from "./components/widgets/NavBar";
@@ -93,14 +93,7 @@ class LevelScreen extends PureComponent {
 	};
 
 	_getResizableSetting() {
-		try {
-			const advancedSettings = JSON.parse(
-				store.getState().savedata?.advancedSettings
-			);
-			return advancedSettings?.layout?.triple?.resizable || false;
-		} catch {
-			return false;
-		}
+		return getAdvancedSetting((obj) => obj.layout?.triple?.resizable);
 	}
 }
 

@@ -1,5 +1,6 @@
 import _ from "lodash";
 import filesystem, { Drive } from "../filesystem";
+import store from "../store";
 import { bus } from "../utils";
 import {
 	getDefaultConsoleTheme,
@@ -435,4 +436,15 @@ function guid() {
 			.toString(16)
 			.slice(-4);
 	return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
+}
+
+export function getAdvancedSetting(getter, defaultValue = false) {
+	try {
+		const advancedSettings = JSON.parse(
+			store.getState().savedata?.advancedSettings
+		);
+		return (advancedSettings && getter(advancedSettings)) || defaultValue;
+	} catch {
+		return defaultValue;
+	}
 }

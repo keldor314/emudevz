@@ -17,6 +17,16 @@ import ChatScript from "./chat/ChatScript";
 const NEWLINE_REGEXP = /\n|\r\n|\r/;
 
 export default class Level {
+	static startEffect(effectName, options = { sfx: true }) {
+		if (options?.sfx) sfx.play("effect");
+
+		document.querySelector("body").className = effectName;
+	}
+
+	static stopEffect() {
+		document.querySelector("body").className = "";
+	}
+
 	constructor(id, metadata, chatScripts, { code, tests, media, bin }) {
 		_.extend(this, metadata);
 
@@ -263,16 +273,6 @@ export default class Level {
 		});
 	}
 
-	startEffect(effectName, options = { sfx: true }) {
-		if (options?.sfx) sfx.play("effect");
-
-		document.querySelector("body").className = effectName;
-	}
-
-	stopEffect() {
-		document.querySelector("body").className = "";
-	}
-
 	init() {
 		this.validate();
 
@@ -346,6 +346,14 @@ export default class Level {
 				}
 			);
 		}
+	}
+
+	startEffect(effectName, options) {
+		Level.startEffect(effectName, options);
+	}
+
+	stopEffect() {
+		Level.stopEffect();
 	}
 
 	get debuggerPinSuffix() {

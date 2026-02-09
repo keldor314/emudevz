@@ -1,3 +1,4 @@
+import { getPersistor } from "@rematch/persist";
 import { push, replace } from "connected-react-router";
 import {
 	SAVESTATE_KEY_PREFIX,
@@ -5,8 +6,9 @@ import {
 } from "../gui/components/emulator/Emulator";
 import { music } from "../gui/sound";
 import Book from "../level/Book";
-import store from "../store";
+import Level from "../level/Level";
 import { analytics } from "../utils";
+import { getAdvancedSetting } from "./savedata";
 
 const KEY = "level";
 const INITIAL_STATE = () => ({
@@ -16,7 +18,12 @@ const INITIAL_STATE = () => ({
 	isCreditsOpen: false,
 });
 
-function navigate(_dispatch_, path, go = push) {
+async function navigate(_dispatch_, path, go = push) {
+	music.saveSecond();
+
+	let r = parseInt(window.location.href.split("?r=")[1] ?? 0) + 1;
+	if (isNaN(r)) r = 1;
+
 	// HACK: Sometimes, we need to reload the full page
 	// the game evaluates player code by using `moduleEval.js`,
 	// which calls `eval(...)`, incorporating their code into EmuDevz's code
@@ -26,13 +33,17 @@ function navigate(_dispatch_, path, go = push) {
 	// since code evaluation cannot be undone, the only solution would be to run player code inside a WebWorker
 	// but that would make debugging harder, and it'd be a huge architectural change, so I'm trying to avoid that
 	// as a cheap but effective hack, we'll force a full page reload if the user has run the emulator
-
-	music.saveSecond();
-
-	let r = parseInt(window.location.href.split("?r=")[1] ?? 0) + 1;
-	if (isNaN(r)) r = 1;
-
 	if (window.EmuDevz.state.didRunEmulator && !shouldPreventReload()) {
+		// wait until any pending writes are flushed
+		Level.startEffect("running", { sfx: false });
+		try {
+			const persistor = getPersistor();
+			await persistor.flush();
+		} finally {
+			Level.stopEffect();
+		}
+
+		// hard-navigate
 		const base = window.location.pathname.replace(/\/[^/]*$/, "/");
 		history.replaceState(null, "", `${base}#${path}?r=${r}`);
 		window.location.reload();
@@ -138,12 +149,5 @@ export default {
 };
 
 function shouldPreventReload() {
-	try {
-		const advancedSettings = JSON.parse(
-			store.getState().savedata?.advancedSettings
-		);
-		return advancedSettings?.layout?.preventReload || false;
-	} catch {
-		return false;
-	}
+	return getAdvancedSetting((obj) => obj.layout?.preventReload);
 }

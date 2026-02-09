@@ -117,12 +117,12 @@ export default class TestCommand extends Command {
 						locales.get("testing") + theme.MESSAGE(fileName) + "..."
 					);
 
-				Level.current.startEffect("running", { sfx: false });
+				Level.startEffect("running", { sfx: false });
 				let results;
 				try {
 					results = await framework.test(test, testDefinition, this._isDebug);
 				} finally {
-					Level.current.stopEffect();
+					Level.stopEffect();
 				}
 
 				for (let result of results) {

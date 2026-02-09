@@ -15,6 +15,7 @@ import _ from "lodash";
 import Level from "../../level/Level";
 import codeEval from "../../level/codeEval";
 import locales from "../../locales";
+import { getAdvancedSetting } from "../../models/savedata";
 import store from "../../store";
 import { bus, dlc } from "../../utils";
 import {
@@ -416,14 +417,7 @@ export default class CodeEditor extends PureComponent {
 	}
 
 	_getBasicSetupOptions() {
-		try {
-			const advancedSettings = JSON.parse(
-				store.getState().savedata?.advancedSettings
-			);
-			return advancedSettings?.codeEditor || {};
-		} catch {
-			return {};
-		}
+		return getAdvancedSetting((obj) => obj.codeEditor, {});
 	}
 }
 
