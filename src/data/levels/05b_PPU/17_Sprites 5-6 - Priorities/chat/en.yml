@@ -26,6 +26,23 @@ fix:
   - and we'll only plot the pixels from that buffer if the sprite priority is <front> or the background pixel is transparent
   responses:
   - sounds clear enough [exercise]
+  - (*) sounds complicated, why? 🤔 [why]
+
+why:
+  messages:
+  - |-
+    one might think that NEEES layers work like this:
+      - 🛸  <front-priority> sprites on top
+      - 🏞️  the background in the middle
+      - 🛸  <back-priority> sprites in back
+  - but that would be <incorrect>
+  - remember that sprites with lower ids are drawn in front?
+  - well, at any given pixel, if the <frontmost> opaque sprite's priority is <back>, an opaque background pixel is drawn in front of it
+  - "and crucially: you don't get to use the next-priority sprite at that pixel"
+  - this means the frontmost sprite can block other sprites even when it's behind the background
+  - that's why we first store the winning sprite pixel in a buffer, then mix with the background
+  responses:
+  - ...fix
 
 exercise:
   messages:
