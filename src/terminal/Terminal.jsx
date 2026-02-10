@@ -4,6 +4,7 @@ import filesystem from "../filesystem";
 import _links from "../gui/_links";
 import { sfx } from "../gui/sound";
 import locales from "../locales";
+import { getAdvancedSetting } from "../models/savedata";
 import store from "../store";
 import { async, bus, dlc, toast } from "../utils";
 import { addSpaceAfterEmoji, ansiEscapes } from "../utils/cli";
@@ -202,7 +203,9 @@ export default class Terminal {
 
 				lastCharacter = characters[i];
 				this._xterm.write(style(lastCharacter));
-				await async.sleep(this._speedFlag ? 0 : interval);
+
+				if (!hasInstantChat())
+					await async.sleep(this._speedFlag ? 0 : interval);
 			}
 		}
 
@@ -720,6 +723,8 @@ export default class Terminal {
 	}
 
 	_needsWordWrap(characters, i, lastCharacter) {
+		if (hasInstantChat()) return false;
+
 		if (WHITESPACE_REGEXP.test(lastCharacter)) {
 			const remainingCharacters = characters.slice(i);
 			let nextWordLength = _.findIndex(remainingCharacters, (it) =>
@@ -982,4 +987,8 @@ export default class Terminal {
 		i = this._stepWhile(text, i, dir, (ch) => !WHITESPACE_REGEXP.test(ch)); // skip word
 		return i;
 	}
+}
+
+function hasInstantChat() {
+	return getAdvancedSetting((obj) => obj.chat?.instant);
 }

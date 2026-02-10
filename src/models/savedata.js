@@ -88,6 +88,9 @@ export const DEFAULT_ADVANCED_SETTINGS = JSON.stringify(
 			},
 			preventReload: false,
 		},
+		chat: {
+			instant: false,
+		},
 	},
 	null,
 	2
