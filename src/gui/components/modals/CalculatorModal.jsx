@@ -26,7 +26,7 @@ export default class CalculatorModal extends PureComponent {
 		let hasDec = _.isFinite(parseInt(this.state.dec, 10));
 		const hasHex = _.isFinite(parseInt(this.state.hex, 16));
 		const hasBin = _.isFinite(parseInt(this.state.bin, 2));
-		if (!hasDec && !hasHex & !hasBin) hasDec = true;
+		if (!hasDec && !hasHex && !hasBin) hasDec = true;
 
 		return (
 			<Modal
@@ -85,12 +85,13 @@ export default class CalculatorModal extends PureComponent {
 								<Form.Control
 									value={this.state.bin}
 									onChange={(e) => {
-										const value = e.target.value.replace(/[^01]/g, "");
+										const raw = e.target.value.replace(/[^01]/g, "");
+										const value = raw === "" ? "0" : raw;
 
 										this.setState({
 											dec: this._convert(value, 2, 10),
 											hex: this._convert(value, 2, 16),
-											bin: this._convert(value, 2, 2),
+											bin: value,
 										});
 									}}
 								/>
