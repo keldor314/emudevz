@@ -25,7 +25,8 @@ export default class CalculatorModal extends PureComponent {
 
 		let hasDec = _.isFinite(parseInt(this.state.dec, 10));
 		const hasHex = _.isFinite(parseInt(this.state.hex, 16));
-		const hasBin = _.isFinite(parseInt(this.state.bin, 2));
+		const hasBin =
+			this.state.bin === "" || _.isFinite(parseInt(this.state.bin, 2));
 		if (!hasDec && !hasHex && !hasBin) hasDec = true;
 
 		return (
@@ -86,12 +87,12 @@ export default class CalculatorModal extends PureComponent {
 									value={this.state.bin}
 									onChange={(e) => {
 										const raw = e.target.value.replace(/[^01]/g, "");
-										const value = raw === "" ? "0" : raw;
+										const coerced = raw === "" ? "0" : raw;
 
 										this.setState({
-											dec: this._convert(value, 2, 10),
-											hex: this._convert(value, 2, 16),
-											bin: value,
+											dec: this._convert(coerced, 2, 10),
+											hex: this._convert(coerced, 2, 16),
+											bin: raw,
 										});
 									}}
 								/>
