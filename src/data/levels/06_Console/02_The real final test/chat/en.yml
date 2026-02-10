@@ -19,6 +19,7 @@ play:
   run-after-messages: |
     {{Top}}.runner.setIntegration("RoboNinjaClimb");
     {{Top}}.loadROM("/roms/.all/RoboNinjaClimb.neees");
+    layout.focus("Top");
   messages:
   - actually, you'll die a lot
   - if it turns out to be too much...

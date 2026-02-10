@@ -19,6 +19,7 @@ play:
   run-after-messages: |
     {{Top}}.runner.setIntegration("RoboNinjaClimb");
     {{Top}}.loadROM("/roms/.all/RoboNinjaClimb.neees");
+    layout.focus("Top");
   messages:
   - en realidad, morirás muchísimo
   - si resulta ser demasiado...

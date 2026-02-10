@@ -9,6 +9,7 @@ main:
 example:
   run: |
     {{Top}}.loadROM("/roms/.all/SuperTiltBro.neees");
+    layout.focus("Top");
   messages:
   - presta atención a la <nube> en el medio
   - la nube es un sprite y el título del juego es parte del fondo
