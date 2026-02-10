@@ -23,7 +23,7 @@ export default {
 				return (this.readAt(address + 1) << 8) | this.readAt(address);
 			},
 			writeAt(address, byte) {
-				if (address > 0 && address <= 0xffff) this.bytes[address] = byte;
+				if (address >= 0 && address <= 0xffff) this.bytes[address] = byte;
 			},
 		};
 		const context = {
