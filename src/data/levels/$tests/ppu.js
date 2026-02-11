@@ -829,7 +829,7 @@ it("resets `PPUStatus::isInVBlankInterval` on ~scanline=-1~, ~cycle=1~", () => {
   use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on ~scanline=241~, ~cycle=1~ when `PPUCtrl::generateNMIOnVBlank` is on,", () => {
+it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on ~scanline=241~, ~cycle=1~ when `PPUCtrl::generateNMIOnVBlank` is on", () => {
   const PPU = mainModule.default.PPU;
   const ppu = new PPU({});
   ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
@@ -872,7 +872,7 @@ it("sets `PPUStatus::isInVBlankInterval` and triggers an NMI on ~scanline=241~, 
   use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
-it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on ~scanline=241~, ~cycle=1~ when `PPUCtrl::generateNMIOnVBlank` is <off>,", () => {
+it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on ~scanline=241~, ~cycle=1~ when `PPUCtrl::generateNMIOnVBlank` is <off>", () => {
   const PPU = mainModule.default.PPU;
   const ppu = new PPU({});
   ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
