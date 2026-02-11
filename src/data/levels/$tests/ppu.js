@@ -911,6 +911,41 @@ it("sets `PPUStatus::isInVBlankInterval` and doesn't trigger an NMI on ~scanline
   use: ({ id }, book) => id >= book.getId("5b.7"),
 });
 
+it("never sets `PPUStatus::isInVBlankInterval` if ~scanline < 241~", () => {
+  const PPU = mainModule.default.PPU;
+  const ppu = new PPU({});
+  ppu.memory?.onLoad?.(dummyCartridge, dummyMapper);
+  ppu.onLoad?.(dummyMapper);
+
+  ppu.registers.ppuCtrl.setValue(0b10000000);
+
+  for (let scanline = -1; scanline < 241; scanline++) {
+    for (let cycle = 0; cycle < 341; cycle++) {
+      ppu.scanline = scanline;
+      ppu.cycle = cycle;
+      ppu.registers.ppuStatus.isInVBlankInterval = 0;
+
+      ppu.step(noop, noop);
+
+      try {
+        expect(ppu.registers.ppuStatus.isInVBlankInterval).to.equalN(
+          0,
+          "isInVBlankInterval"
+        );
+      } catch {
+        throw new Error(
+          `PPUStatus::isInVBlankInterval was set in scanline ${scanline}`
+        );
+      }
+    }
+  }
+})({
+  locales: {
+    es: "nunca enciende `PPUStatus::isInVBlankInterval` si ~scanline < 241~",
+  },
+  use: ({ id }, book) => id >= book.getId("5b.7"),
+});
+
 // 5b.8 VRAM bridge
 
 it("`PPUMemory`: has a `vram` property", () => {
