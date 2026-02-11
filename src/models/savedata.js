@@ -91,6 +91,9 @@ export const DEFAULT_ADVANCED_SETTINGS = JSON.stringify(
 		chat: {
 			instant: false,
 		},
+		audio: {
+			playAudioTests: false,
+		},
 	},
 	null,
 	2

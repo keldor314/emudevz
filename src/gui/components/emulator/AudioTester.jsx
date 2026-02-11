@@ -3,7 +3,10 @@ import { FaTimes } from "react-icons/fa";
 import _ from "lodash";
 import Level from "../../../level/Level";
 import locales from "../../../locales";
+import { getAdvancedSetting } from "../../../models/savedata";
+import store from "../../../store";
 import testContext from "../../../terminal/commands/test/context";
+import { bus } from "../../../utils";
 import AudioComparer from "../debugger/AudioComparer";
 import IconButton from "../widgets/IconButton";
 import Emulator from "./Emulator";
@@ -62,7 +65,7 @@ export default class AudioTester extends PureComponent {
 								useAPU: true,
 								withLatestCode: false,
 							}}
-							volume={0}
+							volume={this._volume}
 							onError={this._setError}
 							onFps={this._setFps}
 							onStart={this._onActualEmulatorStart}
@@ -100,6 +103,21 @@ export default class AudioTester extends PureComponent {
 				}
 			/>
 		);
+	}
+
+	componentDidMount() {
+		this._subscriber = bus.subscribe({
+			"music-volume-changed": (newVolume) => {
+				if (!this._getPlayAudioTests()) return;
+
+				if (this._emulatorA?.speaker)
+					this._emulatorA?.speaker.setVolume(newVolume);
+			},
+		});
+	}
+
+	componentWillUnmount() {
+		this._subscriber.release();
 	}
 
 	_onActualEmulatorStart = (emulation) => {
@@ -242,5 +260,15 @@ export default class AudioTester extends PureComponent {
 
 	get _testFrames() {
 		return this.props.test.frames;
+	}
+
+	get _volume() {
+		if (!this._getPlayAudioTests()) return 0;
+
+		return store.getState().savedata.musicVolume;
+	}
+
+	_getPlayAudioTests() {
+		return getAdvancedSetting((obj) => obj.audio?.playAudioTests, false);
 	}
 }
