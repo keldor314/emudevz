@@ -1066,7 +1066,7 @@ it("`SBC`: updates the Carry and Overflow flags", () => {
   cpu.a.setValue(0x80);
   cpu.flags.c = true;
   instructions.SBC.run(cpu, 0);
-  expect(cpu.a.getValue()).to.equalN(0x80, "getValue()");
+  expect(cpu.a.getValue()).to.equalHex(0x80, "getValue()");
   expect(cpu.flags.c).to.equalN(true, "c");
   expect(cpu.flags.v).to.equalN(false, "v");
 
@@ -1082,7 +1082,7 @@ it("`SBC`: updates the Carry and Overflow flags", () => {
   cpu.a.setValue(0x10);
   cpu.flags.c = false;
   instructions.SBC.run(cpu, 0x10);
-  expect(cpu.a.getValue()).to.equalN(0xff, "getValue()");
+  expect(cpu.a.getValue()).to.equalHex(0xff, "getValue()");
   expect(cpu.flags.c).to.equalN(false, "c");
   expect(cpu.flags.v).to.equalN(false, "v");
 
@@ -1090,7 +1090,7 @@ it("`SBC`: updates the Carry and Overflow flags", () => {
   cpu.a.setValue(0);
   cpu.flags.c = true;
   instructions.SBC.run(cpu, 0x80);
-  expect(cpu.a.getValue()).to.equalN(0x80, "getValue()");
+  expect(cpu.a.getValue()).to.equalHex(0x80, "getValue()");
   expect(cpu.flags.c).to.equalN(false, "c");
   expect(cpu.flags.v).to.equalN(true, "v");
 })({

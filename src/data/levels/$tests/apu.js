@@ -935,10 +935,16 @@ it("`PulseChannel`: `sample()` updates the oscillator volume", () => {
   apu.channels.pulses[1].registers.control.onWrite(0b00111011);
 
   apu.channels.pulses[0].sample();
-  expect(apu.channels.pulses[0].oscillator.volume).to.equalN(0b1100, "volume");
+  expect(apu.channels.pulses[0].oscillator.volume).to.equalBin(
+    0b1100,
+    "volume"
+  );
 
   apu.channels.pulses[1].sample();
-  expect(apu.channels.pulses[1].oscillator.volume).to.equalN(0b1011, "volume");
+  expect(apu.channels.pulses[1].oscillator.volume).to.equalBin(
+    0b1011,
+    "volume"
+  );
 })({
   locales: {
     es: "`PulseChannel`: `sample()` actualiza el volumen del oscilador",
@@ -3038,7 +3044,7 @@ it("`TriangleLengthControl`: writes `linearCounterReload` and updates linear len
     0b1001011,
     "linearCounterReload"
   );
-  expect(channel.linearLengthCounter.reload).to.equalN(0b1001011, "reload");
+  expect(channel.linearLengthCounter.reload).to.equalBin(0b1001011, "reload");
 })({
   locales: {
     es:
@@ -3397,11 +3403,11 @@ it("`NoiseForm`: writes `periodId` (bits ~0-3~) and `mode` (bit 7)", () => {
   const register = apu.registers.noise.form;
 
   register.onWrite(0b10000101);
-  expect(register.periodId).to.equalN(0b0101, "periodId");
+  expect(register.periodId).to.equalBin(0b0101, "periodId");
   expect(register.mode).to.equalN(1, "mode");
 
   register.onWrite(0b00001010);
-  expect(register.periodId).to.equalN(0b1010, "periodId");
+  expect(register.periodId).to.equalBin(0b1010, "periodId");
   expect(register.mode).to.equalN(0, "mode");
 })({
   locales: {
@@ -3506,14 +3512,14 @@ it("`NoiseChannel`: `step()` uses `mode` flag to compute feedback bit", () => {
   // first call: dividerCount = 3, no shift update
   channel.step();
   expect(channel.dividerCount).to.equalN(3, "dividerCount");
-  expect(channel.shift).to.equalN(0b001010101001100, "shift");
+  expect(channel.shift).to.equalBin(0b001010101001100, "shift");
 
   // next step triggers update
   channel.step();
   expect(channel.dividerCount).to.equalN(0, "dividerCount");
   // feedback = bit0 ^ bit6 = 0 ^ 1 = 1,
   // new shift = (0b001010101001100 >> 1) | (1 << 14)
-  expect(channel.shift).to.equalN(0b100101010100110, "shift");
+  expect(channel.shift).to.equalBin(0b100101010100110, "shift");
 })({
   locales: {
     es:
@@ -3536,14 +3542,14 @@ it("`NoiseChannel`: `step()` uses an exclusive OR (~^~) for the feedback bit", (
   // first call: dividerCount = 3, no shift update
   channel.step();
   expect(channel.dividerCount).to.equalN(3, "dividerCount");
-  expect(channel.shift).to.equalN(0b100110111001101, "shift");
+  expect(channel.shift).to.equalBin(0b100110111001101, "shift");
 
   // next step triggers update
   channel.step();
   expect(channel.dividerCount).to.equalN(0, "dividerCount");
   // feedback = bit0 ^ bit6 = 1 ^ 1 = 0
   // new shift = (0b100110111001101 >> 1) | (0 << 14)
-  expect(channel.shift).to.equalN(0b10011011100110, "shift");
+  expect(channel.shift).to.equalBin(0b10011011100110, "shift");
 })({
   locales: {
     es:
@@ -3717,8 +3723,11 @@ it("`DMCLoad`: writes `directLoad` (bits ~0-6~) and updates channel's `outputSam
   const apu = new APU({});
 
   apu.registers.write(0x4011, 0b11001000);
-  expect(apu.registers.dmc.load.directLoad).to.equalN(0b1001000, "directLoad");
-  expect(apu.channels.dmc.outputSample).to.equalN(0b1001000, "outputSample");
+  expect(apu.registers.dmc.load.directLoad).to.equalBin(
+    0b1001000,
+    "directLoad"
+  );
+  expect(apu.channels.dmc.outputSample).to.equalBin(0b1001000, "outputSample");
 
   apu.registers.write(0x4011, 42);
   expect(apu.registers.dmc.load.directLoad).to.equalN(42, "directLoad");
@@ -3909,7 +3918,7 @@ it("`APUStatus`: reads return a <bitfield> for active channels and DMC", () => {
   apu.channels.dmc.dpcm.remainingBytes = () => 5; // bit 4
 
   // expected bits: b4=1,b3=0,b2=1,b1=0,b0=1 => 0b10101 = 21
-  expect(apu.registers.apuStatus.onRead()).to.equalN(0b10101, "onRead()");
+  expect(apu.registers.apuStatus.onRead()).to.equalBin(0b10101, "onRead()");
 })({
   locales: {
     es:
