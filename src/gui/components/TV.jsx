@@ -259,6 +259,7 @@ export default class TV extends PureComponent {
 		reader.onload = (event) => {
 			const rom = event.target.result;
 			this.setContent(rom, "rom", name);
+			window.EmuDevz.achievements.unlock("misc-dumper");
 		};
 
 		reader.readAsArrayBuffer(file);
