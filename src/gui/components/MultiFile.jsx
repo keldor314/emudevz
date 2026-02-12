@@ -134,9 +134,9 @@ class MultiFile extends PureComponent {
 						/>
 					</div>
 					<div className={styles.content}>
-						{this.props.openFiles.map((it, i) => {
+						{this.props.openFiles.map((it) => {
 							const [Component, customArgs] = extensions.getOptions(it);
-							return this._renderTabbedFile(it, i, Component, customArgs);
+							return this._renderTabbedFile(it, Component, customArgs);
 						})}
 						{_.isEmpty(this.props.openFiles) && (
 							<div
@@ -272,7 +272,7 @@ class MultiFile extends PureComponent {
 		return <Component ref={ref} {...props} />;
 	}
 
-	_renderTabbedFile(filePath, index, Component, customArgs) {
+	_renderTabbedFile(filePath, Component, customArgs) {
 		const { args, props } = this._getFileArgsAndProps(
 			filePath,
 			Component,
@@ -284,7 +284,7 @@ class MultiFile extends PureComponent {
 				style={{
 					display: filePath === this.props.selectedFile ? "block" : "none",
 				}}
-				key={index}
+				key={filePath}
 				ref={(ref) => {
 					if (!ref) return;
 					ref.initialize(args, this._level, this._layout);
