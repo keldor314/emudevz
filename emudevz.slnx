@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="emudevz.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>
