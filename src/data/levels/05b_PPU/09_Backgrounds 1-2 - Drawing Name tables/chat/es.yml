@@ -60,7 +60,7 @@ help:
   messages:
   - sabes que ```javascript y = this.ppu.scanline```
   - y que necesitas dibujar desde ~x = 0~ hasta ~x = 255~
-  - también sabes que la pantalla es una cuadrícula de ~32x32~ tiles (de ~8x8~ píxeles cada uno)
+  - también sabes que la pantalla es una cuadrícula de ~32x30~ tiles (de ~8x8~ píxeles cada uno)
   - y por último, ¡ya sabes cómo dibujar un tile usando tu clase 🕊️  `Tile`!
   - |-
     una forma de implementar esto es hacer algo como:
